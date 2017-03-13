@@ -28,16 +28,18 @@ public class Dice extends Component
 
         powerIn = new Input();
 
-        Clock clock = new Clock(circuit, "Clock", 10, TimeUnit.MILLISECONDS);
+        Clock clock = new Clock(circuit, name + "_Clock", 10, TimeUnit.MILLISECONDS);
 
-        SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, "Display");
+        Counter counter = new Counter(circuit, name + "_Counter");
+
+        BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, name + "_BCD");
+
+        DecimalToSevenSegmentDecoder decimal = new DecimalToSevenSegmentDecoder(circuit, name + "_Decoder");
+
+        SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, name + "_Display");
         circuit.addMonitor(display);
 
-        DecimalToSevenSegmentDecoder decimal = new DecimalToSevenSegmentDecoder(circuit, "Decoder");
-        BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, "BCD");
-        Counter counter = new Counter(circuit, "Counter");
-
-        Relay reset = new Relay(circuit, "Reset");
+        Relay reset = new Relay(circuit, name + "_Reset");
 
         // internal wiring
         new Signal(circuit).from(powerIn).to(decimal.getPowerIn(), bcd.getPowerIn(), reset.getMiddleIn(0));
