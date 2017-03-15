@@ -108,7 +108,7 @@ public class RelayClock extends Component
         new Signal(circuit).from(cH1.getOut3()).to(bcdH1.getIn3());
 
         // connect overflow of bcd decoders with counter clock
-        new Signal(circuit).from(bcdS0.getOutCarry()).to(resetS0.getCoilIn());
+        new Signal(circuit).from(bcdS0.getOutA()).to(resetS0.getCoilIn());
         new Signal(circuit).from(resetS0.get_Out(0)).to(cS1.get_Clock(), cS0.getPowerIn());
         new Signal(circuit).from(resetS0.getOut(0)).to(cS1.getClock());
 
@@ -116,7 +116,7 @@ public class RelayClock extends Component
         new Signal(circuit).from(resetS1.get_Out(0)).to(cM0.get_Clock(), cS1.getPowerIn());
         new Signal(circuit).from(resetS1.getOut(0)).to(cM0.getClock());
 
-        new Signal(circuit).from(bcdM0.getOutCarry()).to(resetM0.getCoilIn());
+        new Signal(circuit).from(bcdM0.getOutA()).to(resetM0.getCoilIn());
         new Signal(circuit).from(resetM0.get_Out(0)).to(cM1.get_Clock(), cM0.getPowerIn());
         new Signal(circuit).from(resetM0.getOut(0)).to(cM1.getClock());
 
@@ -124,7 +124,7 @@ public class RelayClock extends Component
         new Signal(circuit).from(resetM1.get_Out(0)).to(cH0.get_Clock(), cM1.getPowerIn());
         new Signal(circuit).from(resetM1.getOut(0)).to(cH0.getClock());
 
-        new Signal(circuit).from(bcdH0.getOutCarry()).to(resetH0.getCoilIn());
+        new Signal(circuit).from(bcdH0.getOutA()).to(resetH0.getCoilIn());
         new Signal(circuit).from(resetH0.get_Out(0)).to(cH1.get_Clock(), cH0.getPowerIn());
         new Signal(circuit).from(resetH0.getOut(0)).to(cH1.getClock());
 

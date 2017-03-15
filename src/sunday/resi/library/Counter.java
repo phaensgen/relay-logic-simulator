@@ -68,15 +68,15 @@ public class Counter extends Component
         new Signal(circuit).from(clock).to(f0.getClock());
 
         // inverse external outputs, otherwise it would count backwards
-        new Signal(circuit).from(f0.getOut()).to(_out0).to(f1.getClock());
-        new Signal(circuit).from(f1.getOut()).to(_out1).to(f2.getClock());
-        new Signal(circuit).from(f2.getOut()).to(_out2).to(f3.getClock());
-        new Signal(circuit).from(f3.getOut()).to(_out3);
+        new Signal(circuit).from(f0.getOut()).to(out0).to(f1.getClock());
+        new Signal(circuit).from(f1.getOut()).to(out1).to(f2.getClock());
+        new Signal(circuit).from(f2.getOut()).to(out2).to(f3.getClock());
+        new Signal(circuit).from(f3.getOut()).to(out3);
 
-        new Signal(circuit).from(f0.get_Out()).to(out0).to(f1.get_Clock());
-        new Signal(circuit).from(f1.get_Out()).to(out1).to(f2.get_Clock());
-        new Signal(circuit).from(f2.get_Out()).to(out2).to(f3.get_Clock());
-        new Signal(circuit).from(f3.get_Out()).to(out3);
+        new Signal(circuit).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
+        new Signal(circuit).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
+        new Signal(circuit).from(f2.get_Out()).to(_out2).to(f3.get_Clock());
+        new Signal(circuit).from(f3.get_Out()).to(_out3);
     }
 
     public Input getPowerIn()

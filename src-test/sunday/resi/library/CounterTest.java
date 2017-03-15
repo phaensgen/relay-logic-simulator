@@ -44,21 +44,9 @@ public class CounterTest
         new Signal(circuit).from(counter.getOut3()).to(out3);
 
         // test counter
-        // initially, output is 15
+        // initially, output is 0
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
-        assertTrue(out1.getValue());
-        assertTrue(out2.getValue());
-        assertTrue(out3.getValue());
-
-        _clock.setValue(null);
-        clock.setValue(true);
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -69,9 +57,9 @@ public class CounterTest
         assertNull(out2.getValue());
         assertNull(out3.getValue());
 
-        // 0
-        _clock.setValue(true);
-        clock.setValue(null);
+        _clock.setValue(null);
+        clock.setValue(true);
+        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -89,20 +77,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -121,19 +102,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertTrue(out1.getValue());
+        assertTrue(out0.getValue());
+        assertNull(out1.getValue());
         assertNull(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -152,19 +127,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -183,19 +152,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertNull(out1.getValue());
-        assertTrue(out2.getValue());
+        assertTrue(out0.getValue());
+        assertTrue(out1.getValue());
+        assertNull(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -214,19 +177,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -245,19 +202,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertTrue(out1.getValue());
+        assertTrue(out0.getValue());
+        assertNull(out1.getValue());
         assertTrue(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -276,19 +227,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
         assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -307,19 +252,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertNull(out1.getValue());
-        assertNull(out2.getValue());
-        assertTrue(out3.getValue());
+        assertTrue(out0.getValue());
+        assertTrue(out1.getValue());
+        assertTrue(out2.getValue());
+        assertNull(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -338,19 +277,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -369,19 +302,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertTrue(out1.getValue());
+        assertTrue(out0.getValue());
+        assertNull(out1.getValue());
         assertNull(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -400,19 +327,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -431,19 +352,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertNull(out1.getValue());
-        assertTrue(out2.getValue());
+        assertTrue(out0.getValue());
+        assertTrue(out1.getValue());
+        assertNull(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -462,19 +377,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -493,19 +402,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertTrue(out1.getValue());
+        assertTrue(out0.getValue());
+        assertNull(out1.getValue());
         assertTrue(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -524,19 +427,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertTrue(out0.getValue());
+        assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
         assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
@@ -555,19 +452,13 @@ public class CounterTest
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
-        assertNull(out0.getValue());
-        assertNull(out1.getValue());
-        assertNull(out2.getValue());
-        assertNull(out3.getValue());
+        assertTrue(out0.getValue());
+        assertTrue(out1.getValue());
+        assertTrue(out2.getValue());
+        assertTrue(out3.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        circuit.simulate();
-        circuit.simulate();
-        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         circuit.simulate();

@@ -42,21 +42,25 @@ public class FlipFlopTest
         _cl.setValue(true);
         cl.setValue(null);
         circuit.simulate();
+        circuit.simulate();
+        circuit.simulate();
         assertTrue(_q.getValue());
         assertNull(q.getValue());
 
         // clock 1 down
         _cl.setValue(null);
         cl.setValue(true);
-        // TODO single simulation cycle
         circuit.simulate();
         circuit.simulate();
-        assertNull(_q.getValue());
-        assertTrue(q.getValue());
+        circuit.simulate();
+        assertTrue(_q.getValue());
+        assertNull(q.getValue());
 
         // clock 1 up
         _cl.setValue(true);
         cl.setValue(null);
+        circuit.simulate();
+        circuit.simulate();
         circuit.simulate();
         assertNull(_q.getValue());
         assertTrue(q.getValue());
@@ -64,15 +68,17 @@ public class FlipFlopTest
         // clock 2 down
         _cl.setValue(null);
         cl.setValue(true);
-        // TODO single simulation cycle
         circuit.simulate();
         circuit.simulate();
-        assertTrue(_q.getValue());
-        assertNull(q.getValue());
+        circuit.simulate();
+        assertNull(_q.getValue());
+        assertTrue(q.getValue());
 
         // clock 2 up
         _cl.setValue(true);
         cl.setValue(null);
+        circuit.simulate();
+        circuit.simulate();
         circuit.simulate();
         assertTrue(_q.getValue());
         assertNull(q.getValue());
@@ -80,7 +86,16 @@ public class FlipFlopTest
         // clock 1 down
         _cl.setValue(null);
         cl.setValue(true);
-        // TODO single simulation cycle
+        circuit.simulate();
+        circuit.simulate();
+        circuit.simulate();
+        assertTrue(_q.getValue());
+        assertNull(q.getValue());
+
+        // clock 1 up
+        _cl.setValue(true);
+        cl.setValue(null);
+        circuit.simulate();
         circuit.simulate();
         circuit.simulate();
         assertNull(_q.getValue());
