@@ -41,6 +41,18 @@ public class DecimalToSevenSegmentDecoderTest
 
     private Output in9;
 
+    private Output inA;
+
+    private Output inB;
+
+    private Output inC;
+
+    private Output inD;
+
+    private Output inE;
+
+    private Output inF;
+
     private Input outA;
 
     private Input outB;
@@ -74,6 +86,12 @@ public class DecimalToSevenSegmentDecoderTest
         in7 = new Output();
         in8 = new Output();
         in9 = new Output();
+        inA = new Output();
+        inB = new Output();
+        inC = new Output();
+        inD = new Output();
+        inE = new Output();
+        inF = new Output();
         outA = new Input();
         outB = new Input();
         outC = new Input();
@@ -95,6 +113,12 @@ public class DecimalToSevenSegmentDecoderTest
         new Signal(circuit).from(in7).to(decoder.getIn7());
         new Signal(circuit).from(in8).to(decoder.getIn8());
         new Signal(circuit).from(in9).to(decoder.getIn9());
+        new Signal(circuit).from(inA).to(decoder.getInA());
+        new Signal(circuit).from(inB).to(decoder.getInB());
+        new Signal(circuit).from(inC).to(decoder.getInC());
+        new Signal(circuit).from(inD).to(decoder.getInD());
+        new Signal(circuit).from(inE).to(decoder.getInE());
+        new Signal(circuit).from(inF).to(decoder.getInF());
         new Signal(circuit).from(decoder.getOutA()).to(outA);
         new Signal(circuit).from(decoder.getOutB()).to(outB);
         new Signal(circuit).from(decoder.getOutC()).to(outC);
@@ -253,6 +277,90 @@ public class DecimalToSevenSegmentDecoderTest
         assertTrue(Boolean.TRUE.equals(outC.getValue()));
         assertTrue(Boolean.TRUE.equals(outD.getValue()));
         assertFalse(Boolean.TRUE.equals(outE.getValue()));
+        assertTrue(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testA()
+    {
+        inA.setValue(true);
+        decoder.getCircuit().simulate();
+        assertTrue(Boolean.TRUE.equals(outA.getValue()));
+        assertTrue(Boolean.TRUE.equals(outB.getValue()));
+        assertTrue(Boolean.TRUE.equals(outC.getValue()));
+        assertFalse(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
+        assertTrue(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testB()
+    {
+        inB.setValue(true);
+        decoder.getCircuit().simulate();
+        assertFalse(Boolean.TRUE.equals(outA.getValue()));
+        assertFalse(Boolean.TRUE.equals(outB.getValue()));
+        assertTrue(Boolean.TRUE.equals(outC.getValue()));
+        assertTrue(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
+        assertTrue(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testC()
+    {
+        inC.setValue(true);
+        decoder.getCircuit().simulate();
+        assertFalse(Boolean.TRUE.equals(outA.getValue()));
+        assertFalse(Boolean.TRUE.equals(outB.getValue()));
+        assertFalse(Boolean.TRUE.equals(outC.getValue()));
+        assertTrue(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
+        assertFalse(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testD()
+    {
+        inD.setValue(true);
+        decoder.getCircuit().simulate();
+        assertFalse(Boolean.TRUE.equals(outA.getValue()));
+        assertTrue(Boolean.TRUE.equals(outB.getValue()));
+        assertTrue(Boolean.TRUE.equals(outC.getValue()));
+        assertTrue(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
+        assertFalse(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testE()
+    {
+        inE.setValue(true);
+        decoder.getCircuit().simulate();
+        assertTrue(Boolean.TRUE.equals(outA.getValue()));
+        assertFalse(Boolean.TRUE.equals(outB.getValue()));
+        assertFalse(Boolean.TRUE.equals(outC.getValue()));
+        assertTrue(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
+        assertTrue(Boolean.TRUE.equals(outF.getValue()));
+        assertTrue(Boolean.TRUE.equals(outG.getValue()));
+    }
+
+    @Test
+    public void testF()
+    {
+        inF.setValue(true);
+        decoder.getCircuit().simulate();
+        assertTrue(Boolean.TRUE.equals(outA.getValue()));
+        assertFalse(Boolean.TRUE.equals(outB.getValue()));
+        assertFalse(Boolean.TRUE.equals(outC.getValue()));
+        assertFalse(Boolean.TRUE.equals(outD.getValue()));
+        assertTrue(Boolean.TRUE.equals(outE.getValue()));
         assertTrue(Boolean.TRUE.equals(outF.getValue()));
         assertTrue(Boolean.TRUE.equals(outG.getValue()));
     }
