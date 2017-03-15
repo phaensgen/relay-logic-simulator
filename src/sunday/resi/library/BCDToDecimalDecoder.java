@@ -43,7 +43,17 @@ public class BCDToDecimalDecoder extends Component
 
     private Output out9;
 
-    private Output outCarry;
+    private Output outA;
+
+    private Output outB;
+
+    private Output outC;
+
+    private Output outD;
+
+    private Output outE;
+
+    private Output outF;
 
     /**
      * The constructor.
@@ -69,7 +79,12 @@ public class BCDToDecimalDecoder extends Component
         out7 = new Output();
         out8 = new Output();
         out9 = new Output();
-        outCarry = new Output();
+        outA = new Output();
+        outB = new Output();
+        outC = new Output();
+        outD = new Output();
+        outE = new Output();
+        outF = new Output();
 
         // create top first to reduce simulation dependencies
         Relay r3 = new Relay(circuit, name + "_R3");
@@ -95,9 +110,14 @@ public class BCDToDecimalDecoder extends Component
         new Signal(circuit).from(r0.getOut(3)).to(out7);
         new Signal(circuit).from(r0.get_Out(4)).to(out8);
         new Signal(circuit).from(r0.getOut(4)).to(out9);
-        new Signal(circuit).from(r0.get_Out(5)).to(outCarry);
+        new Signal(circuit).from(r0.get_Out(5)).to(outA);
+        new Signal(circuit).from(r0.getOut(5)).to(outB);
+        new Signal(circuit).from(r0.get_Out(6)).to(outC);
+        new Signal(circuit).from(r0.getOut(6)).to(outD);
+        new Signal(circuit).from(r0.get_Out(7)).to(outE);
+        new Signal(circuit).from(r0.getOut(7)).to(outF);
 
-        // each relay has 6 switches (0..9 and carry)
+        // each relay has 8 switches (0..F)
         // connect the middle of r3 with +
         // the others are chained
         new Signal(circuit).from(powerIn).to(r3.getMiddleIn(0));
@@ -108,6 +128,7 @@ public class BCDToDecimalDecoder extends Component
         new Signal(circuit).from(r2.get_Out(0)).to(r1.getMiddleIn(0));
         new Signal(circuit).from(r2.getOut(0)).to(r1.getMiddleIn(1));
         new Signal(circuit).from(r2.get_Out(1)).to(r1.getMiddleIn(2));
+        new Signal(circuit).from(r2.getOut(1)).to(r1.getMiddleIn(3));
 
         new Signal(circuit).from(r1.get_Out(0)).to(r0.getMiddleIn(0));
         new Signal(circuit).from(r1.getOut(0)).to(r0.getMiddleIn(1));
@@ -115,6 +136,8 @@ public class BCDToDecimalDecoder extends Component
         new Signal(circuit).from(r1.getOut(1)).to(r0.getMiddleIn(3));
         new Signal(circuit).from(r1.get_Out(2)).to(r0.getMiddleIn(4));
         new Signal(circuit).from(r1.getOut(2)).to(r0.getMiddleIn(5));
+        new Signal(circuit).from(r1.get_Out(3)).to(r0.getMiddleIn(6));
+        new Signal(circuit).from(r1.getOut(3)).to(r0.getMiddleIn(7));
     }
 
     public Input getPowerIn()
@@ -192,8 +215,33 @@ public class BCDToDecimalDecoder extends Component
         return out9;
     }
 
-    public Output getOutCarry()
+    public Output getOutA()
     {
-        return outCarry;
+        return outA;
+    }
+
+    public Output getOutB()
+    {
+        return outB;
+    }
+
+    public Output getOutC()
+    {
+        return outC;
+    }
+
+    public Output getOutD()
+    {
+        return outD;
+    }
+
+    public Output getOutE()
+    {
+        return outE;
+    }
+
+    public Output getOutF()
+    {
+        return outF;
     }
 }
