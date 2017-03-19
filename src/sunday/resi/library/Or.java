@@ -8,24 +8,24 @@ import sunday.resi.common.Output;
 import sunday.resi.common.Signal;
 
 /**
- * A logical NAND gate built with relays.
+ * A logical OR gate built with relays.
  * 
  * @author Peter H&auml;nsgen
  */
-public class Nand extends Component
+public class Or extends Component
 {
     private Input powerIn;
 
     private Input[] ins;
 
-    private Output _out;
+    private Output out;
 
     /**
      * The constructor.
      * 
      * @param n number of inputs
      */
-    public Nand(Circuit circuit, String name, int n)
+    public Or(Circuit circuit, String name, int n)
     {
         super(circuit, name);
 
@@ -42,7 +42,7 @@ public class Nand extends Component
 
         Joint joint = new Joint(circuit, name + "_J");
 
-        _out = new Output();
+        out = new Output();
 
         // internal wiring
         for (int i = 0; i < n; i++)
@@ -52,10 +52,10 @@ public class Nand extends Component
 
             new Signal(circuit).from(in).to(r.getCoilIn());
             new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
-            new Signal(circuit).from(r.get_Out(0)).to(joint.getIn(i));
+            new Signal(circuit).from(r.getOut(0)).to(joint.getIn(i));
         }
 
-        new Signal(circuit).from(joint.getOut()).to(_out);
+        new Signal(circuit).from(joint.getOut()).to(out);
     }
 
     public Input getPowerIn()
@@ -68,16 +68,16 @@ public class Nand extends Component
         return ins[index];
     }
 
-    public Output get_Out()
+    public Output getOut()
     {
-        return _out;
+        return out;
     }
 
     @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("[NAND ");
+        sb.append("[OR ");
         sb.append(getName());
         sb.append(": ");
 
@@ -92,8 +92,8 @@ public class Nand extends Component
             sb.append(", ");
         }
 
-        sb.append("_out=");
-        sb.append(String.valueOf(_out));
+        sb.append("out=");
+        sb.append(String.valueOf(out));
         sb.append("]");
 
         return sb.toString();
