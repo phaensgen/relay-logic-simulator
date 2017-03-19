@@ -72,4 +72,30 @@ public class And extends Component
     {
         return out;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[AND ");
+        sb.append(getName());
+        sb.append(": ");
+
+        for (int i = 0; i < ins.length; i++)
+        {
+            Input in = ins[i];
+
+            sb.append("in");
+            sb.append(String.valueOf(i));
+            sb.append("=");
+            sb.append(String.valueOf(in));
+            sb.append(", ");
+        }
+
+        sb.append("out=");
+        sb.append(String.valueOf(out));
+        sb.append("]");
+
+        return sb.toString();
+    }
 }
