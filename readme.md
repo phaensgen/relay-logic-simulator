@@ -9,15 +9,14 @@ See the example package which demonstrates how to assemble circuits and how to r
 There are a number of improvements I would like to add to the project:
 
 ## Improve existing parts
-* fix counter component, the initial output should be 0, not blanks
 * improve clock generator to use system precision for the ticks
 * introduce artifical ticks for testing not based on real times
 * allow to set counter direction
 * build graphical user interface to visualize the clock display
 * add time adjustment buttons for setting the clock
-* extend decimal decoder to handle hexadecimal outputs
-* extend 7 segment decoder for showing hexadecimal values
 
 ## Add new parts
+* logic gates
+* adder
 * latch
 * ...
