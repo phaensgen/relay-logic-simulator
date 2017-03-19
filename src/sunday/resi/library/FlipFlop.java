@@ -38,34 +38,43 @@ public class FlipFlop extends Component
         _out = new Output();
         out = new Output();
 
+        // create elements in an order that the simulation takes as less cycles as possible
         Relay ra = new Relay(circuit, name + "_RA");
+        Switch sa0 = ra.getSwitch(0);
+        Switch sa1 = ra.getSwitch(1);
+
         Relay rb = new Relay(circuit, name + "_RB");
+        Switch sb0 = rb.getSwitch(0);
+        Switch sb1 = rb.getSwitch(1);
+
         Relay rc = new Relay(circuit, name + "_RC");
+        Switch sc0 = rc.getSwitch(0);
+
         Relay rd = new Relay(circuit, name + "_RD");
+        Switch sd0 = rd.getSwitch(0);
 
         Joint ja = new Joint(circuit, name + "_JA");
         Joint jb = new Joint(circuit, name + "_JB");
 
         // internal wirings
-        new Signal(circuit).from(powerIn).to(ra.getMiddleIn(0), rb.getMiddleIn(0));
-        new Signal(circuit).from(_clock).to(ra.getMiddleIn(1));
-        new Signal(circuit).from(clock).to(rb.getMiddleIn(1));
+        new Signal(circuit).from(powerIn).to(sa0.getMiddleIn(), sb0.getMiddleIn());
+        new Signal(circuit).from(_clock).to(sa1.getMiddleIn());
+        new Signal(circuit).from(clock).to(sb1.getMiddleIn());
+        new Signal(circuit).from(sa0.getOut()).to(out).to(sc0.getMiddleIn());
+        new Signal(circuit).from(sb0.getOut()).to(sd0.getMiddleIn()).to(out);
+
+        new Signal(circuit).from(sb1.get_Out()).to(ja.getIn(0));
+        new Signal(circuit).from(sc0.get_Out()).to(ja.getIn(1));
 
         new Signal(circuit).from(ja.getOut()).to(ra.getCoilIn());
-        // new Signal(circuit).from(ra.get_Out(0)).to(_out);
-        new Signal(circuit).from(ra.get_Out(1)).to(rd.getCoilIn());
-        new Signal(circuit).from(ra.getOut(1)).to(jb.getIn(0));
-        new Signal(circuit).from(ra.getOut(0)).to(out).to(rc.getMiddleIn(0));
+        new Signal(circuit).from(sa1.get_Out()).to(rd.getCoilIn());
+
+        new Signal(circuit).from(sd0.get_Out()).to(jb.getIn(1));
+        new Signal(circuit).from(sa1.getOut()).to(jb.getIn(0));
 
         new Signal(circuit).from(jb.getOut()).to(rb.getCoilIn());
-        new Signal(circuit).from(rb.get_Out(0)).to(_out);
-        new Signal(circuit).from(rb.getOut(0)).to(rd.getMiddleIn(0)).to(out);
-        new Signal(circuit).from(rb.get_Out(1)).to(ja.getIn(0));
-        new Signal(circuit).from(rb.getOut(1)).to(rc.getCoilIn());
-
-        new Signal(circuit).from(rc.get_Out(0)).to(ja.getIn(1));
-
-        new Signal(circuit).from(rd.get_Out(0)).to(jb.getIn(1));
+        new Signal(circuit).from(sb0.get_Out()).to(_out);
+        new Signal(circuit).from(sb1.getOut()).to(rc.getCoilIn());
     }
 
     public Input getPowerIn()

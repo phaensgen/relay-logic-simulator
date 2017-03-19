@@ -9,8 +9,15 @@ import sunday.resi.common.Output;
 import sunday.resi.common.Part;
 
 /**
- * Represents a relay with an arbitrary number of switches. A relay has a single coil input which determines the state
- * of all switches. Each switch has a single middle input whose signal is forwarded to an active and an inactive output.
+ * Represents a relay with an arbitrary number of switching elements. A relay has a single coil input which determines
+ * the state of all switches. There are two types of switching elements:
+ * <ul>
+ * <li>A switch has a single middle input whose signal is forwarded to an active and an inactive output.</li>
+ * <li>A swotch has two inputs whose signal is forwarded to the output</li>
+ * </ul>
+ * The switches and swotches are created dynamically when a switching element for an index is accessed for the first
+ * time. The kind of access determines whether a switch or a swatch is created. For example, if "getMiddleIn(0)" is
+ * called, a switch which has a single middle input connector is instantiated and the input is returned.
  * 
  * @author Peter H&auml;nsgen
  */
@@ -18,16 +25,7 @@ public class Relay extends Part
 {
     private Input coilIn;
 
-    private Map<Integer, Switch> switches;
-
-    static class Switch
-    {
-        private Input middle = new Input();
-
-        private Output _out = new Output();
-
-        private Output out = new Output();
-    }
+    private Map<Integer, AbstractSwitch> switches;
 
     /**
      * The constructor.
@@ -45,22 +43,88 @@ public class Relay extends Part
         return coilIn;
     }
 
+    /**
+     * Returns a switch for the given index. If no switch exists yet, a new instance is created.
+     */
+    public Switch getSwitch(int index)
+    {
+        // will lead to a ClassCastException if there was already a swotch created for this index
+        Switch sw = (Switch) switches.get(index);
+        if (sw == null)
+        {
+            sw = new Switch(getCircuit(), getName() + "_SWI" + String.valueOf(index));
+            switches.put(index, sw);
+        }
+        return sw;
+    }
+
+    /**
+     * Convenience method for <code>getSwitch(index).getMiddleIn()</code>.
+     */
     public Input getMiddleIn(int index)
     {
         Switch sw = getSwitch(index);
-        return sw.middle;
+        return sw.getMiddleIn();
     }
 
+    /**
+     * Convenience method for <code>getSwitch(index).get_Out()</code>.
+     */
     public Output get_Out(int index)
     {
         Switch sw = getSwitch(index);
-        return sw._out;
+        return sw.get_Out();
     }
 
+    /**
+     * Convenience method for <code>getSwitch(index).getOut()</code>.
+     */
     public Output getOut(int index)
     {
         Switch sw = getSwitch(index);
-        return sw.out;
+        return sw.getOut();
+    }
+
+    /**
+     * Returns a swotch for the given index. If no swotch exists yet, a new instance is created.
+     */
+    public Swotch getSwotch(int index)
+    {
+        // will lead to a ClassCastException if there was already a switch created for this index
+        Swotch sw = (Swotch) switches.get(index);
+        if (sw == null)
+        {
+            sw = new Swotch(getCircuit(), getName() + "_SWO" + String.valueOf(index));
+            switches.put(index, sw);
+        }
+        return sw;
+    }
+
+    /**
+     * Convenience method for <code>getSwotch(index).getMiddleOut()</code>.
+     */
+    public Output getMiddleOut(int index)
+    {
+        Swotch sw = getSwotch(index);
+        return sw.getMiddleOut();
+    }
+
+    /**
+     * Convenience method for <code>getSwotch(index).get_In()</code>.
+     */
+    public Input get_In(int index)
+    {
+        Swotch sw = getSwotch(index);
+        return sw.get_In();
+    }
+
+    /**
+     * Convenience method for <code>getSwotch(index).getIn()</code>.
+     */
+    public Input getIn(int index)
+    {
+        Swotch sw = getSwotch(index);
+        return sw.getIn();
     }
 
     @Override
@@ -70,18 +134,16 @@ public class Relay extends Part
 
         if (Boolean.TRUE.equals(state))
         {
-            for (Switch sw : switches.values())
+            for (AbstractSwitch sw : switches.values())
             {
-                sw._out.setValue(null);
-                sw.out.setValue(sw.middle.getValue());
+                sw.push();
             }
         }
         else if ((state == null) || Boolean.FALSE.equals(state))
         {
-            for (Switch sw : switches.values())
+            for (AbstractSwitch sw : switches.values())
             {
-                sw._out.setValue(sw.middle.getValue());
-                sw.out.setValue(null);
+                sw.release();
             }
         }
     }
@@ -99,28 +161,10 @@ public class Relay extends Part
         for (int i = 0; i < switches.size(); i++)
         {
             sb.append(", ");
-            Switch sw = switches.get(i);
-            sb.append("middleIn");
-            sb.append(String.valueOf(i));
-            sb.append("=");
-            sb.append(String.valueOf(sw.middle));
-            sb.append(", _out=");
-            sb.append(String.valueOf(sw._out));
-            sb.append(", out=");
-            sb.append(String.valueOf(sw.out));
+            AbstractSwitch sw = switches.get(i);
+            sb.append(String.valueOf(sw));
         }
         sb.append("]");
         return sb.toString();
-    }
-
-    private Switch getSwitch(int index)
-    {
-        Switch sw = switches.get(index);
-        if (sw == null)
-        {
-            sw = new Switch();
-            switches.put(index, sw);
-        }
-        return sw;
     }
 }

@@ -99,24 +99,6 @@ public class BCDToDecimalDecoder extends Component
         new Signal(circuit).from(in2).to(r2.getCoilIn());
         new Signal(circuit).from(in3).to(r3.getCoilIn());
 
-        // connect output signals
-        new Signal(circuit).from(r0.get_Out(0)).to(out0);
-        new Signal(circuit).from(r0.getOut(0)).to(out1);
-        new Signal(circuit).from(r0.get_Out(1)).to(out2);
-        new Signal(circuit).from(r0.getOut(1)).to(out3);
-        new Signal(circuit).from(r0.get_Out(2)).to(out4);
-        new Signal(circuit).from(r0.getOut(2)).to(out5);
-        new Signal(circuit).from(r0.get_Out(3)).to(out6);
-        new Signal(circuit).from(r0.getOut(3)).to(out7);
-        new Signal(circuit).from(r0.get_Out(4)).to(out8);
-        new Signal(circuit).from(r0.getOut(4)).to(out9);
-        new Signal(circuit).from(r0.get_Out(5)).to(outA);
-        new Signal(circuit).from(r0.getOut(5)).to(outB);
-        new Signal(circuit).from(r0.get_Out(6)).to(outC);
-        new Signal(circuit).from(r0.getOut(6)).to(outD);
-        new Signal(circuit).from(r0.get_Out(7)).to(outE);
-        new Signal(circuit).from(r0.getOut(7)).to(outF);
-
         // each relay has 8 switches (0..F)
         // connect the middle of r3 with +
         // the others are chained
@@ -138,6 +120,24 @@ public class BCDToDecimalDecoder extends Component
         new Signal(circuit).from(r1.getOut(2)).to(r0.getMiddleIn(5));
         new Signal(circuit).from(r1.get_Out(3)).to(r0.getMiddleIn(6));
         new Signal(circuit).from(r1.getOut(3)).to(r0.getMiddleIn(7));
+
+        // connect output signals
+        new Signal(circuit).from(r0.get_Out(0)).to(out0);
+        new Signal(circuit).from(r0.getOut(0)).to(out1);
+        new Signal(circuit).from(r0.get_Out(1)).to(out2);
+        new Signal(circuit).from(r0.getOut(1)).to(out3);
+        new Signal(circuit).from(r0.get_Out(2)).to(out4);
+        new Signal(circuit).from(r0.getOut(2)).to(out5);
+        new Signal(circuit).from(r0.get_Out(3)).to(out6);
+        new Signal(circuit).from(r0.getOut(3)).to(out7);
+        new Signal(circuit).from(r0.get_Out(4)).to(out8);
+        new Signal(circuit).from(r0.getOut(4)).to(out9);
+        new Signal(circuit).from(r0.get_Out(5)).to(outA);
+        new Signal(circuit).from(r0.getOut(5)).to(outB);
+        new Signal(circuit).from(r0.get_Out(6)).to(outC);
+        new Signal(circuit).from(r0.getOut(6)).to(outD);
+        new Signal(circuit).from(r0.get_Out(7)).to(outE);
+        new Signal(circuit).from(r0.getOut(7)).to(outF);
     }
 
     public Input getPowerIn()

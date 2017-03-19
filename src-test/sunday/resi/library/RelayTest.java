@@ -18,8 +18,11 @@ import sunday.resi.common.Signal;
  */
 public class RelayTest
 {
+    /**
+     * Test relay with a switch with one middle input and two outputs.
+     */
     @Test
-    public void testRelay()
+    public void testRelaySwitch()
     {
         Circuit circuit = new Circuit();
         Relay r = new Relay(circuit, "Relay");
@@ -45,51 +48,128 @@ public class RelayTest
 
         coil.setValue(null);
         middle.setValue(false);
-        r.simulate();
+        circuit.simulate();
         assertFalse(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(null);
         middle.setValue(true);
-        r.simulate();
+        circuit.simulate();
         assertTrue(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(false);
         middle.setValue(null);
-        r.simulate();
+        circuit.simulate();
         assertNull(_out.getValue());
         assertNull(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(false);
         middle.setValue(false);
-        r.simulate();
+        circuit.simulate();
         assertFalse(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(false);
         middle.setValue(true);
-        r.simulate();
+        circuit.simulate();
         assertTrue(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(true);
         middle.setValue(null);
-        r.simulate();
+        circuit.simulate();
         assertNull(_out.getValue());
         assertNull(out.getValue());
 
         coil.setValue(true);
         middle.setValue(false);
-        r.simulate();
+        circuit.simulate();
         assertNull(_out.getValue());
         assertFalse(out.getValue());
 
         coil.setValue(true);
         middle.setValue(true);
-        r.simulate();
+        circuit.simulate();
         assertNull(_out.getValue());
         assertTrue(out.getValue());
+    }
+
+    /**
+     * Test relay with a switch with two inputs and one middle output.
+     */
+    @Test
+    public void testRelaySwotch()
+    {
+        Circuit circuit = new Circuit();
+        Relay r = new Relay(circuit, "Relay");
+
+        // define test signal connectors
+        Output coil = new Output();
+        Input middle = new Input();
+        Output _out = new Output();
+        Output out = new Output();
+
+        // connect with relay
+        new Signal(circuit).from(coil).to(r.getCoilIn());
+        new Signal(circuit).from(r.getMiddleOut(0)).to(middle);
+        new Signal(circuit).from(_out).to(r.get_In(0));
+        new Signal(circuit).from(out).to(r.getIn(0));
+
+        // perform tests
+        coil.setValue(null);
+        _out.setValue(null);
+        out.setValue(null);
+        circuit.simulate();
+        assertNull(middle.getValue());
+
+        coil.setValue(null);
+        _out.setValue(false);
+        out.setValue(null);
+        circuit.simulate();
+        assertFalse(middle.getValue());
+
+        coil.setValue(null);
+        _out.setValue(true);
+        out.setValue(null);
+        circuit.simulate();
+        assertTrue(middle.getValue());
+
+        coil.setValue(false);
+        _out.setValue(null);
+        out.setValue(null);
+        circuit.simulate();
+        assertNull(middle.getValue());
+
+        coil.setValue(false);
+        _out.setValue(false);
+        out.setValue(null);
+        circuit.simulate();
+        assertFalse(middle.getValue());
+
+        coil.setValue(false);
+        _out.setValue(true);
+        out.setValue(null);
+        circuit.simulate();
+        assertTrue(middle.getValue());
+
+        coil.setValue(true);
+        _out.setValue(null);
+        out.setValue(null);
+        circuit.simulate();
+        assertNull(middle.getValue());
+
+        coil.setValue(true);
+        _out.setValue(null);
+        out.setValue(false);
+        circuit.simulate();
+        assertFalse(middle.getValue());
+
+        coil.setValue(true);
+        _out.setValue(null);
+        out.setValue(true);
+        circuit.simulate();
+        assertTrue(middle.getValue());
     }
 }

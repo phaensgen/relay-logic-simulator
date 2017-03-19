@@ -37,7 +37,11 @@ public class Or extends Component
         Relay[] relays = new Relay[n];
         for (int i = 0; i < n; i++)
         {
-            relays[i] = new Relay(circuit, name + "_R" + String.valueOf(i));
+            Input in = ins[i] = new Input();
+            Relay r = relays[i] = new Relay(circuit, name + "_R" + String.valueOf(i));
+
+            new Signal(circuit).from(in).to(r.getCoilIn());
+            new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
         }
 
         Joint joint = new Joint(circuit, name + "_J");
@@ -47,11 +51,8 @@ public class Or extends Component
         // internal wiring
         for (int i = 0; i < n; i++)
         {
-            Input in = ins[i] = new Input();
             Relay r = relays[i];
 
-            new Signal(circuit).from(in).to(r.getCoilIn());
-            new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
             new Signal(circuit).from(r.getOut(0)).to(joint.getIn(i));
         }
 
