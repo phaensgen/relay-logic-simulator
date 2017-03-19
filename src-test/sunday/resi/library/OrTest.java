@@ -27,7 +27,7 @@ public class OrTest
         Circuit circuit = new Circuit();
         Power power = new Power(circuit, "VCC");
 
-        Or or = new Or(circuit, "Or", 1).watch();
+        Or or = new Or(circuit, "Or", 1);
 
         Output out0 = new Output();
         Input in = new Input();

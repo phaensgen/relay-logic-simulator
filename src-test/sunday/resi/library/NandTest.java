@@ -27,7 +27,7 @@ public class NandTest
         Circuit circuit = new Circuit();
         Power power = new Power(circuit, "VCC");
 
-        Nand nand = new Nand(circuit, "Nand", 1).watch();
+        Nand nand = new Nand(circuit, "Nand", 1);
 
         Output out0 = new Output();
         Input in = new Input();
