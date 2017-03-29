@@ -61,8 +61,7 @@ public class RelayClockFrame extends Frame implements Monitor
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // TODO connect with setter relay for hours
-                System.err.println(e.getActionCommand());
+                clock.getHoursSwitch().push();
             }
         });
         buttonPanel.add(hoursButton);

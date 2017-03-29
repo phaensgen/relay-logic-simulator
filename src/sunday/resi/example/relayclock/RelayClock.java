@@ -11,6 +11,7 @@ import sunday.resi.library.Clock;
 import sunday.resi.library.Counter;
 import sunday.resi.library.DecimalToSevenSegmentDecoder;
 import sunday.resi.library.Relay;
+import sunday.resi.library.Switch;
 
 /**
  * This is a simulator for a digital clock built with relays.
@@ -22,6 +23,10 @@ public class RelayClock extends Component
     private Input powerIn;
 
     private RelayClockDisplay display;
+
+    private Switch hoursSwitch;
+
+    private Switch minutesSwitch;
 
     /**
      * The constructor.
@@ -57,6 +62,9 @@ public class RelayClock extends Component
 
         display = new RelayClockDisplay(circuit, name + "_Display");
         circuit.addMonitor(display);
+
+        hoursSwitch = new Switch(circuit, name + "_SetHH");
+        minutesSwitch = new Switch(circuit, name + "_SetMM");
 
         Relay resetS0 = new Relay(circuit, name + "_ResetS0");
         Relay resetS1 = new Relay(circuit, name + "_ResetS1");
@@ -111,29 +119,36 @@ public class RelayClock extends Component
 
         // connect overflow of bcd decoders with counter clock
         new Signal(circuit).from(bcdS0.getOutA()).to(resetS0.getCoilIn());
-        new Signal(circuit).from(resetS0.get_Out(0)).to(cS1.get_Clock(), cS0.getPowerIn());
-        new Signal(circuit).from(resetS0.getOut(0)).to(cS1.getClock());
+        new Signal(circuit).from(resetS0.get_Out(0)).to(cS0.getPowerIn());
+        new Signal(circuit).from(resetS0.get_Out(1)).to(cS1.get_Clock());
+        new Signal(circuit).from(resetS0.getOut(1)).to(cS1.getClock());
 
         new Signal(circuit).from(bcdS1.getOut6()).to(resetS1.getCoilIn());
-        new Signal(circuit).from(resetS1.get_Out(0)).to(cM0.get_Clock(), cS1.getPowerIn());
-        new Signal(circuit).from(resetS1.getOut(0)).to(cM0.getClock());
+        new Signal(circuit).from(resetS1.get_Out(0)).to(cS1.getPowerIn());
+        new Signal(circuit).from(resetS1.get_Out(1)).to(cM0.get_Clock());
+        new Signal(circuit).from(resetS1.getOut(1)).to(cM0.getClock());
 
         new Signal(circuit).from(bcdM0.getOutA()).to(resetM0.getCoilIn());
-        new Signal(circuit).from(resetM0.get_Out(0)).to(cM1.get_Clock(), cM0.getPowerIn());
-        new Signal(circuit).from(resetM0.getOut(0)).to(cM1.getClock());
+        new Signal(circuit).from(resetM0.get_Out(0)).to(cM0.getPowerIn());
+        new Signal(circuit).from(resetM0.get_Out(1)).to(cM1.get_Clock());
+        new Signal(circuit).from(resetM0.getOut(1)).to(cM1.getClock());
 
         new Signal(circuit).from(bcdM1.getOut6()).to(resetM1.getCoilIn());
-        new Signal(circuit).from(resetM1.get_Out(0)).to(cH0.get_Clock(), cM1.getPowerIn());
-        new Signal(circuit).from(resetM1.getOut(0)).to(cH0.getClock());
+        new Signal(circuit).from(resetM1.get_Out(0)).to(cM1.getPowerIn());
+        new Signal(circuit).from(resetM1.get_Out(1)).to(cH0.get_Clock());
+        new Signal(circuit).from(resetM1.getOut(1)).to(cH0.getClock());
 
         new Signal(circuit).from(bcdH0.getOutA()).to(resetH0.getCoilIn());
-        new Signal(circuit).from(resetH0.get_Out(0)).to(cH1.get_Clock(), cH0.getPowerIn());
-        new Signal(circuit).from(resetH0.getOut(0)).to(cH1.getClock());
+        new Signal(circuit).from(resetH0.get_Out(0)).to(cH0.getPowerIn());
+        new Signal(circuit).from(resetH0.get_Out(1)).to(cH1.get_Clock());
+        new Signal(circuit).from(resetH0.getOut(1)).to(cH1.getClock());
 
         // reset all counters when 24h is reached
         // disconnect them from power
-        new Signal(circuit).from(reset24.get_Out(0)).to(resetS0.getMiddleIn(0), resetS1.getMiddleIn(0),
-            resetM0.getMiddleIn(0), resetM1.getMiddleIn(0), resetH0.getMiddleIn(0), cH1.getPowerIn());
+        new Signal(circuit).from(reset24.get_Out(0)).to(resetS0.getMiddleIn(0), resetS0.getMiddleIn(1),
+            resetS1.getMiddleIn(0), resetS1.getMiddleIn(1), resetM0.getMiddleIn(0), resetM0.getMiddleIn(1),
+            resetM1.getMiddleIn(0), resetM1.getMiddleIn(1), resetH0.getMiddleIn(0), resetH0.getMiddleIn(1),
+            cH1.getPowerIn());
         new Signal(circuit).from(reset24M0.getOut(0)).to(reset24M1.getMiddleIn(0));
         new Signal(circuit).from(reset24M1.getOut(0)).to(reset24.getCoilIn());
 
@@ -268,5 +283,15 @@ public class RelayClock extends Component
     public RelayClockDisplay getDisplay()
     {
         return display;
+    }
+
+    public Switch getHoursSwitch()
+    {
+        return hoursSwitch;
+    }
+
+    public Switch getMinutesSwitch()
+    {
+        return minutesSwitch;
     }
 }
