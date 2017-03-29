@@ -66,6 +66,9 @@ public class RelayClock extends Component
         hoursSwitch = new Switch(circuit, name + "_SetHH");
         minutesSwitch = new Switch(circuit, name + "_SetMM");
 
+        Relay clockM0 = new Relay(circuit, name + "_ClockM0");
+        Relay clockH0 = new Relay(circuit, name + "_ClockH0");
+
         Relay resetS0 = new Relay(circuit, name + "_ResetS0");
         Relay resetS1 = new Relay(circuit, name + "_ResetS1");
         Relay resetM0 = new Relay(circuit, name + "_ResetM0");
@@ -80,7 +83,8 @@ public class RelayClock extends Component
         new Signal(circuit).from(powerIn).to(bcdS0.getPowerIn(), bcdS1.getPowerIn(), bcdM0.getPowerIn(),
             bcdM1.getPowerIn(), bcdH0.getPowerIn(), bcdH1.getPowerIn(), decoderS0.getPowerIn(), decoderS1.getPowerIn(),
             decoderM0.getPowerIn(), decoderM1.getPowerIn(), decoderH0.getPowerIn(), decoderH1.getPowerIn(),
-            reset24M0.getMiddleIn(0), reset24.getMiddleIn(0));
+            reset24M0.getMiddleIn(0), reset24.getMiddleIn(0), resetS0.getMiddleIn(1), resetS1.getMiddleIn(1),
+            resetM0.getMiddleIn(1), resetM1.getMiddleIn(1), resetH0.getMiddleIn(1));
 
         // connect clock with counter
         new Signal(circuit).from(clock.get_Out()).to(cS0.get_Clock());
@@ -145,10 +149,8 @@ public class RelayClock extends Component
 
         // reset all counters when 24h is reached
         // disconnect them from power
-        new Signal(circuit).from(reset24.get_Out(0)).to(resetS0.getMiddleIn(0), resetS0.getMiddleIn(1),
-            resetS1.getMiddleIn(0), resetS1.getMiddleIn(1), resetM0.getMiddleIn(0), resetM0.getMiddleIn(1),
-            resetM1.getMiddleIn(0), resetM1.getMiddleIn(1), resetH0.getMiddleIn(0), resetH0.getMiddleIn(1),
-            cH1.getPowerIn());
+        new Signal(circuit).from(reset24.get_Out(0)).to(resetS0.getMiddleIn(0), resetS1.getMiddleIn(0),
+            resetM0.getMiddleIn(0), resetM1.getMiddleIn(0), resetH0.getMiddleIn(0), cH1.getPowerIn());
         new Signal(circuit).from(reset24M0.getOut(0)).to(reset24M1.getMiddleIn(0));
         new Signal(circuit).from(reset24M1.getOut(0)).to(reset24.getCoilIn());
 
