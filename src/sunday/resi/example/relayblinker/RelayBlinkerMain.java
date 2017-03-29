@@ -21,7 +21,7 @@ public class RelayBlinkerMain
 
         new Signal(circuit).from(vcc.getOut()).to(blinker.getPowerIn());
 
-        Simulator sim = new Simulator(10);
-        sim.simulate(circuit);
+        Simulator sim = new Simulator(circuit, 10);
+        sim.start();
     }
 }

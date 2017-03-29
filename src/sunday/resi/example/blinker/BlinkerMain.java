@@ -16,7 +16,7 @@ public class BlinkerMain
 
         new Blinker(circuit, "Blinker");
 
-        Simulator sim = new Simulator(10);
-        sim.simulate(circuit);
+        Simulator sim = new Simulator(circuit, 10);
+        sim.start();
     }
 }

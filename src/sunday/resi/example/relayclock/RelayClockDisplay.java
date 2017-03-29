@@ -9,7 +9,7 @@ import sunday.resi.library.SevenSegmentDisplay;
  * 
  * @author Peter H&auml;nsgen
  */
-public class ClockDisplay extends Component
+public class RelayClockDisplay extends Component
 {
     // seconds
     private SevenSegmentDisplay s0;
@@ -29,7 +29,7 @@ public class ClockDisplay extends Component
     /**
      * The constructor.
      */
-    public ClockDisplay(Circuit circuit, String name)
+    public RelayClockDisplay(Circuit circuit, String name)
     {
         super(circuit, name);
 

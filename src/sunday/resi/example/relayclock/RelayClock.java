@@ -21,6 +21,8 @@ public class RelayClock extends Component
 {
     private Input powerIn;
 
+    private RelayClockDisplay display;
+
     /**
      * The constructor.
      */
@@ -53,7 +55,7 @@ public class RelayClock extends Component
         DecimalToSevenSegmentDecoder decoderH0 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH0");
         DecimalToSevenSegmentDecoder decoderH1 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH1");
 
-        ClockDisplay display = new ClockDisplay(circuit, name + "_Display");
+        display = new RelayClockDisplay(circuit, name + "_Display");
         circuit.addMonitor(display);
 
         Relay resetS0 = new Relay(circuit, name + "_ResetS0");
@@ -261,5 +263,10 @@ public class RelayClock extends Component
     public Input getPowerIn()
     {
         return powerIn;
+    }
+
+    public RelayClockDisplay getDisplay()
+    {
+        return display;
     }
 }

@@ -10,7 +10,7 @@ There are a number of improvements I would like to add to the project:
 
 ## Improve existing parts
 * improve clock generator to use system precision for the ticks
-* introduce artifical ticks for testing not based on real times
+* introduce artificial ticks for testing not based on real times
 * allow to set counter direction
 * build graphical user interface to visualize the clock display
 * add time adjustment buttons for setting the clock

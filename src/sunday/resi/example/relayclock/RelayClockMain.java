@@ -24,7 +24,11 @@ public class RelayClockMain
 
         new Signal(circuit).from(power.getOut()).to(clock.getPowerIn());
 
-        Simulator sim = new Simulator(10);
-        sim.simulate(circuit);
+        Simulator sim = new Simulator(circuit, 10);
+
+        RelayClockFrame frame = new RelayClockFrame(clock, sim);
+        circuit.addMonitor(frame);
+
+        sim.start();
     }
 }

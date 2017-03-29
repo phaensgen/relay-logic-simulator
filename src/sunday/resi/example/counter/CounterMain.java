@@ -71,7 +71,7 @@ public class CounterMain
         new Signal(circuit).from(decimal.getOutF()).to(display.getInF());
         new Signal(circuit).from(decimal.getOutG()).to(display.getInG());
 
-        Simulator sim = new Simulator(10);
-        sim.simulate(circuit);
+        Simulator sim = new Simulator(circuit, 10);
+        sim.start();
     }
 }

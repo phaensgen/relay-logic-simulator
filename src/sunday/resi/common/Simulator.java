@@ -1,44 +1,72 @@
 package sunday.resi.common;
 
 /**
- * Simulates a circuit.
+ * Simulates a circuit. The actual simulation is done in an extra thread which can be stopped and restarted.
  * 
  * @author Peter H&auml;nsgen
  */
 public class Simulator
 {
-    private long delay;
+    private final long delay;
 
-    private long duration;
+    private SimulatorThread workerThread;
 
-    /**
-     * The constructor.
-     */
-    public Simulator(long delay)
-    {
-        this(delay, Long.MAX_VALUE);
-    }
+    private Circuit circuit;
 
     /**
      * The constructor.
      */
-    public Simulator(long delay, long duration)
+    public Simulator(Circuit circuit, long delay)
     {
+        this.circuit = circuit;
         this.delay = delay;
-        this.duration = duration;
     }
 
-    public void simulate(Circuit circuit)
+    public void start()
     {
-        long begin = System.currentTimeMillis();
-
-        while ((System.currentTimeMillis() - begin) < duration)
+        if (workerThread == null)
         {
-            circuit.simulate();
+            workerThread = new SimulatorThread();
+            workerThread.start();
+        }
+    }
 
+    public void stop()
+    {
+        if (workerThread != null)
+        {
+            workerThread.terminate();
+            workerThread = null;
+        }
+    }
+
+    class SimulatorThread extends Thread
+    {
+        private volatile boolean stop;
+
+        @Override
+        public void run()
+        {
+            while (!stop)
+            {
+                circuit.simulate();
+
+                try
+                {
+                    Thread.sleep(delay);
+                }
+                catch (InterruptedException e)
+                {
+                }
+            }
+        }
+
+        public void terminate()
+        {
+            stop = true;
             try
             {
-                Thread.sleep(delay);
+                join();
             }
             catch (InterruptedException e)
             {
