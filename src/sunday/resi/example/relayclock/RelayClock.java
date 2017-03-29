@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import sunday.resi.common.Circuit;
 import sunday.resi.common.Component;
 import sunday.resi.common.Input;
+import sunday.resi.common.Joint;
 import sunday.resi.common.Signal;
 import sunday.resi.library.BCDToDecimalDecoder;
 import sunday.resi.library.Clock;
@@ -24,9 +25,9 @@ public class RelayClock extends Component
 
     private RelayClockDisplay display;
 
-    private Switch hoursSwitch;
-
     private Switch minutesSwitch;
+
+    private Switch hoursSwitch;
 
     /**
      * The constructor.
@@ -63,11 +64,13 @@ public class RelayClock extends Component
         display = new RelayClockDisplay(circuit, name + "_Display");
         circuit.addMonitor(display);
 
-        hoursSwitch = new Switch(circuit, name + "_SetHH");
         minutesSwitch = new Switch(circuit, name + "_SetMM");
+        hoursSwitch = new Switch(circuit, name + "_SetHH");
 
         Relay clockM0 = new Relay(circuit, name + "_ClockM0");
         Relay clockH0 = new Relay(circuit, name + "_ClockH0");
+        Joint jointM0 = new Joint(circuit, name + "_JointM0");
+        Joint jointH0 = new Joint(circuit, name + "_JointH0");
 
         Relay resetS0 = new Relay(circuit, name + "_ResetS0");
         Relay resetS1 = new Relay(circuit, name + "_ResetS1");
@@ -84,7 +87,8 @@ public class RelayClock extends Component
             bcdM1.getPowerIn(), bcdH0.getPowerIn(), bcdH1.getPowerIn(), decoderS0.getPowerIn(), decoderS1.getPowerIn(),
             decoderM0.getPowerIn(), decoderM1.getPowerIn(), decoderH0.getPowerIn(), decoderH1.getPowerIn(),
             reset24M0.getMiddleIn(0), reset24.getMiddleIn(0), resetS0.getMiddleIn(1), resetS1.getMiddleIn(1),
-            resetM0.getMiddleIn(1), resetM1.getMiddleIn(1), resetH0.getMiddleIn(1));
+            resetM0.getMiddleIn(1), resetM1.getMiddleIn(1), resetH0.getMiddleIn(1), hoursSwitch.getMiddleIn(),
+            minutesSwitch.getMiddleIn(), clockH0.getMiddleIn(0), clockM0.getMiddleIn(0));
 
         // connect clock with counter
         new Signal(circuit).from(clock.get_Out()).to(cS0.get_Clock());
@@ -129,8 +133,7 @@ public class RelayClock extends Component
 
         new Signal(circuit).from(bcdS1.getOut6()).to(resetS1.getCoilIn());
         new Signal(circuit).from(resetS1.get_Out(0)).to(cS1.getPowerIn());
-        new Signal(circuit).from(resetS1.get_Out(1)).to(cM0.get_Clock());
-        new Signal(circuit).from(resetS1.getOut(1)).to(cM0.getClock());
+        new Signal(circuit).from(resetS1.getOut(1)).to(jointM0.getIn(0));
 
         new Signal(circuit).from(bcdM0.getOutA()).to(resetM0.getCoilIn());
         new Signal(circuit).from(resetM0.get_Out(0)).to(cM0.getPowerIn());
@@ -139,8 +142,7 @@ public class RelayClock extends Component
 
         new Signal(circuit).from(bcdM1.getOut6()).to(resetM1.getCoilIn());
         new Signal(circuit).from(resetM1.get_Out(0)).to(cM1.getPowerIn());
-        new Signal(circuit).from(resetM1.get_Out(1)).to(cH0.get_Clock());
-        new Signal(circuit).from(resetM1.getOut(1)).to(cH0.getClock());
+        new Signal(circuit).from(resetM1.getOut(1)).to(jointH0.getIn(0));
 
         new Signal(circuit).from(bcdH0.getOutA()).to(resetH0.getCoilIn());
         new Signal(circuit).from(resetH0.get_Out(0)).to(cH0.getPowerIn());
@@ -153,6 +155,18 @@ public class RelayClock extends Component
             resetM0.getMiddleIn(0), resetM1.getMiddleIn(0), resetH0.getMiddleIn(0), cH1.getPowerIn());
         new Signal(circuit).from(reset24M0.getOut(0)).to(reset24M1.getMiddleIn(0));
         new Signal(circuit).from(reset24M1.getOut(0)).to(reset24.getCoilIn());
+
+        // set switch for minutes
+        new Signal(circuit).from(minutesSwitch.getOut()).to(jointM0.getIn(1));
+        new Signal(circuit).from(jointM0.getOut()).to(clockM0.getCoilIn());
+        new Signal(circuit).from(clockM0.get_Out(0)).to(cM0.get_Clock());
+        new Signal(circuit).from(clockM0.getOut(0)).to(cM0.getClock());
+
+        // set switch for hours
+        new Signal(circuit).from(hoursSwitch.getOut()).to(jointH0.getIn(1));
+        new Signal(circuit).from(jointH0.getOut()).to(clockH0.getCoilIn());
+        new Signal(circuit).from(clockH0.get_Out(0)).to(cH0.get_Clock());
+        new Signal(circuit).from(clockH0.getOut(0)).to(cH0.getClock());
 
         // connect decimal decoders with 7-segment decoders
         new Signal(circuit).from(bcdS0.getOut0()).to(decoderS0.getIn0());
@@ -287,13 +301,13 @@ public class RelayClock extends Component
         return display;
     }
 
-    public Switch getHoursSwitch()
-    {
-        return hoursSwitch;
-    }
-
     public Switch getMinutesSwitch()
     {
         return minutesSwitch;
+    }
+
+    public Switch getHoursSwitch()
+    {
+        return hoursSwitch;
     }
 }

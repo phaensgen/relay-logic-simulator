@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 
 import sunday.resi.common.Monitor;
 import sunday.resi.common.Simulator;
+import sunday.resi.library.Switch;
 
 /**
  * A window for a graphical visualization of the relay clock.
@@ -61,7 +62,17 @@ public class RelayClockFrame extends Frame implements Monitor
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                clock.getHoursSwitch().push();
+                Switch setHours = clock.getHoursSwitch();
+                setHours.push();
+                try
+                {
+                    // we have to wait for a number of simulation cycles so that the change becomes effective
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException e1)
+                {
+                }
+                setHours.release();
             }
         });
         buttonPanel.add(hoursButton);
@@ -74,8 +85,17 @@ public class RelayClockFrame extends Frame implements Monitor
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // TODO connect with setter relay for minutes
-                System.err.println(e.getActionCommand());
+                Switch setMinutes = clock.getMinutesSwitch();
+                setMinutes.push();
+                try
+                {
+                    // we have to wait for a number of simulation cycles so that the change becomes effective
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException e1)
+                {
+                }
+                setMinutes.release();
             }
         });
         buttonPanel.add(minutesButton);
