@@ -12,7 +12,7 @@ import sunday.resi.common.Signal;
  * 
  * @author Peter H&auml;nsgen
  */
-public class DecimalToSevenSegmentDecoder extends Component
+public class SevenSegmentDecoder10 extends Component
 {
     private Input powerIn;
 
@@ -36,36 +36,24 @@ public class DecimalToSevenSegmentDecoder extends Component
 
     private Input in9;
 
-    private Input inA;
+    private Output outA;
 
-    private Input inB;
+    private Output outB;
 
-    private Input inC;
+    private Output outC;
 
-    private Input inD;
+    private Output outD;
 
-    private Input inE;
+    private Output outE;
 
-    private Input inF;
+    private Output outF;
 
-    private Output a;
-
-    private Output b;
-
-    private Output c;
-
-    private Output d;
-
-    private Output e;
-
-    private Output f;
-
-    private Output g;
+    private Output outG;
 
     /**
      * The constructor.
      */
-    public DecimalToSevenSegmentDecoder(Circuit circuit, String name)
+    public SevenSegmentDecoder10(Circuit circuit, String name)
     {
         super(circuit, name);
 
@@ -82,20 +70,14 @@ public class DecimalToSevenSegmentDecoder extends Component
         in7 = new Input();
         in8 = new Input();
         in9 = new Input();
-        inA = new Input();
-        inB = new Input();
-        inC = new Input();
-        inD = new Input();
-        inE = new Input();
-        inF = new Input();
 
-        a = new Output();
-        b = new Output();
-        c = new Output();
-        d = new Output();
-        e = new Output();
-        f = new Output();
-        g = new Output();
+        outA = new Output();
+        outB = new Output();
+        outC = new Output();
+        outD = new Output();
+        outE = new Output();
+        outF = new Output();
+        outG = new Output();
 
         // internal elements
         Relay r0 = new Relay(circuit, name + "_R0");
@@ -108,12 +90,6 @@ public class DecimalToSevenSegmentDecoder extends Component
         Relay r7 = new Relay(circuit, name + "_R7");
         Relay r8 = new Relay(circuit, name + "_R8");
         Relay r9 = new Relay(circuit, name + "_R9");
-        Relay ra = new Relay(circuit, name + "_RA");
-        Relay rb = new Relay(circuit, name + "_RB");
-        Relay rc = new Relay(circuit, name + "_RC");
-        Relay rd = new Relay(circuit, name + "_RD");
-        Relay re = new Relay(circuit, name + "_RE");
-        Relay rf = new Relay(circuit, name + "_RF");
 
         // internal wirings
         // each relay needs up to 13 switches
@@ -122,8 +98,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         {
             new Signal(circuit).from(powerIn).to(r0.getMiddleIn(i), r1.getMiddleIn(i), r2.getMiddleIn(i),
                 r3.getMiddleIn(i), r4.getMiddleIn(i), r5.getMiddleIn(i), r6.getMiddleIn(i), r7.getMiddleIn(i),
-                r8.getMiddleIn(i), r9.getMiddleIn(i), ra.getMiddleIn(i), rb.getMiddleIn(i), rc.getMiddleIn(i),
-                rd.getMiddleIn(i), re.getMiddleIn(i), rf.getMiddleIn(i));
+                r8.getMiddleIn(i), r9.getMiddleIn(i));
         }
 
         // connect inputs with their coils
@@ -137,12 +112,6 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(in7).to(r7.getCoilIn());
         new Signal(circuit).from(in8).to(r8.getCoilIn());
         new Signal(circuit).from(in9).to(r9.getCoilIn());
-        new Signal(circuit).from(inA).to(ra.getCoilIn());
-        new Signal(circuit).from(inB).to(rb.getCoilIn());
-        new Signal(circuit).from(inC).to(rc.getCoilIn());
-        new Signal(circuit).from(inD).to(rd.getCoilIn());
-        new Signal(circuit).from(inE).to(re.getCoilIn());
-        new Signal(circuit).from(inF).to(rf.getCoilIn());
 
         // A
         Joint ja = new Joint(circuit);
@@ -154,10 +123,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r7.getOut(0)).to(ja.getIn(5));
         new Signal(circuit).from(r8.getOut(0)).to(ja.getIn(6));
         new Signal(circuit).from(r9.getOut(0)).to(ja.getIn(7));
-        new Signal(circuit).from(ra.getOut(0)).to(ja.getIn(8));
-        new Signal(circuit).from(re.getOut(0)).to(ja.getIn(9));
-        new Signal(circuit).from(rf.getOut(0)).to(ja.getIn(10));
-        new Signal(circuit).from(ja.getOut()).to(a);
+        new Signal(circuit).from(ja.getOut()).to(outA);
 
         // B
         Joint jb = new Joint(circuit);
@@ -169,9 +135,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r7.getOut(1)).to(jb.getIn(5));
         new Signal(circuit).from(r8.getOut(1)).to(jb.getIn(6));
         new Signal(circuit).from(r9.getOut(1)).to(jb.getIn(7));
-        new Signal(circuit).from(ra.getOut(1)).to(jb.getIn(8));
-        new Signal(circuit).from(rd.getOut(1)).to(jb.getIn(9));
-        new Signal(circuit).from(jb.getOut()).to(b);
+        new Signal(circuit).from(jb.getOut()).to(outB);
 
         // C
         Joint jc = new Joint(circuit);
@@ -184,10 +148,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r7.getOut(2)).to(jc.getIn(6));
         new Signal(circuit).from(r8.getOut(2)).to(jc.getIn(7));
         new Signal(circuit).from(r9.getOut(2)).to(jc.getIn(8));
-        new Signal(circuit).from(ra.getOut(2)).to(jc.getIn(9));
-        new Signal(circuit).from(rb.getOut(2)).to(jc.getIn(10));
-        new Signal(circuit).from(rd.getOut(2)).to(jc.getIn(11));
-        new Signal(circuit).from(jc.getOut()).to(c);
+        new Signal(circuit).from(jc.getOut()).to(outC);
 
         // D
         Joint jd = new Joint(circuit);
@@ -198,11 +159,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r6.getOut(3)).to(jd.getIn(4));
         new Signal(circuit).from(r8.getOut(3)).to(jd.getIn(5));
         new Signal(circuit).from(r9.getOut(3)).to(jd.getIn(6));
-        new Signal(circuit).from(rb.getOut(3)).to(jd.getIn(7));
-        new Signal(circuit).from(rc.getOut(3)).to(jd.getIn(8));
-        new Signal(circuit).from(rd.getOut(3)).to(jd.getIn(9));
-        new Signal(circuit).from(re.getOut(3)).to(jd.getIn(10));
-        new Signal(circuit).from(jd.getOut()).to(d);
+        new Signal(circuit).from(jd.getOut()).to(outD);
 
         // E
         Joint je = new Joint(circuit);
@@ -210,13 +167,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r2.getOut(4)).to(je.getIn(1));
         new Signal(circuit).from(r6.getOut(4)).to(je.getIn(2));
         new Signal(circuit).from(r8.getOut(4)).to(je.getIn(3));
-        new Signal(circuit).from(ra.getOut(4)).to(je.getIn(4));
-        new Signal(circuit).from(rb.getOut(4)).to(je.getIn(5));
-        new Signal(circuit).from(rc.getOut(4)).to(je.getIn(6));
-        new Signal(circuit).from(rd.getOut(4)).to(je.getIn(7));
-        new Signal(circuit).from(re.getOut(4)).to(je.getIn(8));
-        new Signal(circuit).from(rf.getOut(4)).to(je.getIn(9));
-        new Signal(circuit).from(je.getOut()).to(e);
+        new Signal(circuit).from(je.getOut()).to(outE);
 
         // F
         Joint jf = new Joint(circuit);
@@ -226,11 +177,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r6.getOut(5)).to(jf.getIn(3));
         new Signal(circuit).from(r8.getOut(5)).to(jf.getIn(4));
         new Signal(circuit).from(r9.getOut(5)).to(jf.getIn(5));
-        new Signal(circuit).from(ra.getOut(5)).to(jf.getIn(6));
-        new Signal(circuit).from(rb.getOut(5)).to(jf.getIn(7));
-        new Signal(circuit).from(re.getOut(5)).to(jf.getIn(8));
-        new Signal(circuit).from(rf.getOut(5)).to(jf.getIn(9));
-        new Signal(circuit).from(jf.getOut()).to(f);
+        new Signal(circuit).from(jf.getOut()).to(outF);
 
         // G
         Joint jg = new Joint(circuit);
@@ -241,13 +188,7 @@ public class DecimalToSevenSegmentDecoder extends Component
         new Signal(circuit).from(r6.getOut(6)).to(jg.getIn(4));
         new Signal(circuit).from(r8.getOut(6)).to(jg.getIn(5));
         new Signal(circuit).from(r9.getOut(6)).to(jg.getIn(6));
-        new Signal(circuit).from(ra.getOut(6)).to(jg.getIn(7));
-        new Signal(circuit).from(rb.getOut(6)).to(jg.getIn(8));
-        new Signal(circuit).from(rc.getOut(6)).to(jg.getIn(9));
-        new Signal(circuit).from(rd.getOut(6)).to(jg.getIn(10));
-        new Signal(circuit).from(re.getOut(6)).to(jg.getIn(11));
-        new Signal(circuit).from(rf.getOut(6)).to(jg.getIn(12));
-        new Signal(circuit).from(jg.getOut()).to(g);
+        new Signal(circuit).from(jg.getOut()).to(outG);
     }
 
     public Input getPowerIn()
@@ -305,68 +246,38 @@ public class DecimalToSevenSegmentDecoder extends Component
         return in9;
     }
 
-    public Input getInA()
-    {
-        return inA;
-    }
-
-    public Input getInB()
-    {
-        return inB;
-    }
-
-    public Input getInC()
-    {
-        return inC;
-    }
-
-    public Input getInD()
-    {
-        return inD;
-    }
-
-    public Input getInE()
-    {
-        return inE;
-    }
-
-    public Input getInF()
-    {
-        return inF;
-    }
-
     public Output getOutA()
     {
-        return a;
+        return outA;
     }
 
     public Output getOutB()
     {
-        return b;
+        return outB;
     }
 
     public Output getOutC()
     {
-        return c;
+        return outC;
     }
 
     public Output getOutD()
     {
-        return d;
+        return outD;
     }
 
     public Output getOutE()
     {
-        return e;
+        return outE;
     }
 
     public Output getOutF()
     {
-        return f;
+        return outF;
     }
 
     public Output getOutG()
     {
-        return g;
+        return outG;
     }
 }

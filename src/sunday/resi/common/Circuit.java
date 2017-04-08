@@ -72,6 +72,24 @@ public class Circuit
         return parts.values();
     }
 
+    /**
+     * Returns the number of parts with the given type in the circuit.
+     */
+    public int getPartCount(Class<? extends Part> type)
+    {
+        int count = 0;
+
+        for (Part p : parts.values())
+        {
+            if (type.isInstance(p))
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     public void addMonitor(Monitor monitor)
     {
         monitors.add(monitor);

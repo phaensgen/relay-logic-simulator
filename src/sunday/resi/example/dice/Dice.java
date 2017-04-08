@@ -9,8 +9,8 @@ import sunday.resi.common.Signal;
 import sunday.resi.library.BCDToDecimalDecoder;
 import sunday.resi.library.Clock;
 import sunday.resi.library.Counter;
-import sunday.resi.library.DecimalToSevenSegmentDecoder;
 import sunday.resi.library.Relay;
+import sunday.resi.library.SevenSegmentDecoder10;
 import sunday.resi.library.SevenSegmentDisplay;
 
 /**
@@ -34,7 +34,7 @@ public class Dice extends Component
 
         BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, name + "_BCD");
 
-        DecimalToSevenSegmentDecoder decimal = new DecimalToSevenSegmentDecoder(circuit, name + "_Decoder");
+        SevenSegmentDecoder10 decoder = new SevenSegmentDecoder10(circuit, name + "_Decoder");
 
         SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, name + "_Display");
         circuit.addMonitor(display);
@@ -42,7 +42,7 @@ public class Dice extends Component
         Relay reset = new Relay(circuit, name + "_Reset");
 
         // internal wiring
-        new Signal(circuit).from(powerIn).to(decimal.getPowerIn(), bcd.getPowerIn(), reset.getMiddleIn(0));
+        new Signal(circuit).from(powerIn).to(decoder.getPowerIn(), bcd.getPowerIn(), reset.getMiddleIn(0));
 
         new Signal(circuit).from(clock.get_Out()).to(counter.get_Clock());
         new Signal(circuit).from(clock.getOut()).to(counter.getClock());
@@ -52,23 +52,23 @@ public class Dice extends Component
         new Signal(circuit).from(counter.getOut2()).to(bcd.getIn2());
         new Signal(circuit).from(counter.getOut3()).to(bcd.getIn3());
 
-        new Signal(circuit).from(bcd.getOut0()).to(decimal.getIn1());
-        new Signal(circuit).from(bcd.getOut1()).to(decimal.getIn2());
-        new Signal(circuit).from(bcd.getOut2()).to(decimal.getIn3());
-        new Signal(circuit).from(bcd.getOut3()).to(decimal.getIn4());
-        new Signal(circuit).from(bcd.getOut4()).to(decimal.getIn5());
-        new Signal(circuit).from(bcd.getOut5()).to(decimal.getIn6());
+        new Signal(circuit).from(bcd.getOut0()).to(decoder.getIn1());
+        new Signal(circuit).from(bcd.getOut1()).to(decoder.getIn2());
+        new Signal(circuit).from(bcd.getOut2()).to(decoder.getIn3());
+        new Signal(circuit).from(bcd.getOut3()).to(decoder.getIn4());
+        new Signal(circuit).from(bcd.getOut4()).to(decoder.getIn5());
+        new Signal(circuit).from(bcd.getOut5()).to(decoder.getIn6());
         new Signal(circuit).from(bcd.getOut6()).to(reset.getCoilIn());
 
         new Signal(circuit).from(reset.get_Out(0)).to(counter.getPowerIn());
 
-        new Signal(circuit).from(decimal.getOutA()).to(display.getInA());
-        new Signal(circuit).from(decimal.getOutB()).to(display.getInB());
-        new Signal(circuit).from(decimal.getOutC()).to(display.getInC());
-        new Signal(circuit).from(decimal.getOutD()).to(display.getInD());
-        new Signal(circuit).from(decimal.getOutE()).to(display.getInE());
-        new Signal(circuit).from(decimal.getOutF()).to(display.getInF());
-        new Signal(circuit).from(decimal.getOutG()).to(display.getInG());
+        new Signal(circuit).from(decoder.getOutA()).to(display.getInA());
+        new Signal(circuit).from(decoder.getOutB()).to(display.getInB());
+        new Signal(circuit).from(decoder.getOutC()).to(display.getInC());
+        new Signal(circuit).from(decoder.getOutD()).to(display.getInD());
+        new Signal(circuit).from(decoder.getOutE()).to(display.getInE());
+        new Signal(circuit).from(decoder.getOutF()).to(display.getInF());
+        new Signal(circuit).from(decoder.getOutG()).to(display.getInG());
     }
 
     public Input getPowerIn()

@@ -13,13 +13,13 @@ import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 
 /**
- * Tests the decimal-to-7-segment decoder.
+ * Tests the hexadecimal-to-7-segment decoder.
  * 
  * @author Peter H&auml;nsgen
  */
-public class DecimalToSevenSegmentDecoderTest
+public class SevenSegmentDecoder16Test
 {
-    private DecimalToSevenSegmentDecoder decoder;
+    private SevenSegmentDecoder16 decoder;
 
     private Output in0;
 
@@ -73,7 +73,7 @@ public class DecimalToSevenSegmentDecoderTest
         Circuit circuit = new Circuit();
         Power p = new Power(circuit, "VCC");
 
-        decoder = new DecimalToSevenSegmentDecoder(circuit, "Decoder");
+        decoder = new SevenSegmentDecoder16(circuit, "Decoder");
 
         // test signals
         in0 = new Output();

@@ -4,6 +4,7 @@ import sunday.resi.common.Circuit;
 import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
+import sunday.resi.library.Relay;
 
 /**
  * Simulates the relay clock.
@@ -28,6 +29,8 @@ public class RelayClockMain
 
         RelayClockFrame frame = new RelayClockFrame(clock, sim);
         circuit.addMonitor(frame);
+
+        System.out.println(String.valueOf(circuit.getPartCount(Relay.class) + " relays used."));
 
         sim.start();
     }

@@ -70,8 +70,6 @@ public class RelayClock extends Component
         minutesSwitch = new Switch(circuit, name + "_SetMM");
         hoursSwitch = new Switch(circuit, name + "_SetHH");
 
-        Relay clockH0 = new Relay(circuit, name + "_ClockH0");
-
         Relay reset24M0 = new Relay(circuit, name + "_Reset24M0");
         Relay reset24M1 = new Relay(circuit, name + "_Reset24M1");
         Relay reset24 = new Relay(circuit, name + "_Reset24");
@@ -82,7 +80,7 @@ public class RelayClock extends Component
             counterM1.getPowerIn(), counterH0.getPowerIn(), counterH1.getPowerIn(), decoderS0.getPowerIn(),
             decoderS1.getPowerIn(), decoderM0.getPowerIn(), decoderM1.getPowerIn(), decoderH0.getPowerIn(),
             decoderH1.getPowerIn(), reset24M0.getMiddleIn(0), reset24.getMiddleIn(0), hoursSwitch.getMiddleIn(),
-            minutesSwitch.getMiddleIn(), clockH0.getMiddleIn(0));
+            minutesSwitch.getMiddleIn());
 
         // connect clock and overflows with counters
         new Signal(circuit).from(clock.getOut()).to(counterS0.getClockIn());

@@ -5,7 +5,7 @@ import sunday.resi.common.Component;
 import sunday.resi.common.Input;
 import sunday.resi.common.Output;
 import sunday.resi.common.Signal;
-import sunday.resi.library.DecimalToSevenSegmentDecoder;
+import sunday.resi.library.SevenSegmentDecoder10;
 
 /**
  * Represents a PCB for the relay clock containing the 7-segment-decoder. The clock needs six such PCBs.
@@ -57,7 +57,7 @@ public class RelayClockDecoderPCB extends Component
     {
         super(circuit, name);
 
-        DecimalToSevenSegmentDecoder decoder = new DecimalToSevenSegmentDecoder(circuit, name + "_Decoder");
+        SevenSegmentDecoder10 decoder = new SevenSegmentDecoder10(circuit, name + "_Decoder");
 
         powerIn = new Input();
 

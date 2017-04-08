@@ -9,7 +9,7 @@ import sunday.resi.common.Simulator;
 import sunday.resi.library.BCDToDecimalDecoder;
 import sunday.resi.library.Clock;
 import sunday.resi.library.Counter;
-import sunday.resi.library.DecimalToSevenSegmentDecoder;
+import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
 
 /**
@@ -30,13 +30,13 @@ public class CounterMain
 
         BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, "BCD");
 
-        DecimalToSevenSegmentDecoder decimal = new DecimalToSevenSegmentDecoder(circuit, "Decoder");
+        SevenSegmentDecoder16 decoder = new SevenSegmentDecoder16(circuit, "Decoder");
 
         SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, "Display");
         circuit.addMonitor(display);
 
         // internal wiring
-        new Signal(circuit).from(power.getOut()).to(counter.getPowerIn(), decimal.getPowerIn(), bcd.getPowerIn());
+        new Signal(circuit).from(power.getOut()).to(counter.getPowerIn(), decoder.getPowerIn(), bcd.getPowerIn());
 
         new Signal(circuit).from(clock.get_Out()).to(counter.get_Clock());
         new Signal(circuit).from(clock.getOut()).to(counter.getClock());
@@ -46,30 +46,30 @@ public class CounterMain
         new Signal(circuit).from(counter.getOut2()).to(bcd.getIn2());
         new Signal(circuit).from(counter.getOut3()).to(bcd.getIn3());
 
-        new Signal(circuit).from(bcd.getOut0()).to(decimal.getIn0());
-        new Signal(circuit).from(bcd.getOut1()).to(decimal.getIn1());
-        new Signal(circuit).from(bcd.getOut2()).to(decimal.getIn2());
-        new Signal(circuit).from(bcd.getOut3()).to(decimal.getIn3());
-        new Signal(circuit).from(bcd.getOut4()).to(decimal.getIn4());
-        new Signal(circuit).from(bcd.getOut5()).to(decimal.getIn5());
-        new Signal(circuit).from(bcd.getOut6()).to(decimal.getIn6());
-        new Signal(circuit).from(bcd.getOut7()).to(decimal.getIn7());
-        new Signal(circuit).from(bcd.getOut8()).to(decimal.getIn8());
-        new Signal(circuit).from(bcd.getOut9()).to(decimal.getIn9());
-        new Signal(circuit).from(bcd.getOutA()).to(decimal.getInA());
-        new Signal(circuit).from(bcd.getOutB()).to(decimal.getInB());
-        new Signal(circuit).from(bcd.getOutC()).to(decimal.getInC());
-        new Signal(circuit).from(bcd.getOutD()).to(decimal.getInD());
-        new Signal(circuit).from(bcd.getOutE()).to(decimal.getInE());
-        new Signal(circuit).from(bcd.getOutF()).to(decimal.getInF());
+        new Signal(circuit).from(bcd.getOut0()).to(decoder.getIn0());
+        new Signal(circuit).from(bcd.getOut1()).to(decoder.getIn1());
+        new Signal(circuit).from(bcd.getOut2()).to(decoder.getIn2());
+        new Signal(circuit).from(bcd.getOut3()).to(decoder.getIn3());
+        new Signal(circuit).from(bcd.getOut4()).to(decoder.getIn4());
+        new Signal(circuit).from(bcd.getOut5()).to(decoder.getIn5());
+        new Signal(circuit).from(bcd.getOut6()).to(decoder.getIn6());
+        new Signal(circuit).from(bcd.getOut7()).to(decoder.getIn7());
+        new Signal(circuit).from(bcd.getOut8()).to(decoder.getIn8());
+        new Signal(circuit).from(bcd.getOut9()).to(decoder.getIn9());
+        new Signal(circuit).from(bcd.getOutA()).to(decoder.getInA());
+        new Signal(circuit).from(bcd.getOutB()).to(decoder.getInB());
+        new Signal(circuit).from(bcd.getOutC()).to(decoder.getInC());
+        new Signal(circuit).from(bcd.getOutD()).to(decoder.getInD());
+        new Signal(circuit).from(bcd.getOutE()).to(decoder.getInE());
+        new Signal(circuit).from(bcd.getOutF()).to(decoder.getInF());
 
-        new Signal(circuit).from(decimal.getOutA()).to(display.getInA());
-        new Signal(circuit).from(decimal.getOutB()).to(display.getInB());
-        new Signal(circuit).from(decimal.getOutC()).to(display.getInC());
-        new Signal(circuit).from(decimal.getOutD()).to(display.getInD());
-        new Signal(circuit).from(decimal.getOutE()).to(display.getInE());
-        new Signal(circuit).from(decimal.getOutF()).to(display.getInF());
-        new Signal(circuit).from(decimal.getOutG()).to(display.getInG());
+        new Signal(circuit).from(decoder.getOutA()).to(display.getInA());
+        new Signal(circuit).from(decoder.getOutB()).to(display.getInB());
+        new Signal(circuit).from(decoder.getOutC()).to(display.getInC());
+        new Signal(circuit).from(decoder.getOutD()).to(display.getInD());
+        new Signal(circuit).from(decoder.getOutE()).to(display.getInE());
+        new Signal(circuit).from(decoder.getOutF()).to(display.getInF());
+        new Signal(circuit).from(decoder.getOutG()).to(display.getInG());
 
         Simulator sim = new Simulator(circuit, 10);
         sim.start();
