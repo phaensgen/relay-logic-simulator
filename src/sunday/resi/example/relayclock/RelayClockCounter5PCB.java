@@ -12,10 +12,11 @@ import sunday.resi.library.Relay;
 
 /**
  * Represents a PCB for the relay clock that contains a counter, a BCD decoder and the set / reset logic for a digit.
+ * The counter counts up to 5.
  * 
  * @author Peter H&auml;nsgen
  */
-public class RelayClockCounterPCB extends Component
+public class RelayClockCounter5PCB extends Component
 {
     private Input powerIn;
 
@@ -37,14 +38,6 @@ public class RelayClockCounterPCB extends Component
 
     private Output out5;
 
-    private Output out6;
-
-    private Output out7;
-
-    private Output out8;
-
-    private Output out9;
-
     @Deprecated
     private Output _carryOut;
 
@@ -53,7 +46,7 @@ public class RelayClockCounterPCB extends Component
     /**
      * The constructor.
      */
-    public RelayClockCounterPCB(Circuit circuit, String name)
+    public RelayClockCounter5PCB(Circuit circuit, String name)
     {
         super(circuit, name);
 
@@ -68,10 +61,6 @@ public class RelayClockCounterPCB extends Component
         out3 = new Output();
         out4 = new Output();
         out5 = new Output();
-        out6 = new Output();
-        out7 = new Output();
-        out8 = new Output();
-        out9 = new Output();
         _carryOut = new Output();
         carryOut = new Output();
 
@@ -99,11 +88,7 @@ public class RelayClockCounterPCB extends Component
         new Signal(circuit).from(bcd.getOut3()).to(out3);
         new Signal(circuit).from(bcd.getOut4()).to(out4);
         new Signal(circuit).from(bcd.getOut5()).to(out5);
-        new Signal(circuit).from(bcd.getOut6()).to(out6);
-        new Signal(circuit).from(bcd.getOut7()).to(out7);
-        new Signal(circuit).from(bcd.getOut8()).to(out8);
-        new Signal(circuit).from(bcd.getOut9()).to(out9);
-        new Signal(circuit).from(bcd.getOutA()).to(carry.getCoilIn());
+        new Signal(circuit).from(bcd.getOut6()).to(carry.getCoilIn());
 
         new Signal(circuit).from(clockIn).to(j.getIn(0));
         new Signal(circuit).from(setIn).to(j.getIn(1));
@@ -162,26 +147,6 @@ public class RelayClockCounterPCB extends Component
     public Output getOut5()
     {
         return out5;
-    }
-
-    public Output getOut6()
-    {
-        return out6;
-    }
-
-    public Output getOut7()
-    {
-        return out7;
-    }
-
-    public Output getOut8()
-    {
-        return out8;
-    }
-
-    public Output getOut9()
-    {
-        return out9;
     }
 
     public Output getCarryOut()
