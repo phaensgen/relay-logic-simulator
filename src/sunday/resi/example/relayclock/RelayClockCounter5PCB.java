@@ -114,6 +114,11 @@ public class RelayClockCounter5PCB extends Component
         return clockIn;
     }
 
+    public Input getSetIn()
+    {
+        return setIn;
+    }
+
     public Input getReset24In()
     {
         return reset24In;
