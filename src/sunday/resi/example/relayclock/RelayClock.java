@@ -49,33 +49,33 @@ public class RelayClock extends Component
 
         Clock clock = new Clock(circuit, name + "Clock", 500, TimeUnit.MILLISECONDS);
 
-        Counter cS0 = new Counter(circuit, name + "_CounterS0");
+        RelayClockCounterPCB counterS0 = new RelayClockCounterPCB(circuit, name + "_CounterS0");
+
         Counter cS1 = new Counter(circuit, name + "_CounterS1");
         Counter cM0 = new Counter(circuit, name + "_CounterM0");
         Counter cM1 = new Counter(circuit, name + "_CounterM1");
         Counter cH0 = new Counter(circuit, name + "_CounterH0");
         Counter cH1 = new Counter(circuit, name + "_CounterH1");
 
-        BCDToDecimalDecoder bcdS0 = new BCDToDecimalDecoder(circuit, name + "_BCDS0");
         BCDToDecimalDecoder bcdS1 = new BCDToDecimalDecoder(circuit, name + "_BCDS1");
         BCDToDecimalDecoder bcdM0 = new BCDToDecimalDecoder(circuit, name + "_BCDM0");
         BCDToDecimalDecoder bcdM1 = new BCDToDecimalDecoder(circuit, name + "_BCDM1");
         BCDToDecimalDecoder bcdH0 = new BCDToDecimalDecoder(circuit, name + "_BCDH0");
         BCDToDecimalDecoder bcdH1 = new BCDToDecimalDecoder(circuit, name + "_BCDH1");
 
-        RelayClockDecoderPCB decoderS0 = new RelayClockDecoderPCB(circuit, name + "_S0");
-        RelayClockDecoderPCB decoderS1 = new RelayClockDecoderPCB(circuit, name + "_S1");
-        RelayClockDecoderPCB decoderM0 = new RelayClockDecoderPCB(circuit, name + "_M0");
-        RelayClockDecoderPCB decoderM1 = new RelayClockDecoderPCB(circuit, name + "_M1");
-        RelayClockDecoderPCB decoderH0 = new RelayClockDecoderPCB(circuit, name + "_H0");
-        RelayClockDecoderPCB decoderH1 = new RelayClockDecoderPCB(circuit, name + "_H1");
+        RelayClockDecoderPCB decoderS0 = new RelayClockDecoderPCB(circuit, name + "_DecoderS0");
+        RelayClockDecoderPCB decoderS1 = new RelayClockDecoderPCB(circuit, name + "_DecoderS1");
+        RelayClockDecoderPCB decoderM0 = new RelayClockDecoderPCB(circuit, name + "_DecoderM0");
+        RelayClockDecoderPCB decoderM1 = new RelayClockDecoderPCB(circuit, name + "_DecoderM1");
+        RelayClockDecoderPCB decoderH0 = new RelayClockDecoderPCB(circuit, name + "_DecoderH0");
+        RelayClockDecoderPCB decoderH1 = new RelayClockDecoderPCB(circuit, name + "_DecoderH1");
 
-        digitS0 = new RelayClockDigitPCB(circuit, name + "_DisplayS0");
-        digitS1 = new RelayClockDigitPCB(circuit, name + "_DisplayS1");
-        digitM0 = new RelayClockDigitPCB(circuit, name + "_DisplayM0");
-        digitM1 = new RelayClockDigitPCB(circuit, name + "_DisplayM1");
-        digitH0 = new RelayClockDigitPCB(circuit, name + "_DisplayH0");
-        digitH1 = new RelayClockDigitPCB(circuit, name + "_DisplayH1");
+        digitS0 = new RelayClockDigitPCB(circuit, name + "_DigitS0");
+        digitS1 = new RelayClockDigitPCB(circuit, name + "_DigitS1");
+        digitM0 = new RelayClockDigitPCB(circuit, name + "_DigitM0");
+        digitM1 = new RelayClockDigitPCB(circuit, name + "_DigitM1");
+        digitH0 = new RelayClockDigitPCB(circuit, name + "_DigitH0");
+        digitH1 = new RelayClockDigitPCB(circuit, name + "_DigitH1");
 
         minutesSwitch = new Switch(circuit, name + "_SetMM");
         hoursSwitch = new Switch(circuit, name + "_SetHH");
@@ -85,7 +85,6 @@ public class RelayClock extends Component
         Joint jointM0 = new Joint(circuit, name + "_JointM0");
         Joint jointH0 = new Joint(circuit, name + "_JointH0");
 
-        Relay resetS0 = new Relay(circuit, name + "_ResetS0");
         Relay resetS1 = new Relay(circuit, name + "_ResetS1");
         Relay resetM0 = new Relay(circuit, name + "_ResetM0");
         Relay resetM1 = new Relay(circuit, name + "_ResetM1");
@@ -96,23 +95,17 @@ public class RelayClock extends Component
 
         // internal wirings
         // connect power
-        new Signal(circuit).from(powerIn).to(bcdS0.getPowerIn(), bcdS1.getPowerIn(), bcdM0.getPowerIn(),
+        new Signal(circuit).from(powerIn).to(counterS0.getPowerIn(), bcdS1.getPowerIn(), bcdM0.getPowerIn(),
             bcdM1.getPowerIn(), bcdH0.getPowerIn(), bcdH1.getPowerIn(), decoderS0.getPowerIn(), decoderS1.getPowerIn(),
             decoderM0.getPowerIn(), decoderM1.getPowerIn(), decoderH0.getPowerIn(), decoderH1.getPowerIn(),
-            reset24M0.getMiddleIn(0), reset24.getMiddleIn(0), resetS0.getMiddleIn(1), resetS1.getMiddleIn(1),
-            resetM0.getMiddleIn(1), resetM1.getMiddleIn(1), resetH0.getMiddleIn(1), hoursSwitch.getMiddleIn(),
-            minutesSwitch.getMiddleIn(), clockH0.getMiddleIn(0), clockM0.getMiddleIn(0));
+            reset24M0.getMiddleIn(0), reset24.getMiddleIn(0), resetS1.getMiddleIn(1), resetM0.getMiddleIn(1),
+            resetM1.getMiddleIn(1), resetH0.getMiddleIn(1), hoursSwitch.getMiddleIn(), minutesSwitch.getMiddleIn(),
+            clockH0.getMiddleIn(0), clockM0.getMiddleIn(0));
 
         // connect clock with counter
-        new Signal(circuit).from(clock.get_Out()).to(cS0.get_Clock());
-        new Signal(circuit).from(clock.getOut()).to(cS0.getClock());
+        new Signal(circuit).from(clock.getOut()).to(counterS0.getClockIn());
 
         // connect counters with bcd decoders
-        new Signal(circuit).from(cS0.getOut0()).to(bcdS0.getIn0());
-        new Signal(circuit).from(cS0.getOut1()).to(bcdS0.getIn1());
-        new Signal(circuit).from(cS0.getOut2()).to(bcdS0.getIn2());
-        new Signal(circuit).from(cS0.getOut3()).to(bcdS0.getIn3());
-
         new Signal(circuit).from(cS1.getOut0()).to(bcdS1.getIn0());
         new Signal(circuit).from(cS1.getOut1()).to(bcdS1.getIn1());
         new Signal(circuit).from(cS1.getOut2()).to(bcdS1.getIn2());
@@ -139,10 +132,8 @@ public class RelayClock extends Component
         new Signal(circuit).from(cH1.getOut3()).to(bcdH1.getIn3());
 
         // connect overflow of bcd decoders with counter clock
-        new Signal(circuit).from(bcdS0.getOutA()).to(resetS0.getCoilIn());
-        new Signal(circuit).from(resetS0.get_Out(0)).to(cS0.getPowerIn());
-        new Signal(circuit).from(resetS0.get_Out(1)).to(cS1.get_Clock());
-        new Signal(circuit).from(resetS0.getOut(1)).to(cS1.getClock());
+        new Signal(circuit).from(counterS0.get_CarryOut()).to(cS1.get_Clock());
+        new Signal(circuit).from(counterS0.getCarryOut()).to(cS1.getClock());
 
         new Signal(circuit).from(bcdS1.getOut6()).to(resetS1.getCoilIn());
         new Signal(circuit).from(resetS1.get_Out(0)).to(cS1.getPowerIn());
@@ -164,8 +155,9 @@ public class RelayClock extends Component
 
         // reset all counters when 24h is reached
         // disconnect them from power
-        new Signal(circuit).from(reset24.get_Out(0)).to(resetS0.getMiddleIn(0), resetS1.getMiddleIn(0),
-            resetM0.getMiddleIn(0), resetM1.getMiddleIn(0), resetH0.getMiddleIn(0), cH1.getPowerIn());
+        new Signal(circuit).from(reset24.getOut(0)).to(counterS0.getReset24In());
+        new Signal(circuit).from(reset24.get_Out(0)).to(resetS1.getMiddleIn(0), resetM0.getMiddleIn(0),
+            resetM1.getMiddleIn(0), resetH0.getMiddleIn(0), cH1.getPowerIn());
         new Signal(circuit).from(reset24M0.getOut(0)).to(reset24M1.getMiddleIn(0));
         new Signal(circuit).from(reset24M1.getOut(0)).to(reset24.getCoilIn());
 
@@ -182,16 +174,16 @@ public class RelayClock extends Component
         new Signal(circuit).from(clockH0.getOut(0)).to(cH0.getClock());
 
         // connect decimal decoders with 7-segment decoders
-        new Signal(circuit).from(bcdS0.getOut0()).to(decoderS0.getIn0());
-        new Signal(circuit).from(bcdS0.getOut1()).to(decoderS0.getIn1());
-        new Signal(circuit).from(bcdS0.getOut2()).to(decoderS0.getIn2());
-        new Signal(circuit).from(bcdS0.getOut3()).to(decoderS0.getIn3());
-        new Signal(circuit).from(bcdS0.getOut4()).to(decoderS0.getIn4());
-        new Signal(circuit).from(bcdS0.getOut5()).to(decoderS0.getIn5());
-        new Signal(circuit).from(bcdS0.getOut6()).to(decoderS0.getIn6());
-        new Signal(circuit).from(bcdS0.getOut7()).to(decoderS0.getIn7());
-        new Signal(circuit).from(bcdS0.getOut8()).to(decoderS0.getIn8());
-        new Signal(circuit).from(bcdS0.getOut9()).to(decoderS0.getIn9());
+        new Signal(circuit).from(counterS0.getOut0()).to(decoderS0.getIn0());
+        new Signal(circuit).from(counterS0.getOut1()).to(decoderS0.getIn1());
+        new Signal(circuit).from(counterS0.getOut2()).to(decoderS0.getIn2());
+        new Signal(circuit).from(counterS0.getOut3()).to(decoderS0.getIn3());
+        new Signal(circuit).from(counterS0.getOut4()).to(decoderS0.getIn4());
+        new Signal(circuit).from(counterS0.getOut5()).to(decoderS0.getIn5());
+        new Signal(circuit).from(counterS0.getOut6()).to(decoderS0.getIn6());
+        new Signal(circuit).from(counterS0.getOut7()).to(decoderS0.getIn7());
+        new Signal(circuit).from(counterS0.getOut8()).to(decoderS0.getIn8());
+        new Signal(circuit).from(counterS0.getOut9()).to(decoderS0.getIn9());
 
         new Signal(circuit).from(bcdS1.getOut0()).to(decoderS1.getIn0());
         new Signal(circuit).from(bcdS1.getOut1()).to(decoderS1.getIn1());
