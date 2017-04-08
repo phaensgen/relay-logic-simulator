@@ -23,7 +23,17 @@ public class RelayClock extends Component
 {
     private Input powerIn;
 
-    private RelayClockDisplay display;
+    private RelayClockDigitPCB digitS0;
+
+    private RelayClockDigitPCB digitS1;
+
+    private RelayClockDigitPCB digitM0;
+
+    private RelayClockDigitPCB digitM1;
+
+    private RelayClockDigitPCB digitH0;
+
+    private RelayClockDigitPCB digitH1;
 
     private Switch minutesSwitch;
 
@@ -61,8 +71,12 @@ public class RelayClock extends Component
         DecimalToSevenSegmentDecoder decoderH0 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH0");
         DecimalToSevenSegmentDecoder decoderH1 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH1");
 
-        display = new RelayClockDisplay(circuit, name + "_Display");
-        circuit.addMonitor(display);
+        digitS0 = new RelayClockDigitPCB(circuit, name + "_DisplayS0");
+        digitS1 = new RelayClockDigitPCB(circuit, name + "_DisplayS1");
+        digitM0 = new RelayClockDigitPCB(circuit, name + "_DisplayM0");
+        digitM1 = new RelayClockDigitPCB(circuit, name + "_DisplayM1");
+        digitH0 = new RelayClockDigitPCB(circuit, name + "_DisplayH0");
+        digitH1 = new RelayClockDigitPCB(circuit, name + "_DisplayH1");
 
         minutesSwitch = new Switch(circuit, name + "_SetMM");
         hoursSwitch = new Switch(circuit, name + "_SetHH");
@@ -242,53 +256,53 @@ public class RelayClock extends Component
         */
 
         // connect decoders with display
-        new Signal(circuit).from(decoderS0.getOutA()).to(display.getSeconds0().getInA());
-        new Signal(circuit).from(decoderS0.getOutB()).to(display.getSeconds0().getInB());
-        new Signal(circuit).from(decoderS0.getOutC()).to(display.getSeconds0().getInC());
-        new Signal(circuit).from(decoderS0.getOutD()).to(display.getSeconds0().getInD());
-        new Signal(circuit).from(decoderS0.getOutE()).to(display.getSeconds0().getInE());
-        new Signal(circuit).from(decoderS0.getOutF()).to(display.getSeconds0().getInF());
-        new Signal(circuit).from(decoderS0.getOutG()).to(display.getSeconds0().getInG());
+        new Signal(circuit).from(decoderS0.getOutA()).to(digitS0.getInA());
+        new Signal(circuit).from(decoderS0.getOutB()).to(digitS0.getInB());
+        new Signal(circuit).from(decoderS0.getOutC()).to(digitS0.getInC());
+        new Signal(circuit).from(decoderS0.getOutD()).to(digitS0.getInD());
+        new Signal(circuit).from(decoderS0.getOutE()).to(digitS0.getInE());
+        new Signal(circuit).from(decoderS0.getOutF()).to(digitS0.getInF());
+        new Signal(circuit).from(decoderS0.getOutG()).to(digitS0.getInG());
 
-        new Signal(circuit).from(decoderS1.getOutA()).to(display.getSeconds1().getInA());
-        new Signal(circuit).from(decoderS1.getOutB()).to(display.getSeconds1().getInB());
-        new Signal(circuit).from(decoderS1.getOutC()).to(display.getSeconds1().getInC());
-        new Signal(circuit).from(decoderS1.getOutD()).to(display.getSeconds1().getInD());
-        new Signal(circuit).from(decoderS1.getOutE()).to(display.getSeconds1().getInE());
-        new Signal(circuit).from(decoderS1.getOutF()).to(display.getSeconds1().getInF());
-        new Signal(circuit).from(decoderS1.getOutG()).to(display.getSeconds1().getInG());
+        new Signal(circuit).from(decoderS1.getOutA()).to(digitS1.getInA());
+        new Signal(circuit).from(decoderS1.getOutB()).to(digitS1.getInB());
+        new Signal(circuit).from(decoderS1.getOutC()).to(digitS1.getInC());
+        new Signal(circuit).from(decoderS1.getOutD()).to(digitS1.getInD());
+        new Signal(circuit).from(decoderS1.getOutE()).to(digitS1.getInE());
+        new Signal(circuit).from(decoderS1.getOutF()).to(digitS1.getInF());
+        new Signal(circuit).from(decoderS1.getOutG()).to(digitS1.getInG());
 
-        new Signal(circuit).from(decoderM0.getOutA()).to(display.getMinutes0().getInA());
-        new Signal(circuit).from(decoderM0.getOutB()).to(display.getMinutes0().getInB());
-        new Signal(circuit).from(decoderM0.getOutC()).to(display.getMinutes0().getInC());
-        new Signal(circuit).from(decoderM0.getOutD()).to(display.getMinutes0().getInD());
-        new Signal(circuit).from(decoderM0.getOutE()).to(display.getMinutes0().getInE());
-        new Signal(circuit).from(decoderM0.getOutF()).to(display.getMinutes0().getInF());
-        new Signal(circuit).from(decoderM0.getOutG()).to(display.getMinutes0().getInG());
+        new Signal(circuit).from(decoderM0.getOutA()).to(digitM0.getInA());
+        new Signal(circuit).from(decoderM0.getOutB()).to(digitM0.getInB());
+        new Signal(circuit).from(decoderM0.getOutC()).to(digitM0.getInC());
+        new Signal(circuit).from(decoderM0.getOutD()).to(digitM0.getInD());
+        new Signal(circuit).from(decoderM0.getOutE()).to(digitM0.getInE());
+        new Signal(circuit).from(decoderM0.getOutF()).to(digitM0.getInF());
+        new Signal(circuit).from(decoderM0.getOutG()).to(digitM0.getInG());
 
-        new Signal(circuit).from(decoderM1.getOutA()).to(display.getMinutes1().getInA());
-        new Signal(circuit).from(decoderM1.getOutB()).to(display.getMinutes1().getInB());
-        new Signal(circuit).from(decoderM1.getOutC()).to(display.getMinutes1().getInC());
-        new Signal(circuit).from(decoderM1.getOutD()).to(display.getMinutes1().getInD());
-        new Signal(circuit).from(decoderM1.getOutE()).to(display.getMinutes1().getInE());
-        new Signal(circuit).from(decoderM1.getOutF()).to(display.getMinutes1().getInF());
-        new Signal(circuit).from(decoderM1.getOutG()).to(display.getMinutes1().getInG());
+        new Signal(circuit).from(decoderM1.getOutA()).to(digitM1.getInA());
+        new Signal(circuit).from(decoderM1.getOutB()).to(digitM1.getInB());
+        new Signal(circuit).from(decoderM1.getOutC()).to(digitM1.getInC());
+        new Signal(circuit).from(decoderM1.getOutD()).to(digitM1.getInD());
+        new Signal(circuit).from(decoderM1.getOutE()).to(digitM1.getInE());
+        new Signal(circuit).from(decoderM1.getOutF()).to(digitM1.getInF());
+        new Signal(circuit).from(decoderM1.getOutG()).to(digitM1.getInG());
 
-        new Signal(circuit).from(decoderH0.getOutA()).to(display.getHours0().getInA());
-        new Signal(circuit).from(decoderH0.getOutB()).to(display.getHours0().getInB());
-        new Signal(circuit).from(decoderH0.getOutC()).to(display.getHours0().getInC());
-        new Signal(circuit).from(decoderH0.getOutD()).to(display.getHours0().getInD());
-        new Signal(circuit).from(decoderH0.getOutE()).to(display.getHours0().getInE());
-        new Signal(circuit).from(decoderH0.getOutF()).to(display.getHours0().getInF());
-        new Signal(circuit).from(decoderH0.getOutG()).to(display.getHours0().getInG());
+        new Signal(circuit).from(decoderH0.getOutA()).to(digitH0.getInA());
+        new Signal(circuit).from(decoderH0.getOutB()).to(digitH0.getInB());
+        new Signal(circuit).from(decoderH0.getOutC()).to(digitH0.getInC());
+        new Signal(circuit).from(decoderH0.getOutD()).to(digitH0.getInD());
+        new Signal(circuit).from(decoderH0.getOutE()).to(digitH0.getInE());
+        new Signal(circuit).from(decoderH0.getOutF()).to(digitH0.getInF());
+        new Signal(circuit).from(decoderH0.getOutG()).to(digitH0.getInG());
 
-        new Signal(circuit).from(decoderH1.getOutA()).to(display.getHours1().getInA());
-        new Signal(circuit).from(decoderH1.getOutB()).to(display.getHours1().getInB());
-        new Signal(circuit).from(decoderH1.getOutC()).to(display.getHours1().getInC());
-        new Signal(circuit).from(decoderH1.getOutD()).to(display.getHours1().getInD());
-        new Signal(circuit).from(decoderH1.getOutE()).to(display.getHours1().getInE());
-        new Signal(circuit).from(decoderH1.getOutF()).to(display.getHours1().getInF());
-        new Signal(circuit).from(decoderH1.getOutG()).to(display.getHours1().getInG());
+        new Signal(circuit).from(decoderH1.getOutA()).to(digitH1.getInA());
+        new Signal(circuit).from(decoderH1.getOutB()).to(digitH1.getInB());
+        new Signal(circuit).from(decoderH1.getOutC()).to(digitH1.getInC());
+        new Signal(circuit).from(decoderH1.getOutD()).to(digitH1.getInD());
+        new Signal(circuit).from(decoderH1.getOutE()).to(digitH1.getInE());
+        new Signal(circuit).from(decoderH1.getOutF()).to(digitH1.getInF());
+        new Signal(circuit).from(decoderH1.getOutG()).to(digitH1.getInG());
     }
 
     public Input getPowerIn()
@@ -296,9 +310,34 @@ public class RelayClock extends Component
         return powerIn;
     }
 
-    public RelayClockDisplay getDisplay()
+    public RelayClockDigitPCB getDisplayS0()
     {
-        return display;
+        return digitS0;
+    }
+
+    public RelayClockDigitPCB getDisplayS1()
+    {
+        return digitS1;
+    }
+
+    public RelayClockDigitPCB getDisplayM0()
+    {
+        return digitM0;
+    }
+
+    public RelayClockDigitPCB getDisplayM1()
+    {
+        return digitM1;
+    }
+
+    public RelayClockDigitPCB getDisplayH0()
+    {
+        return digitH0;
+    }
+
+    public RelayClockDigitPCB getDisplayH1()
+    {
+        return digitH1;
     }
 
     public Switch getMinutesSwitch()

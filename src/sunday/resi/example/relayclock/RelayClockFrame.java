@@ -44,7 +44,7 @@ public class RelayClockFrame extends Frame implements Monitor
         setLayout(layout);
 
         // clock display
-        canvas = new RelayClockCanvas(clock.getDisplay());
+        canvas = new RelayClockCanvas(clock);
         add(canvas, BorderLayout.CENTER);
 
         // buttons to set the clock

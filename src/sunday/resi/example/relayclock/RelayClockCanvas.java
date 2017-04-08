@@ -15,14 +15,29 @@ public class RelayClockCanvas extends Canvas
 {
     private static final long serialVersionUID = 1L;
 
-    private RelayClockDisplay display;
+    private RelayClockDigitPCB digitS0;
+
+    private RelayClockDigitPCB digitS1;
+
+    private RelayClockDigitPCB digitM0;
+
+    private RelayClockDigitPCB digitM1;
+
+    private RelayClockDigitPCB digitH0;
+
+    private RelayClockDigitPCB digitH1;
 
     /**
      * The constructor.
      */
-    public RelayClockCanvas(RelayClockDisplay display)
+    public RelayClockCanvas(RelayClock clock)
     {
-        this.display = display;
+        this.digitS0 = clock.getDisplayS0();
+        this.digitS1 = clock.getDisplayS1();
+        this.digitM0 = clock.getDisplayM0();
+        this.digitM1 = clock.getDisplayM1();
+        this.digitH0 = clock.getDisplayH0();
+        this.digitH1 = clock.getDisplayH1();
     }
 
     @Override
@@ -44,12 +59,12 @@ public class RelayClockCanvas extends Canvas
         int x = (w - 330) / 2;
         int y = (h - 120) / 2;
 
-        paint(display.getHours1(), g, x + 20, y + 20);
-        paint(display.getHours0(), g, x + 70, y + 20);
-        paint(display.getMinutes1(), g, x + 120, y + 20);
-        paint(display.getMinutes0(), g, x + 170, y + 20);
-        paint(display.getSeconds1(), g, x + 220, y + 20);
-        paint(display.getSeconds0(), g, x + 270, y + 20);
+        paint(digitH1.getDisplay(), g, x + 20, y + 20);
+        paint(digitH0.getDisplay(), g, x + 70, y + 20);
+        paint(digitM1.getDisplay(), g, x + 120, y + 20);
+        paint(digitM0.getDisplay(), g, x + 170, y + 20);
+        paint(digitS1.getDisplay(), g, x + 220, y + 20);
+        paint(digitS0.getDisplay(), g, x + 270, y + 20);
     }
 
     private void paint(SevenSegmentDisplay digit, Graphics g, int xOffset, int yOffset)
