@@ -10,7 +10,6 @@ import sunday.resi.common.Signal;
 import sunday.resi.library.BCDToDecimalDecoder;
 import sunday.resi.library.Clock;
 import sunday.resi.library.Counter;
-import sunday.resi.library.DecimalToSevenSegmentDecoder;
 import sunday.resi.library.Relay;
 import sunday.resi.library.Switch;
 
@@ -64,12 +63,12 @@ public class RelayClock extends Component
         BCDToDecimalDecoder bcdH0 = new BCDToDecimalDecoder(circuit, name + "_BCDH0");
         BCDToDecimalDecoder bcdH1 = new BCDToDecimalDecoder(circuit, name + "_BCDH1");
 
-        DecimalToSevenSegmentDecoder decoderS0 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecS0");
-        DecimalToSevenSegmentDecoder decoderS1 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecS1");
-        DecimalToSevenSegmentDecoder decoderM0 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecM0");
-        DecimalToSevenSegmentDecoder decoderM1 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecM1");
-        DecimalToSevenSegmentDecoder decoderH0 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH0");
-        DecimalToSevenSegmentDecoder decoderH1 = new DecimalToSevenSegmentDecoder(circuit, name + "_DecH1");
+        RelayClockDecoderPCB decoderS0 = new RelayClockDecoderPCB(circuit, name + "_S0");
+        RelayClockDecoderPCB decoderS1 = new RelayClockDecoderPCB(circuit, name + "_S1");
+        RelayClockDecoderPCB decoderM0 = new RelayClockDecoderPCB(circuit, name + "_M0");
+        RelayClockDecoderPCB decoderM1 = new RelayClockDecoderPCB(circuit, name + "_M1");
+        RelayClockDecoderPCB decoderH0 = new RelayClockDecoderPCB(circuit, name + "_H0");
+        RelayClockDecoderPCB decoderH1 = new RelayClockDecoderPCB(circuit, name + "_H1");
 
         digitS0 = new RelayClockDigitPCB(circuit, name + "_DisplayS0");
         digitS1 = new RelayClockDigitPCB(circuit, name + "_DisplayS1");
