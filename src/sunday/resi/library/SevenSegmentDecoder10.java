@@ -92,9 +92,9 @@ public class SevenSegmentDecoder10 extends Component
         Relay r9 = new Relay(circuit, name + "_R9");
 
         // internal wirings
-        // each relay needs up to 13 switches
+        // each relay needs up to 9 switches
         // connect the middle contact for all of them with power
-        for (int i = 0; i < 13; i++)
+        for (int i = 0; i < 9; i++)
         {
             new Signal(circuit).from(powerIn).to(r0.getMiddleIn(i), r1.getMiddleIn(i), r2.getMiddleIn(i),
                 r3.getMiddleIn(i), r4.getMiddleIn(i), r5.getMiddleIn(i), r6.getMiddleIn(i), r7.getMiddleIn(i),
