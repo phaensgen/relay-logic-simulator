@@ -46,9 +46,6 @@ public class RelayClockCounter9PCB extends Component
 
     private Output out9;
 
-    @Deprecated
-    private Output _carryOut;
-
     private Output carryOut;
 
     /**
@@ -73,7 +70,6 @@ public class RelayClockCounter9PCB extends Component
         out7 = new Output();
         out8 = new Output();
         out9 = new Output();
-        _carryOut = new Output();
         carryOut = new Output();
 
         Counter counter = new Counter(circuit, name + "_Counter");
@@ -116,7 +112,6 @@ public class RelayClockCounter9PCB extends Component
         new Signal(circuit).from(reset24.get_Out(0)).to(carry.getMiddleIn(0));
 
         new Signal(circuit).from(carry.get_Out(0)).to(counter.getPowerIn());
-        new Signal(circuit).from(carry.get_Out(1)).to(_carryOut);
         new Signal(circuit).from(carry.getOut(1)).to(carryOut);
     }
 
@@ -193,11 +188,5 @@ public class RelayClockCounter9PCB extends Component
     public Output getCarryOut()
     {
         return carryOut;
-    }
-
-    @Deprecated
-    public Output get_CarryOut()
-    {
-        return _carryOut;
     }
 }
