@@ -48,19 +48,19 @@ public class SevenSegmentDecoder16 extends Component
 
     private Input inF;
 
-    private Output a;
+    private Output outA;
 
-    private Output b;
+    private Output outB;
 
-    private Output c;
+    private Output outC;
 
-    private Output d;
+    private Output outD;
 
-    private Output e;
+    private Output outE;
 
-    private Output f;
+    private Output outF;
 
-    private Output g;
+    private Output outG;
 
     /**
      * The constructor.
@@ -89,13 +89,13 @@ public class SevenSegmentDecoder16 extends Component
         inE = new Input();
         inF = new Input();
 
-        a = new Output();
-        b = new Output();
-        c = new Output();
-        d = new Output();
-        e = new Output();
-        f = new Output();
-        g = new Output();
+        outA = new Output();
+        outB = new Output();
+        outC = new Output();
+        outD = new Output();
+        outE = new Output();
+        outF = new Output();
+        outG = new Output();
 
         // internal elements
         Relay r0 = new Relay(circuit, name + "_R0");
@@ -157,7 +157,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(ra.getOut(0)).to(ja.getIn(8));
         new Signal(circuit).from(re.getOut(0)).to(ja.getIn(9));
         new Signal(circuit).from(rf.getOut(0)).to(ja.getIn(10));
-        new Signal(circuit).from(ja.getOut()).to(a);
+        new Signal(circuit).from(ja.getOut()).to(outA);
 
         // B
         Joint jb = new Joint(circuit);
@@ -171,7 +171,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(r9.getOut(1)).to(jb.getIn(7));
         new Signal(circuit).from(ra.getOut(1)).to(jb.getIn(8));
         new Signal(circuit).from(rd.getOut(1)).to(jb.getIn(9));
-        new Signal(circuit).from(jb.getOut()).to(b);
+        new Signal(circuit).from(jb.getOut()).to(outB);
 
         // C
         Joint jc = new Joint(circuit);
@@ -187,7 +187,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(ra.getOut(2)).to(jc.getIn(9));
         new Signal(circuit).from(rb.getOut(2)).to(jc.getIn(10));
         new Signal(circuit).from(rd.getOut(2)).to(jc.getIn(11));
-        new Signal(circuit).from(jc.getOut()).to(c);
+        new Signal(circuit).from(jc.getOut()).to(outC);
 
         // D
         Joint jd = new Joint(circuit);
@@ -202,7 +202,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(rc.getOut(3)).to(jd.getIn(8));
         new Signal(circuit).from(rd.getOut(3)).to(jd.getIn(9));
         new Signal(circuit).from(re.getOut(3)).to(jd.getIn(10));
-        new Signal(circuit).from(jd.getOut()).to(d);
+        new Signal(circuit).from(jd.getOut()).to(outD);
 
         // E
         Joint je = new Joint(circuit);
@@ -216,7 +216,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(rd.getOut(4)).to(je.getIn(7));
         new Signal(circuit).from(re.getOut(4)).to(je.getIn(8));
         new Signal(circuit).from(rf.getOut(4)).to(je.getIn(9));
-        new Signal(circuit).from(je.getOut()).to(e);
+        new Signal(circuit).from(je.getOut()).to(outE);
 
         // F
         Joint jf = new Joint(circuit);
@@ -230,7 +230,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(rb.getOut(5)).to(jf.getIn(7));
         new Signal(circuit).from(re.getOut(5)).to(jf.getIn(8));
         new Signal(circuit).from(rf.getOut(5)).to(jf.getIn(9));
-        new Signal(circuit).from(jf.getOut()).to(f);
+        new Signal(circuit).from(jf.getOut()).to(outF);
 
         // G
         Joint jg = new Joint(circuit);
@@ -247,7 +247,7 @@ public class SevenSegmentDecoder16 extends Component
         new Signal(circuit).from(rd.getOut(6)).to(jg.getIn(10));
         new Signal(circuit).from(re.getOut(6)).to(jg.getIn(11));
         new Signal(circuit).from(rf.getOut(6)).to(jg.getIn(12));
-        new Signal(circuit).from(jg.getOut()).to(g);
+        new Signal(circuit).from(jg.getOut()).to(outG);
     }
 
     public Input getPowerIn()
@@ -337,36 +337,36 @@ public class SevenSegmentDecoder16 extends Component
 
     public Output getOutA()
     {
-        return a;
+        return outA;
     }
 
     public Output getOutB()
     {
-        return b;
+        return outB;
     }
 
     public Output getOutC()
     {
-        return c;
+        return outC;
     }
 
     public Output getOutD()
     {
-        return d;
+        return outD;
     }
 
     public Output getOutE()
     {
-        return e;
+        return outE;
     }
 
     public Output getOutF()
     {
-        return f;
+        return outF;
     }
 
     public Output getOutG()
     {
-        return g;
+        return outG;
     }
 }
