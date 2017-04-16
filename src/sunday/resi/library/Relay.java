@@ -127,6 +127,14 @@ public class Relay extends Part
         return sw.getIn();
     }
 
+    /**
+     * Returns the number of used switches of the relay. Can be used to estimate the required number of real relays.
+     */
+    public int getSwitchCount()
+    {
+        return switches.size();
+    }
+
     @Override
     public void simulate()
     {
