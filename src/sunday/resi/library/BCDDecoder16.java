@@ -7,11 +7,11 @@ import sunday.resi.common.Output;
 import sunday.resi.common.Signal;
 
 /**
- * This is a decoder that converts a 4-bit BCD value into decimal outputs.
+ * This is a decoder that converts a 4-bit BCD value into hexadecimal outputs.
  * 
  * @author Peter H&auml;nsgen
  */
-public class BCDToDecimalDecoder extends Component
+public class BCDDecoder16 extends Component
 {
     private Input powerIn;
 
@@ -58,7 +58,7 @@ public class BCDToDecimalDecoder extends Component
     /**
      * The constructor.
      */
-    public BCDToDecimalDecoder(Circuit circuit, String name)
+    public BCDDecoder16(Circuit circuit, String name)
     {
         super(circuit, name);
 

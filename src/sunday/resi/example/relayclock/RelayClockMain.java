@@ -30,8 +30,23 @@ public class RelayClockMain
         RelayClockFrame frame = new RelayClockFrame(clock, sim);
         circuit.addMonitor(frame);
 
-        System.out.println(String.valueOf(circuit.getPartCount(Relay.class) + " relays used."));
+        printRelayCount(circuit, 2);
 
         sim.start();
+    }
+
+    /**
+     * Prints the number of required relays for the circuit.
+     */
+    static void printRelayCount(Circuit circuit, int maxSwitchCount)
+    {
+        // we assume that every relay has up to maxSwitchCount switches
+        int count = 0;
+        for (Relay r : circuit.getParts(Relay.class))
+        {
+            count += (r.getSwitchCount() + 1) / maxSwitchCount;
+        }
+
+        System.out.println(String.valueOf(count + " relays with " + maxSwitchCount + " switches required."));
     }
 }

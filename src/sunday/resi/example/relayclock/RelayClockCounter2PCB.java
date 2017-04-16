@@ -6,8 +6,8 @@ import sunday.resi.common.Input;
 import sunday.resi.common.Joint;
 import sunday.resi.common.Output;
 import sunday.resi.common.Signal;
-import sunday.resi.library.BCDToDecimalDecoder;
-import sunday.resi.library.Counter;
+import sunday.resi.library.BCDDecoder10;
+import sunday.resi.library.Counter4;
 import sunday.resi.library.Relay;
 
 /**
@@ -48,9 +48,9 @@ public class RelayClockCounter2PCB extends Component
         out1 = new Output();
         out2 = new Output();
 
-        Counter counter = new Counter(circuit, name + "_Counter");
+        Counter4 counter = new Counter4(circuit, name + "_Counter");
 
-        BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, name + "_BCD");
+        BCDDecoder10 bcd = new BCDDecoder10(circuit, name + "_BCD");
 
         Relay clock = new Relay(circuit, name + "_Clock");
         Relay reset24 = new Relay(circuit, name + "_Reset24");
@@ -61,8 +61,6 @@ public class RelayClockCounter2PCB extends Component
 
         new Signal(circuit).from(counter.getOut0()).to(bcd.getIn0());
         new Signal(circuit).from(counter.getOut1()).to(bcd.getIn1());
-        new Signal(circuit).from(counter.getOut2()).to(bcd.getIn2());
-        new Signal(circuit).from(counter.getOut3()).to(bcd.getIn3());
 
         new Signal(circuit).from(bcd.getOut0()).to(out0);
         new Signal(circuit).from(bcd.getOut1()).to(out1);

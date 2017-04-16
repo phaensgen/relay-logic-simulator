@@ -6,9 +6,9 @@ import sunday.resi.common.Circuit;
 import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
-import sunday.resi.library.BCDToDecimalDecoder;
+import sunday.resi.library.BCDDecoder16;
 import sunday.resi.library.Clock;
-import sunday.resi.library.Counter;
+import sunday.resi.library.Counter16;
 import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
 
@@ -26,9 +26,9 @@ public class CounterMain
         Power power = new Power(circuit, "VCC");
         Clock clock = new Clock(circuit, "Clock", 500, TimeUnit.MILLISECONDS);
 
-        Counter counter = new Counter(circuit, "Counter");
+        Counter16 counter = new Counter16(circuit, "Counter");
 
-        BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, "BCD");
+        BCDDecoder16 bcd = new BCDDecoder16(circuit, "BCD");
 
         SevenSegmentDecoder16 decoder = new SevenSegmentDecoder16(circuit, "Decoder");
 

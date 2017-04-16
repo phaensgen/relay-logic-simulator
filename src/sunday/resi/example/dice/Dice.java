@@ -6,9 +6,9 @@ import sunday.resi.common.Circuit;
 import sunday.resi.common.Component;
 import sunday.resi.common.Input;
 import sunday.resi.common.Signal;
-import sunday.resi.library.BCDToDecimalDecoder;
+import sunday.resi.library.BCDDecoder10;
 import sunday.resi.library.Clock;
-import sunday.resi.library.Counter;
+import sunday.resi.library.Counter8;
 import sunday.resi.library.Relay;
 import sunday.resi.library.SevenSegmentDecoder10;
 import sunday.resi.library.SevenSegmentDisplay;
@@ -30,9 +30,9 @@ public class Dice extends Component
 
         Clock clock = new Clock(circuit, name + "_Clock", 10, TimeUnit.MILLISECONDS);
 
-        Counter counter = new Counter(circuit, name + "_Counter");
+        Counter8 counter = new Counter8(circuit, name + "_Counter");
 
-        BCDToDecimalDecoder bcd = new BCDToDecimalDecoder(circuit, name + "_BCD");
+        BCDDecoder10 bcd = new BCDDecoder10(circuit, name + "_BCD");
 
         SevenSegmentDecoder10 decoder = new SevenSegmentDecoder10(circuit, name + "_Decoder");
 
@@ -50,7 +50,6 @@ public class Dice extends Component
         new Signal(circuit).from(counter.getOut0()).to(bcd.getIn0());
         new Signal(circuit).from(counter.getOut1()).to(bcd.getIn1());
         new Signal(circuit).from(counter.getOut2()).to(bcd.getIn2());
-        new Signal(circuit).from(counter.getOut3()).to(bcd.getIn3());
 
         new Signal(circuit).from(bcd.getOut0()).to(decoder.getIn1());
         new Signal(circuit).from(bcd.getOut1()).to(decoder.getIn2());

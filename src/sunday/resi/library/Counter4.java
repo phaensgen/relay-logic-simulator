@@ -7,11 +7,11 @@ import sunday.resi.common.Output;
 import sunday.resi.common.Signal;
 
 /**
- * This is a 4-bit counter based on flip flops.
+ * This is a 2-bit counter based on flip flops.
  * 
  * @author Peter H&auml;nsgen
  */
-public class Counter16 extends Component
+public class Counter4 extends Component
 {
     private Input powerIn;
 
@@ -27,18 +27,10 @@ public class Counter16 extends Component
 
     private Output out1;
 
-    private Output _out2;
-
-    private Output out2;
-
-    private Output _out3;
-
-    private Output out3;
-
     /**
      * The constructor.
      */
-    public Counter16(Circuit circuit, String name)
+    public Counter4(Circuit circuit, String name)
     {
         super(circuit, name);
 
@@ -50,18 +42,12 @@ public class Counter16 extends Component
         out0 = new Output();
         _out1 = new Output();
         out1 = new Output();
-        _out2 = new Output();
-        out2 = new Output();
-        _out3 = new Output();
-        out3 = new Output();
 
         FlipFlop f0 = new FlipFlop(circuit, name + "_FF0");
         FlipFlop f1 = new FlipFlop(circuit, name + "_FF1");
-        FlipFlop f2 = new FlipFlop(circuit, name + "_FF2");
-        FlipFlop f3 = new FlipFlop(circuit, name + "_FF3");
 
         // internal wiring
-        new Signal(circuit).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn(), f2.getPowerIn(), f3.getPowerIn());
+        new Signal(circuit).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn());
 
         // connect the flip flops with each other for form a 4-bit counter
         new Signal(circuit).from(_clock).to(f0.get_Clock());
@@ -69,14 +55,10 @@ public class Counter16 extends Component
 
         // inverse external outputs, otherwise it would count backwards
         new Signal(circuit).from(f0.getOut()).to(out0).to(f1.getClock());
-        new Signal(circuit).from(f1.getOut()).to(out1).to(f2.getClock());
-        new Signal(circuit).from(f2.getOut()).to(out2).to(f3.getClock());
-        new Signal(circuit).from(f3.getOut()).to(out3);
+        new Signal(circuit).from(f1.getOut()).to(out1);
 
         new Signal(circuit).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
-        new Signal(circuit).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
-        new Signal(circuit).from(f2.get_Out()).to(_out2).to(f3.get_Clock());
-        new Signal(circuit).from(f3.get_Out()).to(_out3);
+        new Signal(circuit).from(f1.get_Out()).to(_out1);
     }
 
     public Input getPowerIn()
@@ -114,26 +96,6 @@ public class Counter16 extends Component
         return out1;
     }
 
-    public Output get_Out2()
-    {
-        return _out2;
-    }
-
-    public Output getOut2()
-    {
-        return out2;
-    }
-
-    public Output get_Out3()
-    {
-        return _out3;
-    }
-
-    public Output getOut3()
-    {
-        return out3;
-    }
-
     @Override
     public String toString()
     {
@@ -153,14 +115,6 @@ public class Counter16 extends Component
         sb.append(String.valueOf(_out1));
         sb.append(", out1=");
         sb.append(String.valueOf(out1));
-        sb.append(", _out2=");
-        sb.append(String.valueOf(_out2));
-        sb.append(", out2=");
-        sb.append(String.valueOf(out2));
-        sb.append(", _out3=");
-        sb.append(String.valueOf(_out3));
-        sb.append(", out3=");
-        sb.append(String.valueOf(out3));
         sb.append("]");
 
         return sb.toString();
