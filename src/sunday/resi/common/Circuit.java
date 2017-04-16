@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Represents an electronic circuit. A circuit consists of parts and signals that connects parts with each other. Parts
@@ -70,6 +71,12 @@ public class Circuit
     public Collection<Part> getParts()
     {
         return parts.values();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <P extends Part> Collection<P> getParts(Class<P> type)
+    {
+        return (Collection<P>) parts.values().stream().filter(p -> type.isInstance(p)).collect(Collectors.toList());
     }
 
     /**
