@@ -8,11 +8,12 @@ import sunday.resi.common.Signal;
 import sunday.resi.library.SevenSegmentDecoder10;
 
 /**
- * Represents a PCB for the relay clock containing the 7-segment-decoder. The clock needs six such PCBs.
+ * Represents a PCB for the relay clock containing the 7-segment-decoder for the full value range 0..9. The clock needs
+ * at least three such PCBs.
  * 
  * @author Peter H&auml;nsgen
  */
-public class RelayClockDecoderPCB extends Component
+public class RelayClockDecoder10PCB extends Component
 {
     private Input powerIn;
 
@@ -53,7 +54,7 @@ public class RelayClockDecoderPCB extends Component
     /**
      * The constructor.
      */
-    public RelayClockDecoderPCB(Circuit circuit, String name)
+    public RelayClockDecoder10PCB(Circuit circuit, String name)
     {
         super(circuit, name);
 

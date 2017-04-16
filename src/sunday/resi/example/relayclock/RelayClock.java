@@ -53,12 +53,12 @@ public class RelayClock extends Component
         RelayClockCounter9PCB counterH0 = new RelayClockCounter9PCB(circuit, name + "_CounterH0");
         RelayClockCounter2PCB counterH1 = new RelayClockCounter2PCB(circuit, name + "_CounterH1");
 
-        RelayClockDecoderPCB decoderS0 = new RelayClockDecoderPCB(circuit, name + "_DecoderS0");
-        RelayClockDecoderPCB decoderS1 = new RelayClockDecoderPCB(circuit, name + "_DecoderS1");
-        RelayClockDecoderPCB decoderM0 = new RelayClockDecoderPCB(circuit, name + "_DecoderM0");
-        RelayClockDecoderPCB decoderM1 = new RelayClockDecoderPCB(circuit, name + "_DecoderM1");
-        RelayClockDecoderPCB decoderH0 = new RelayClockDecoderPCB(circuit, name + "_DecoderH0");
-        RelayClockDecoderPCB decoderH1 = new RelayClockDecoderPCB(circuit, name + "_DecoderH1");
+        RelayClockDecoder10PCB decoderS0 = new RelayClockDecoder10PCB(circuit, name + "_DecoderS0");
+        RelayClockDecoder6PCB decoderS1 = new RelayClockDecoder6PCB(circuit, name + "_DecoderS1");
+        RelayClockDecoder10PCB decoderM0 = new RelayClockDecoder10PCB(circuit, name + "_DecoderM0");
+        RelayClockDecoder6PCB decoderM1 = new RelayClockDecoder6PCB(circuit, name + "_DecoderM1");
+        RelayClockDecoder10PCB decoderH0 = new RelayClockDecoder10PCB(circuit, name + "_DecoderH0");
+        RelayClockDecoder3PCB decoderH1 = new RelayClockDecoder3PCB(circuit, name + "_DecoderH1");
 
         digitS0 = new RelayClockDigitPCB(circuit, name + "_DigitS0");
         digitS1 = new RelayClockDigitPCB(circuit, name + "_DigitS1");
