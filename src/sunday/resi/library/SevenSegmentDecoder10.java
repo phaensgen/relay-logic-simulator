@@ -92,14 +92,22 @@ public class SevenSegmentDecoder10 extends Component
         Relay r9 = new Relay(circuit, name + "_R9");
 
         // internal wirings
-        // each relay needs up to 9 switches
-        // connect the middle contact for all of them with power
-        for (int i = 0; i < 9; i++)
-        {
-            new Signal(circuit).from(powerIn).to(r0.getMiddleIn(i), r1.getMiddleIn(i), r2.getMiddleIn(i),
-                r3.getMiddleIn(i), r4.getMiddleIn(i), r5.getMiddleIn(i), r6.getMiddleIn(i), r7.getMiddleIn(i),
-                r8.getMiddleIn(i), r9.getMiddleIn(i));
-        }
+        // connect the middle contact for all used relay switches with power
+        new Signal(circuit).from(powerIn)
+            .to(r0.getMiddleIn(0), r0.getMiddleIn(1), r0.getMiddleIn(2), r0.getMiddleIn(3), r0.getMiddleIn(4),
+                r0.getMiddleIn(5))
+            .to(r1.getMiddleIn(0), r1.getMiddleIn(1))
+            .to(r2.getMiddleIn(0), r2.getMiddleIn(1), r2.getMiddleIn(2), r2.getMiddleIn(3), r2.getMiddleIn(4))
+            .to(r3.getMiddleIn(0), r3.getMiddleIn(1), r3.getMiddleIn(2), r3.getMiddleIn(3), r3.getMiddleIn(4))
+            .to(r4.getMiddleIn(0), r4.getMiddleIn(1), r4.getMiddleIn(2), r4.getMiddleIn(3))
+            .to(r5.getMiddleIn(0), r5.getMiddleIn(1), r5.getMiddleIn(2), r5.getMiddleIn(3), r5.getMiddleIn(4))
+            .to(r6.getMiddleIn(0), r6.getMiddleIn(1), r6.getMiddleIn(2), r6.getMiddleIn(3), r6.getMiddleIn(4),
+                r6.getMiddleIn(5))
+            .to(r7.getMiddleIn(0), r7.getMiddleIn(1), r7.getMiddleIn(2))
+            .to(r8.getMiddleIn(0), r8.getMiddleIn(1), r8.getMiddleIn(2), r8.getMiddleIn(3), r8.getMiddleIn(4),
+                r8.getMiddleIn(5), r8.getMiddleIn(6))
+            .to(r9.getMiddleIn(0), r9.getMiddleIn(1), r9.getMiddleIn(2), r9.getMiddleIn(3), r9.getMiddleIn(4),
+                r9.getMiddleIn(5));
 
         // connect inputs with their coils
         new Signal(circuit).from(in0).to(r0.getCoilIn());
@@ -128,10 +136,10 @@ public class SevenSegmentDecoder10 extends Component
         // B
         Joint jb = new Joint(circuit);
         new Signal(circuit).from(r0.getOut(1)).to(jb.getIn(0));
-        new Signal(circuit).from(r1.getOut(1)).to(jb.getIn(1));
+        new Signal(circuit).from(r1.getOut(0)).to(jb.getIn(1));
         new Signal(circuit).from(r2.getOut(1)).to(jb.getIn(2));
         new Signal(circuit).from(r3.getOut(1)).to(jb.getIn(3));
-        new Signal(circuit).from(r4.getOut(1)).to(jb.getIn(4));
+        new Signal(circuit).from(r4.getOut(0)).to(jb.getIn(4));
         new Signal(circuit).from(r7.getOut(1)).to(jb.getIn(5));
         new Signal(circuit).from(r8.getOut(1)).to(jb.getIn(6));
         new Signal(circuit).from(r9.getOut(1)).to(jb.getIn(7));
@@ -140,11 +148,11 @@ public class SevenSegmentDecoder10 extends Component
         // C
         Joint jc = new Joint(circuit);
         new Signal(circuit).from(r0.getOut(2)).to(jc.getIn(0));
-        new Signal(circuit).from(r1.getOut(2)).to(jc.getIn(1));
+        new Signal(circuit).from(r1.getOut(1)).to(jc.getIn(1));
         new Signal(circuit).from(r3.getOut(2)).to(jc.getIn(2));
-        new Signal(circuit).from(r4.getOut(2)).to(jc.getIn(3));
-        new Signal(circuit).from(r5.getOut(2)).to(jc.getIn(4));
-        new Signal(circuit).from(r6.getOut(2)).to(jc.getIn(5));
+        new Signal(circuit).from(r4.getOut(1)).to(jc.getIn(3));
+        new Signal(circuit).from(r5.getOut(1)).to(jc.getIn(4));
+        new Signal(circuit).from(r6.getOut(1)).to(jc.getIn(5));
         new Signal(circuit).from(r7.getOut(2)).to(jc.getIn(6));
         new Signal(circuit).from(r8.getOut(2)).to(jc.getIn(7));
         new Signal(circuit).from(r9.getOut(2)).to(jc.getIn(8));
@@ -153,10 +161,10 @@ public class SevenSegmentDecoder10 extends Component
         // D
         Joint jd = new Joint(circuit);
         new Signal(circuit).from(r0.getOut(3)).to(jd.getIn(0));
-        new Signal(circuit).from(r2.getOut(3)).to(jd.getIn(1));
+        new Signal(circuit).from(r2.getOut(2)).to(jd.getIn(1));
         new Signal(circuit).from(r3.getOut(3)).to(jd.getIn(2));
-        new Signal(circuit).from(r5.getOut(3)).to(jd.getIn(3));
-        new Signal(circuit).from(r6.getOut(3)).to(jd.getIn(4));
+        new Signal(circuit).from(r5.getOut(2)).to(jd.getIn(3));
+        new Signal(circuit).from(r6.getOut(2)).to(jd.getIn(4));
         new Signal(circuit).from(r8.getOut(3)).to(jd.getIn(5));
         new Signal(circuit).from(r9.getOut(3)).to(jd.getIn(6));
         new Signal(circuit).from(jd.getOut()).to(outD);
@@ -164,30 +172,30 @@ public class SevenSegmentDecoder10 extends Component
         // E
         Joint je = new Joint(circuit);
         new Signal(circuit).from(r0.getOut(4)).to(je.getIn(0));
-        new Signal(circuit).from(r2.getOut(4)).to(je.getIn(1));
-        new Signal(circuit).from(r6.getOut(4)).to(je.getIn(2));
+        new Signal(circuit).from(r2.getOut(3)).to(je.getIn(1));
+        new Signal(circuit).from(r6.getOut(3)).to(je.getIn(2));
         new Signal(circuit).from(r8.getOut(4)).to(je.getIn(3));
         new Signal(circuit).from(je.getOut()).to(outE);
 
         // F
         Joint jf = new Joint(circuit);
         new Signal(circuit).from(r0.getOut(5)).to(jf.getIn(0));
-        new Signal(circuit).from(r4.getOut(5)).to(jf.getIn(1));
-        new Signal(circuit).from(r5.getOut(5)).to(jf.getIn(2));
-        new Signal(circuit).from(r6.getOut(5)).to(jf.getIn(3));
+        new Signal(circuit).from(r4.getOut(2)).to(jf.getIn(1));
+        new Signal(circuit).from(r5.getOut(3)).to(jf.getIn(2));
+        new Signal(circuit).from(r6.getOut(4)).to(jf.getIn(3));
         new Signal(circuit).from(r8.getOut(5)).to(jf.getIn(4));
-        new Signal(circuit).from(r9.getOut(5)).to(jf.getIn(5));
+        new Signal(circuit).from(r9.getOut(4)).to(jf.getIn(5));
         new Signal(circuit).from(jf.getOut()).to(outF);
 
         // G
         Joint jg = new Joint(circuit);
-        new Signal(circuit).from(r2.getOut(6)).to(jg.getIn(0));
-        new Signal(circuit).from(r3.getOut(6)).to(jg.getIn(1));
-        new Signal(circuit).from(r4.getOut(6)).to(jg.getIn(2));
-        new Signal(circuit).from(r5.getOut(6)).to(jg.getIn(3));
-        new Signal(circuit).from(r6.getOut(6)).to(jg.getIn(4));
+        new Signal(circuit).from(r2.getOut(4)).to(jg.getIn(0));
+        new Signal(circuit).from(r3.getOut(4)).to(jg.getIn(1));
+        new Signal(circuit).from(r4.getOut(3)).to(jg.getIn(2));
+        new Signal(circuit).from(r5.getOut(4)).to(jg.getIn(3));
+        new Signal(circuit).from(r6.getOut(5)).to(jg.getIn(4));
         new Signal(circuit).from(r8.getOut(6)).to(jg.getIn(5));
-        new Signal(circuit).from(r9.getOut(6)).to(jg.getIn(6));
+        new Signal(circuit).from(r9.getOut(5)).to(jg.getIn(6));
         new Signal(circuit).from(jg.getOut()).to(outG);
     }
 
