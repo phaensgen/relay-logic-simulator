@@ -62,8 +62,8 @@ public class RelayClockFrame extends Frame implements Monitor
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Switch setHours = clock.getHoursSwitch();
-                setHours.push();
+                Switch setHoursSwitch = clock.getHoursSwitch();
+                setHoursSwitch.push();
                 try
                 {
                     // we have to wait for a number of simulation cycles so that the change becomes effective
@@ -72,7 +72,7 @@ public class RelayClockFrame extends Frame implements Monitor
                 catch (InterruptedException e1)
                 {
                 }
-                setHours.release();
+                setHoursSwitch.release();
             }
         });
         buttonPanel.add(hoursButton);
@@ -85,8 +85,8 @@ public class RelayClockFrame extends Frame implements Monitor
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Switch setMinutes = clock.getMinutesSwitch();
-                setMinutes.push();
+                Switch setMinutesSwitch = clock.getMinutesSwitch();
+                setMinutesSwitch.push();
                 try
                 {
                     // we have to wait for a number of simulation cycles so that the change becomes effective
@@ -95,7 +95,7 @@ public class RelayClockFrame extends Frame implements Monitor
                 catch (InterruptedException e1)
                 {
                 }
-                setMinutes.release();
+                setMinutesSwitch.release();
             }
         });
         buttonPanel.add(minutesButton);

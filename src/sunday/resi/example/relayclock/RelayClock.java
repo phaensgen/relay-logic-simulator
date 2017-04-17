@@ -67,8 +67,8 @@ public class RelayClock extends Component
         digitH0 = new RelayClockDigitPCB(circuit, name + "_DigitH0");
         digitH1 = new RelayClockDigitPCB(circuit, name + "_DigitH1");
 
-        minutesSwitch = new Switch(circuit, name + "_SetMM");
-        hoursSwitch = new Switch(circuit, name + "_SetHH");
+        minutesSwitch = new Switch(circuit, name + "_SetMinutesSwitch");
+        hoursSwitch = new Switch(circuit, name + "_SetHoursSwitch");
 
         Relay reset24M0 = new Relay(circuit, name + "_Reset24M0");
         Relay reset24M1 = new Relay(circuit, name + "_Reset24M1");
