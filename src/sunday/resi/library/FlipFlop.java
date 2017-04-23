@@ -60,7 +60,7 @@ public class FlipFlop extends Component
         new Signal(circuit).from(powerIn).to(sa0.getMiddleIn(), sb0.getMiddleIn());
         new Signal(circuit).from(_clock).to(sa1.getMiddleIn());
         new Signal(circuit).from(clock).to(sb1.getMiddleIn());
-        new Signal(circuit).from(sa0.getOut()).to(out).to(sc0.getMiddleIn());
+        new Signal(circuit).from(sa0.getOut()).to(sc0.getMiddleIn());
         new Signal(circuit).from(sb0.getOut()).to(sd0.getMiddleIn()).to(out);
 
         new Signal(circuit).from(sb1.get_Out()).to(ja.getIn(0));
