@@ -8,7 +8,7 @@ import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
 import sunday.resi.library.BCDDecoder16;
 import sunday.resi.library.Clock;
-import sunday.resi.library.Counter16;
+import sunday.resi.library.Countdown16;
 import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
 
@@ -26,7 +26,7 @@ public class CountdownMain
         Power power = new Power(circuit, "VCC");
         Clock clock = new Clock(circuit, "Clock", 500, TimeUnit.MILLISECONDS);
 
-        Counter16 counter = new Counter16(circuit, "Counter");
+        Countdown16 countdown = new Countdown16(circuit, "Countdown");
 
         BCDDecoder16 bcd = new BCDDecoder16(circuit, "BCD");
 
@@ -36,33 +36,33 @@ public class CountdownMain
         circuit.addMonitor(display);
 
         // internal wiring
-        new Signal(circuit).from(power.getOut()).to(counter.getPowerIn(), decoder.getPowerIn(), bcd.getPowerIn());
+        new Signal(circuit).from(power.getOut()).to(countdown.getPowerIn(), decoder.getPowerIn(), bcd.getPowerIn());
 
-        new Signal(circuit).from(clock.get_Out()).to(counter.get_Clock());
-        new Signal(circuit).from(clock.getOut()).to(counter.getClock());
+        new Signal(circuit).from(clock.get_Out()).to(countdown.get_Clock());
+        new Signal(circuit).from(clock.getOut()).to(countdown.getClock());
 
-        new Signal(circuit).from(counter.getOut0()).to(bcd.getIn0());
-        new Signal(circuit).from(counter.getOut1()).to(bcd.getIn1());
-        new Signal(circuit).from(counter.getOut2()).to(bcd.getIn2());
-        new Signal(circuit).from(counter.getOut3()).to(bcd.getIn3());
+        new Signal(circuit).from(countdown.getOut0()).to(bcd.getIn0());
+        new Signal(circuit).from(countdown.getOut1()).to(bcd.getIn1());
+        new Signal(circuit).from(countdown.getOut2()).to(bcd.getIn2());
+        new Signal(circuit).from(countdown.getOut3()).to(bcd.getIn3());
 
-        // connect counter and decoder cross-wise for counting backwards
-        new Signal(circuit).from(bcd.getOut0()).to(decoder.getInF());
-        new Signal(circuit).from(bcd.getOut1()).to(decoder.getInE());
-        new Signal(circuit).from(bcd.getOut2()).to(decoder.getInD());
-        new Signal(circuit).from(bcd.getOut3()).to(decoder.getInC());
-        new Signal(circuit).from(bcd.getOut4()).to(decoder.getInB());
-        new Signal(circuit).from(bcd.getOut5()).to(decoder.getInA());
-        new Signal(circuit).from(bcd.getOut6()).to(decoder.getIn9());
-        new Signal(circuit).from(bcd.getOut7()).to(decoder.getIn8());
-        new Signal(circuit).from(bcd.getOut8()).to(decoder.getIn7());
-        new Signal(circuit).from(bcd.getOut9()).to(decoder.getIn6());
-        new Signal(circuit).from(bcd.getOutA()).to(decoder.getIn5());
-        new Signal(circuit).from(bcd.getOutB()).to(decoder.getIn4());
-        new Signal(circuit).from(bcd.getOutC()).to(decoder.getIn3());
-        new Signal(circuit).from(bcd.getOutD()).to(decoder.getIn2());
-        new Signal(circuit).from(bcd.getOutE()).to(decoder.getIn1());
-        new Signal(circuit).from(bcd.getOutF()).to(decoder.getIn0());
+        // connect counter and decoder
+        new Signal(circuit).from(bcd.getOut0()).to(decoder.getIn0());
+        new Signal(circuit).from(bcd.getOut1()).to(decoder.getIn1());
+        new Signal(circuit).from(bcd.getOut2()).to(decoder.getIn2());
+        new Signal(circuit).from(bcd.getOut3()).to(decoder.getIn3());
+        new Signal(circuit).from(bcd.getOut4()).to(decoder.getIn4());
+        new Signal(circuit).from(bcd.getOut5()).to(decoder.getIn5());
+        new Signal(circuit).from(bcd.getOut6()).to(decoder.getIn6());
+        new Signal(circuit).from(bcd.getOut7()).to(decoder.getIn7());
+        new Signal(circuit).from(bcd.getOut8()).to(decoder.getIn8());
+        new Signal(circuit).from(bcd.getOut9()).to(decoder.getIn9());
+        new Signal(circuit).from(bcd.getOutA()).to(decoder.getInA());
+        new Signal(circuit).from(bcd.getOutB()).to(decoder.getInB());
+        new Signal(circuit).from(bcd.getOutC()).to(decoder.getInC());
+        new Signal(circuit).from(bcd.getOutD()).to(decoder.getInD());
+        new Signal(circuit).from(bcd.getOutE()).to(decoder.getInE());
+        new Signal(circuit).from(bcd.getOutF()).to(decoder.getInF());
 
         new Signal(circuit).from(decoder.getOutA()).to(display.getInA());
         new Signal(circuit).from(decoder.getOutB()).to(display.getInB());
