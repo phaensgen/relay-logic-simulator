@@ -42,7 +42,7 @@ public class RelayClockMain
     {
         // we assume that every relay has up to maxSwitchCount switches
         int count = 0;
-        for (Relay r : circuit.getParts(Relay.class))
+        for (Relay r : circuit.getAllParts(Relay.class))
         {
             count += (r.getSwitchCount() + 1) / maxSwitchCount;
         }

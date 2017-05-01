@@ -73,28 +73,33 @@ public class Circuit
         return parts.values();
     }
 
+    public Collection<Part> getAllParts()
+    {
+        List<Part> allParts = new ArrayList<>();
+        for (Part p : parts.values())
+        {
+            if (p instanceof Component)
+            {
+                allParts.addAll(((Component) p).getLocalCircuit().getAllParts());
+            }
+            else
+            {
+                allParts.add(p);
+            }
+        }
+        return allParts;
+    }
+
     @SuppressWarnings("unchecked")
     public <P extends Part> Collection<P> getParts(Class<P> type)
     {
         return (Collection<P>) parts.values().stream().filter(p -> type.isInstance(p)).collect(Collectors.toList());
     }
 
-    /**
-     * Returns the number of parts with the given type in the circuit.
-     */
-    public int getPartCount(Class<? extends Part> type)
+    @SuppressWarnings("unchecked")
+    public <P extends Part> Collection<P> getAllParts(Class<P> type)
     {
-        int count = 0;
-
-        for (Part p : parts.values())
-        {
-            if (type.isInstance(p))
-            {
-                count++;
-            }
-        }
-
-        return count;
+        return (Collection<P>) getAllParts().stream().filter(p -> type.isInstance(p)).collect(Collectors.toList());
     }
 
     public void addMonitor(Monitor monitor)
