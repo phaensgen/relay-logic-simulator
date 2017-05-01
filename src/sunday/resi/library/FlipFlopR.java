@@ -15,22 +15,22 @@ import sunday.resi.common.Signal;
  */
 public class FlipFlopR extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input _clock;
+    private final Input _clock;
 
-    private Input clock;
+    private final Input clock;
 
-    private Output _out;
+    private final Output _out;
 
-    private Output out;
+    private final Output out;
 
     /**
      * The constructor.
      */
-    public FlipFlopR(Circuit circuit, String name)
+    public FlipFlopR(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
         _clock = new Input();
@@ -39,43 +39,55 @@ public class FlipFlopR extends Component
         _out = new Output();
         out = new Output();
 
+        Circuit local = getLocalCircuit();
+
         // create elements in an order that the simulation takes as less cycles as possible
-        Relay ra = new Relay(circuit, name + "_RA");
+        Relay ra = new Relay(local, name + "_RA");
         Switch sa0 = ra.getSwitch(0);
         Switch sa1 = ra.getSwitch(1);
 
-        Relay rb = new Relay(circuit, name + "_RB");
+        Relay rb = new Relay(local, name + "_RB");
         Switch sb0 = rb.getSwitch(0);
         Switch sb1 = rb.getSwitch(1);
 
-        Relay rc = new Relay(circuit, name + "_RC");
+        Relay rc = new Relay(local, name + "_RC");
         Switch sc0 = rc.getSwitch(0);
 
-        Relay rd = new Relay(circuit, name + "_RD");
+        Relay rd = new Relay(local, name + "_RD");
         Switch sd0 = rd.getSwitch(0);
 
-        Joint ja = new Joint(circuit, name + "_JA");
-        Joint jb = new Joint(circuit, name + "_JB");
+        Joint ja = new Joint(local, name + "_JA");
+        Joint jb = new Joint(local, name + "_JB");
 
         // internal wirings
-        new Signal(circuit).from(powerIn).to(sa0.getMiddleIn(), sb0.getMiddleIn());
-        new Signal(circuit).from(_clock).to(sa1.getMiddleIn());
-        new Signal(circuit).from(clock).to(sb1.getMiddleIn());
-        new Signal(circuit).from(sa0.getOut()).to(sc0.getMiddleIn()).to(out);
-        new Signal(circuit).from(sa0.get_Out()).to(_out);
-        new Signal(circuit).from(sb0.getOut()).to(sd0.getMiddleIn());
+        new Signal(local).from(powerIn).to(sa0.getMiddleIn(), sb0.getMiddleIn());
+        new Signal(local).from(_clock).to(sa1.getMiddleIn());
+        new Signal(local).from(clock).to(sb1.getMiddleIn());
+        new Signal(local).from(sa0.getOut()).to(sc0.getMiddleIn()).to(out);
+        new Signal(local).from(sa0.get_Out()).to(_out);
+        new Signal(local).from(sb0.getOut()).to(sd0.getMiddleIn());
 
-        new Signal(circuit).from(sb1.get_Out()).to(ja.getIn(0));
-        new Signal(circuit).from(sc0.get_Out()).to(ja.getIn(1));
+        new Signal(local).from(sb1.get_Out()).to(ja.getIn(0));
+        new Signal(local).from(sc0.get_Out()).to(ja.getIn(1));
 
-        new Signal(circuit).from(ja.getOut()).to(ra.getCoilIn());
-        new Signal(circuit).from(sa1.get_Out()).to(rd.getCoilIn());
+        new Signal(local).from(ja.getOut()).to(ra.getCoilIn());
+        new Signal(local).from(sa1.get_Out()).to(rd.getCoilIn());
 
-        new Signal(circuit).from(sd0.get_Out()).to(jb.getIn(1));
-        new Signal(circuit).from(sa1.getOut()).to(jb.getIn(0));
+        new Signal(local).from(sd0.get_Out()).to(jb.getIn(1));
+        new Signal(local).from(sa1.getOut()).to(jb.getIn(0));
 
-        new Signal(circuit).from(jb.getOut()).to(rb.getCoilIn());
-        new Signal(circuit).from(sb1.getOut()).to(rc.getCoilIn());
+        new Signal(local).from(jb.getOut()).to(rb.getCoilIn());
+        new Signal(local).from(sb1.getOut()).to(rc.getCoilIn());
+    }
+
+    @Override
+    public void simulate()
+    {
+        // use multiple cycles for consistent results
+        for (int i = 0; i < 3; i++)
+        {
+            super.simulate();
+        }
     }
 
     public Input getPowerIn()

@@ -12,40 +12,40 @@ import sunday.resi.common.Signal;
  */
 public class SevenSegmentDisplay extends Component
 {
-    private Lamp a;
+    private final Lamp a;
 
-    private Lamp b;
+    private final Lamp b;
 
-    private Lamp c;
+    private final Lamp c;
 
-    private Lamp d;
+    private final Lamp d;
 
-    private Lamp e;
+    private final Lamp e;
 
-    private Lamp f;
+    private final Lamp f;
 
-    private Lamp g;
+    private final Lamp g;
 
-    private Input inA;
+    private final Input inA;
 
-    private Input inB;
+    private final Input inB;
 
-    private Input inC;
+    private final Input inC;
 
-    private Input inD;
+    private final Input inD;
 
-    private Input inE;
+    private final Input inE;
 
-    private Input inF;
+    private final Input inF;
 
-    private Input inG;
+    private final Input inG;
 
     /**
      * The constructor.
      */
-    public SevenSegmentDisplay(Circuit circuit, String name)
+    public SevenSegmentDisplay(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         inA = new Input();
         inB = new Input();
@@ -55,22 +55,24 @@ public class SevenSegmentDisplay extends Component
         inF = new Input();
         inG = new Input();
 
-        a = new Lamp(circuit, name + "_A");
-        b = new Lamp(circuit, name + "_B");
-        c = new Lamp(circuit, name + "_C");
-        d = new Lamp(circuit, name + "_D");
-        e = new Lamp(circuit, name + "_E");
-        f = new Lamp(circuit, name + "_F");
-        g = new Lamp(circuit, name + "_G");
+        Circuit local = getLocalCircuit();
+
+        a = new Lamp(local, name + "_A");
+        b = new Lamp(local, name + "_B");
+        c = new Lamp(local, name + "_C");
+        d = new Lamp(local, name + "_D");
+        e = new Lamp(local, name + "_E");
+        f = new Lamp(local, name + "_F");
+        g = new Lamp(local, name + "_G");
 
         // internal wirings
-        new Signal(circuit).from(inA).to(a.getIn());
-        new Signal(circuit).from(inB).to(b.getIn());
-        new Signal(circuit).from(inC).to(c.getIn());
-        new Signal(circuit).from(inD).to(d.getIn());
-        new Signal(circuit).from(inE).to(e.getIn());
-        new Signal(circuit).from(inF).to(f.getIn());
-        new Signal(circuit).from(inG).to(g.getIn());
+        new Signal(local).from(inA).to(a.getIn());
+        new Signal(local).from(inB).to(b.getIn());
+        new Signal(local).from(inC).to(c.getIn());
+        new Signal(local).from(inD).to(d.getIn());
+        new Signal(local).from(inE).to(e.getIn());
+        new Signal(local).from(inF).to(f.getIn());
+        new Signal(local).from(inG).to(g.getIn());
     }
 
     public Lamp getA()

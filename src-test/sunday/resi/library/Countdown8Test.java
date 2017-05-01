@@ -45,7 +45,7 @@ public class Countdown8Test
         // initially, output is 0
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
@@ -53,14 +53,14 @@ public class Countdown8Test
         // 7
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
@@ -68,14 +68,14 @@ public class Countdown8Test
         // 6
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertTrue(out2.getValue());
@@ -83,14 +83,14 @@ public class Countdown8Test
         // 5
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
@@ -98,14 +98,14 @@ public class Countdown8Test
         // 4
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertTrue(out2.getValue());
@@ -113,14 +113,14 @@ public class Countdown8Test
         // 3
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
@@ -128,14 +128,14 @@ public class Countdown8Test
         // 2
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
         assertNull(out2.getValue());
@@ -143,14 +143,14 @@ public class Countdown8Test
         // 1
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
@@ -158,27 +158,16 @@ public class Countdown8Test
         // 0
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
         assertNull(out2.getValue());
-    }
-
-    /**
-     * Performs a number of simulation steps.
-     */
-    private void simulate(Circuit circuit)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            circuit.simulate();
-        }
     }
 }

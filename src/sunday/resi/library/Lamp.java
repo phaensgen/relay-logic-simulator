@@ -11,7 +11,7 @@ import sunday.resi.common.Part;
  */
 public class Lamp extends Part
 {
-    private Input in;
+    private final Input in;
 
     private Boolean state;
 

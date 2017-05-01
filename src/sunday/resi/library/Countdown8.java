@@ -13,30 +13,30 @@ import sunday.resi.common.Signal;
  */
 public class Countdown8 extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input _clock;
+    private final Input _clock;
 
-    private Input clock;
+    private final Input clock;
 
-    private Output _out0;
+    private final Output _out0;
 
-    private Output out0;
+    private final Output out0;
 
-    private Output _out1;
+    private final Output _out1;
 
-    private Output out1;
+    private final Output out1;
 
-    private Output _out2;
+    private final Output _out2;
 
-    private Output out2;
+    private final Output out2;
 
     /**
      * The constructor.
      */
-    public Countdown8(Circuit circuit, String name)
+    public Countdown8(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
         _clock = new Input();
@@ -49,25 +49,27 @@ public class Countdown8 extends Component
         _out2 = new Output();
         out2 = new Output();
 
-        FlipFlopR f0 = new FlipFlopR(circuit, name + "_FF0");
-        FlipFlopR f1 = new FlipFlopR(circuit, name + "_FF1");
-        FlipFlopR f2 = new FlipFlopR(circuit, name + "_FF2");
+        Circuit local = getLocalCircuit();
+
+        FlipFlopR f0 = new FlipFlopR(local, name + "_FF0");
+        FlipFlopR f1 = new FlipFlopR(local, name + "_FF1");
+        FlipFlopR f2 = new FlipFlopR(local, name + "_FF2");
 
         // internal wiring
-        new Signal(circuit).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn(), f2.getPowerIn());
+        new Signal(local).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn(), f2.getPowerIn());
 
         // connect the flip flops with each other for form a 4-bit counter
-        new Signal(circuit).from(_clock).to(f0.get_Clock());
-        new Signal(circuit).from(clock).to(f0.getClock());
+        new Signal(local).from(_clock).to(f0.get_Clock());
+        new Signal(local).from(clock).to(f0.getClock());
 
         // inverse external outputs, otherwise it would count backwards
-        new Signal(circuit).from(f0.getOut()).to(out0).to(f1.getClock());
-        new Signal(circuit).from(f1.getOut()).to(out1).to(f2.getClock());
-        new Signal(circuit).from(f2.getOut()).to(out2);
+        new Signal(local).from(f0.getOut()).to(out0).to(f1.getClock());
+        new Signal(local).from(f1.getOut()).to(out1).to(f2.getClock());
+        new Signal(local).from(f2.getOut()).to(out2);
 
-        new Signal(circuit).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
-        new Signal(circuit).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
-        new Signal(circuit).from(f2.get_Out()).to(_out2);
+        new Signal(local).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
+        new Signal(local).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
+        new Signal(local).from(f2.get_Out()).to(_out2);
     }
 
     public Input getPowerIn()

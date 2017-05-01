@@ -15,15 +15,15 @@ public class Clock extends Part
 {
     public static final String CLOCK = "clock";
 
-    private long interval;
+    private final long interval;
 
     private long lastTime;
 
     private boolean state;
 
-    private Output _out;
+    private final Output _out;
 
-    private Output out;
+    private final Output out;
 
     /**
      * The constructor.

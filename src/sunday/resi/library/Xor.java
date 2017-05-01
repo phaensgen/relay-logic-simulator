@@ -24,31 +24,33 @@ public class Xor extends Component
     /**
      * The constructor.
      */
-    public Xor(Circuit circuit, String name)
+    public Xor(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
         in0 = new Input();
         in1 = new Input();
         out = new Output();
 
-        Relay r0 = new Relay(circuit, name + "_R0");
+        Circuit local = getLocalCircuit();
+
+        Relay r0 = new Relay(local, name + "_R0");
         Switch s0 = r0.getSwitch(0);
 
-        Relay r1 = new Relay(circuit, name + "_R1");
+        Relay r1 = new Relay(local, name + "_R1");
         Swotch s1 = r1.getSwotch(0);
 
         // internal wiring
-        new Signal(circuit).from(powerIn).to(s0.getMiddleIn());
+        new Signal(local).from(powerIn).to(s0.getMiddleIn());
 
-        new Signal(circuit).from(in0).to(r0.getCoilIn());
-        new Signal(circuit).from(in1).to(r1.getCoilIn());
+        new Signal(local).from(in0).to(r0.getCoilIn());
+        new Signal(local).from(in1).to(r1.getCoilIn());
 
-        new Signal(circuit).from(s0.get_Out()).to(s1.getIn());
-        new Signal(circuit).from(s0.getOut()).to(s1.get_In());
+        new Signal(local).from(s0.get_Out()).to(s1.getIn());
+        new Signal(local).from(s0.getOut()).to(s1.get_In());
 
-        new Signal(circuit).from(s1.getMiddleOut()).to(out);
+        new Signal(local).from(s1.getMiddleOut()).to(out);
     }
 
     public Input getPowerIn()

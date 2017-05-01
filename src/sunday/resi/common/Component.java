@@ -9,16 +9,29 @@ package sunday.resi.common;
 public abstract class Component extends Part
 {
     /**
+     * The inner circuit, formed of the parts of the component.
+     */
+    private final Circuit local;
+
+    /**
      * The constructor.
      */
-    public Component(Circuit circuit, String name)
+    public Component(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
+
+        local = new Circuit();
+    }
+
+    protected Circuit getLocalCircuit()
+    {
+        return local;
     }
 
     @Override
     public void simulate()
     {
-        // contained parts are simulated individually, nothing to do here
+        // parts are contained by local circuit
+        local.simulate();
     }
 }

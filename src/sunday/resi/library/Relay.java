@@ -23,9 +23,9 @@ import sunday.resi.common.Part;
  */
 public class Relay extends Part
 {
-    private Input coilIn;
+    private final Input coilIn;
 
-    private Map<Integer, AbstractSwitch> switches;
+    private final Map<Integer, AbstractSwitch> switches;
 
     /**
      * The constructor.

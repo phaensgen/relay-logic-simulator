@@ -14,37 +14,39 @@ import sunday.resi.common.Signal;
  */
 public class Nand extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input[] ins;
+    private final Input[] ins;
 
-    private Output _out;
+    private final Output _out;
 
     /**
      * The constructor.
      * 
      * @param n number of inputs
      */
-    public Nand(Circuit circuit, String name, int n)
+    public Nand(Circuit parent, String name, int n)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
 
         ins = new Input[n];
+
+        Circuit local = getLocalCircuit();
 
         // first create relays, then the joint to keep them in the right processing order
         Relay[] relays = new Relay[n];
         for (int i = 0; i < n; i++)
         {
             Input in = ins[i] = new Input();
-            Relay r = relays[i] = new Relay(circuit, name + "_R" + String.valueOf(i));
+            Relay r = relays[i] = new Relay(local, name + "_R" + String.valueOf(i));
 
-            new Signal(circuit).from(in).to(r.getCoilIn());
-            new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
+            new Signal(local).from(in).to(r.getCoilIn());
+            new Signal(local).from(powerIn).to(r.getMiddleIn(0));
         }
 
-        Joint joint = new Joint(circuit, name + "_J");
+        Joint joint = new Joint(local, name + "_J");
 
         _out = new Output();
 
@@ -53,10 +55,10 @@ public class Nand extends Component
         {
             Relay r = relays[i];
 
-            new Signal(circuit).from(r.get_Out(0)).to(joint.getIn(i));
+            new Signal(local).from(r.get_Out(0)).to(joint.getIn(i));
         }
 
-        new Signal(circuit).from(joint.getOut()).to(_out);
+        new Signal(local).from(joint.getOut()).to(_out);
     }
 
     public Input getPowerIn()

@@ -13,49 +13,51 @@ import sunday.resi.common.Signal;
  */
 public class Nor extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input[] ins;
+    private final Input[] ins;
 
-    private Output _out;
+    private final Output _out;
 
     /**
      * The constructor.
      * 
      * @param n number of inputs
      */
-    public Nor(Circuit circuit, String name, int n)
+    public Nor(Circuit parent, String name, int n)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
 
         ins = new Input[n];
+
+        Circuit local = getLocalCircuit();
 
         Relay[] relays = new Relay[n];
         for (int i = 0; i < n; i++)
         {
             ins[i] = new Input();
 
-            Relay r = new Relay(circuit, name + "_R" + String.valueOf(i));
+            Relay r = new Relay(local, name + "_R" + String.valueOf(i));
             relays[i] = r;
 
             // internal wiring
-            new Signal(circuit).from(ins[i]).to(r.getCoilIn());
+            new Signal(local).from(ins[i]).to(r.getCoilIn());
 
             if (i == 0)
             {
-                new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
+                new Signal(local).from(powerIn).to(r.getMiddleIn(0));
             }
             else
             {
-                new Signal(circuit).from(relays[i - 1].get_Out(0)).to(r.getMiddleIn(0));
+                new Signal(local).from(relays[i - 1].get_Out(0)).to(r.getMiddleIn(0));
             }
         }
 
         _out = new Output();
 
-        new Signal(circuit).from(relays[n - 1].get_Out(0)).to(_out);
+        new Signal(local).from(relays[n - 1].get_Out(0)).to(_out);
     }
 
     public Input getPowerIn()

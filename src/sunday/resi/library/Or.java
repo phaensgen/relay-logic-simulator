@@ -14,37 +14,39 @@ import sunday.resi.common.Signal;
  */
 public class Or extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input[] ins;
+    private final Input[] ins;
 
-    private Output out;
+    private final Output out;
 
     /**
      * The constructor.
      * 
      * @param n number of inputs
      */
-    public Or(Circuit circuit, String name, int n)
+    public Or(Circuit parent, String name, int n)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
 
         ins = new Input[n];
+
+        Circuit local = getLocalCircuit();
 
         // first create relays, then the joint to keep them in the right processing order
         Relay[] relays = new Relay[n];
         for (int i = 0; i < n; i++)
         {
             Input in = ins[i] = new Input();
-            Relay r = relays[i] = new Relay(circuit, name + "_R" + String.valueOf(i));
+            Relay r = relays[i] = new Relay(local, name + "_R" + String.valueOf(i));
 
-            new Signal(circuit).from(in).to(r.getCoilIn());
-            new Signal(circuit).from(powerIn).to(r.getMiddleIn(0));
+            new Signal(local).from(in).to(r.getCoilIn());
+            new Signal(local).from(powerIn).to(r.getMiddleIn(0));
         }
 
-        Joint joint = new Joint(circuit, name + "_J");
+        Joint joint = new Joint(local, name + "_J");
 
         out = new Output();
 
@@ -53,10 +55,10 @@ public class Or extends Component
         {
             Relay r = relays[i];
 
-            new Signal(circuit).from(r.getOut(0)).to(joint.getIn(i));
+            new Signal(local).from(r.getOut(0)).to(joint.getIn(i));
         }
 
-        new Signal(circuit).from(joint.getOut()).to(out);
+        new Signal(local).from(joint.getOut()).to(out);
     }
 
     public Input getPowerIn()

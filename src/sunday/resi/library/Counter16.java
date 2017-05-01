@@ -13,34 +13,34 @@ import sunday.resi.common.Signal;
  */
 public class Counter16 extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input _clock;
+    private final Input _clock;
 
-    private Input clock;
+    private final Input clock;
 
-    private Output _out0;
+    private final Output _out0;
 
-    private Output out0;
+    private final Output out0;
 
-    private Output _out1;
+    private final Output _out1;
 
-    private Output out1;
+    private final Output out1;
 
-    private Output _out2;
+    private final Output _out2;
 
-    private Output out2;
+    private final Output out2;
 
-    private Output _out3;
+    private final Output _out3;
 
-    private Output out3;
+    private final Output out3;
 
     /**
      * The constructor.
      */
-    public Counter16(Circuit circuit, String name)
+    public Counter16(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         powerIn = new Input();
         _clock = new Input();
@@ -55,28 +55,30 @@ public class Counter16 extends Component
         _out3 = new Output();
         out3 = new Output();
 
-        FlipFlop f0 = new FlipFlop(circuit, name + "_FF0");
-        FlipFlop f1 = new FlipFlop(circuit, name + "_FF1");
-        FlipFlop f2 = new FlipFlop(circuit, name + "_FF2");
-        FlipFlop f3 = new FlipFlop(circuit, name + "_FF3");
+        Circuit local = getLocalCircuit();
+
+        FlipFlop f0 = new FlipFlop(local, name + "_FF0");
+        FlipFlop f1 = new FlipFlop(local, name + "_FF1");
+        FlipFlop f2 = new FlipFlop(local, name + "_FF2");
+        FlipFlop f3 = new FlipFlop(local, name + "_FF3");
 
         // internal wiring
-        new Signal(circuit).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn(), f2.getPowerIn(), f3.getPowerIn());
+        new Signal(local).from(powerIn).to(f0.getPowerIn(), f1.getPowerIn(), f2.getPowerIn(), f3.getPowerIn());
 
         // connect the flip flops with each other for form a 4-bit counter
-        new Signal(circuit).from(_clock).to(f0.get_Clock());
-        new Signal(circuit).from(clock).to(f0.getClock());
+        new Signal(local).from(_clock).to(f0.get_Clock());
+        new Signal(local).from(clock).to(f0.getClock());
 
         // inverse external outputs, otherwise it would count backwards
-        new Signal(circuit).from(f0.getOut()).to(out0).to(f1.getClock());
-        new Signal(circuit).from(f1.getOut()).to(out1).to(f2.getClock());
-        new Signal(circuit).from(f2.getOut()).to(out2).to(f3.getClock());
-        new Signal(circuit).from(f3.getOut()).to(out3);
+        new Signal(local).from(f0.getOut()).to(out0).to(f1.getClock());
+        new Signal(local).from(f1.getOut()).to(out1).to(f2.getClock());
+        new Signal(local).from(f2.getOut()).to(out2).to(f3.getClock());
+        new Signal(local).from(f3.getOut()).to(out3);
 
-        new Signal(circuit).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
-        new Signal(circuit).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
-        new Signal(circuit).from(f2.get_Out()).to(_out2).to(f3.get_Clock());
-        new Signal(circuit).from(f3.get_Out()).to(_out3);
+        new Signal(local).from(f0.get_Out()).to(_out0).to(f1.get_Clock());
+        new Signal(local).from(f1.get_Out()).to(_out1).to(f2.get_Clock());
+        new Signal(local).from(f2.get_Out()).to(_out2).to(f3.get_Clock());
+        new Signal(local).from(f3.get_Out()).to(_out3);
     }
 
     public Input getPowerIn()
@@ -139,7 +141,7 @@ public class Counter16 extends Component
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[Counter ");
+        sb.append("[Counter16 ");
         sb.append(getName());
         sb.append(": _clock=");
         sb.append(String.valueOf(_clock));

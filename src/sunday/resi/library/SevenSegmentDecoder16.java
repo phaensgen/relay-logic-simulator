@@ -14,60 +14,60 @@ import sunday.resi.common.Signal;
  */
 public class SevenSegmentDecoder16 extends Component
 {
-    private Input powerIn;
+    private final Input powerIn;
 
-    private Input in0;
+    private final Input in0;
 
-    private Input in1;
+    private final Input in1;
 
-    private Input in2;
+    private final Input in2;
 
-    private Input in3;
+    private final Input in3;
 
-    private Input in4;
+    private final Input in4;
 
-    private Input in5;
+    private final Input in5;
 
-    private Input in6;
+    private final Input in6;
 
-    private Input in7;
+    private final Input in7;
 
-    private Input in8;
+    private final Input in8;
 
-    private Input in9;
+    private final Input in9;
 
-    private Input inA;
+    private final Input inA;
 
-    private Input inB;
+    private final Input inB;
 
-    private Input inC;
+    private final Input inC;
 
-    private Input inD;
+    private final Input inD;
 
-    private Input inE;
+    private final Input inE;
 
-    private Input inF;
+    private final Input inF;
 
-    private Output outA;
+    private final Output outA;
 
-    private Output outB;
+    private final Output outB;
 
-    private Output outC;
+    private final Output outC;
 
-    private Output outD;
+    private final Output outD;
 
-    private Output outE;
+    private final Output outE;
 
-    private Output outF;
+    private final Output outF;
 
-    private Output outG;
+    private final Output outG;
 
     /**
      * The constructor.
      */
-    public SevenSegmentDecoder16(Circuit circuit, String name)
+    public SevenSegmentDecoder16(Circuit parent, String name)
     {
-        super(circuit, name);
+        super(parent, name);
 
         // external connectors
         powerIn = new Input();
@@ -97,27 +97,29 @@ public class SevenSegmentDecoder16 extends Component
         outF = new Output();
         outG = new Output();
 
+        Circuit local = getLocalCircuit();
+
         // internal elements
-        Relay r0 = new Relay(circuit, name + "_R0");
-        Relay r1 = new Relay(circuit, name + "_R1");
-        Relay r2 = new Relay(circuit, name + "_R2");
-        Relay r3 = new Relay(circuit, name + "_R3");
-        Relay r4 = new Relay(circuit, name + "_R4");
-        Relay r5 = new Relay(circuit, name + "_R5");
-        Relay r6 = new Relay(circuit, name + "_R6");
-        Relay r7 = new Relay(circuit, name + "_R7");
-        Relay r8 = new Relay(circuit, name + "_R8");
-        Relay r9 = new Relay(circuit, name + "_R9");
-        Relay ra = new Relay(circuit, name + "_RA");
-        Relay rb = new Relay(circuit, name + "_RB");
-        Relay rc = new Relay(circuit, name + "_RC");
-        Relay rd = new Relay(circuit, name + "_RD");
-        Relay re = new Relay(circuit, name + "_RE");
-        Relay rf = new Relay(circuit, name + "_RF");
+        Relay r0 = new Relay(local, name + "_R0");
+        Relay r1 = new Relay(local, name + "_R1");
+        Relay r2 = new Relay(local, name + "_R2");
+        Relay r3 = new Relay(local, name + "_R3");
+        Relay r4 = new Relay(local, name + "_R4");
+        Relay r5 = new Relay(local, name + "_R5");
+        Relay r6 = new Relay(local, name + "_R6");
+        Relay r7 = new Relay(local, name + "_R7");
+        Relay r8 = new Relay(local, name + "_R8");
+        Relay r9 = new Relay(local, name + "_R9");
+        Relay ra = new Relay(local, name + "_RA");
+        Relay rb = new Relay(local, name + "_RB");
+        Relay rc = new Relay(local, name + "_RC");
+        Relay rd = new Relay(local, name + "_RD");
+        Relay re = new Relay(local, name + "_RE");
+        Relay rf = new Relay(local, name + "_RF");
 
         // internal wirings
         // connect the middle contact for all used relay switches with power
-        new Signal(circuit).from(powerIn)
+        new Signal(local).from(powerIn)
             .to(r0.getMiddleIn(0), r0.getMiddleIn(1), r0.getMiddleIn(2), r0.getMiddleIn(3), r0.getMiddleIn(4),
                 r0.getMiddleIn(5))
             .to(r1.getMiddleIn(0), r1.getMiddleIn(1))
@@ -141,127 +143,127 @@ public class SevenSegmentDecoder16 extends Component
             .to(rf.getMiddleIn(0), rf.getMiddleIn(1), rf.getMiddleIn(2), rf.getMiddleIn(3));
 
         // connect inputs with their coils
-        new Signal(circuit).from(in0).to(r0.getCoilIn());
-        new Signal(circuit).from(in1).to(r1.getCoilIn());
-        new Signal(circuit).from(in2).to(r2.getCoilIn());
-        new Signal(circuit).from(in3).to(r3.getCoilIn());
-        new Signal(circuit).from(in4).to(r4.getCoilIn());
-        new Signal(circuit).from(in5).to(r5.getCoilIn());
-        new Signal(circuit).from(in6).to(r6.getCoilIn());
-        new Signal(circuit).from(in7).to(r7.getCoilIn());
-        new Signal(circuit).from(in8).to(r8.getCoilIn());
-        new Signal(circuit).from(in9).to(r9.getCoilIn());
-        new Signal(circuit).from(inA).to(ra.getCoilIn());
-        new Signal(circuit).from(inB).to(rb.getCoilIn());
-        new Signal(circuit).from(inC).to(rc.getCoilIn());
-        new Signal(circuit).from(inD).to(rd.getCoilIn());
-        new Signal(circuit).from(inE).to(re.getCoilIn());
-        new Signal(circuit).from(inF).to(rf.getCoilIn());
+        new Signal(local).from(in0).to(r0.getCoilIn());
+        new Signal(local).from(in1).to(r1.getCoilIn());
+        new Signal(local).from(in2).to(r2.getCoilIn());
+        new Signal(local).from(in3).to(r3.getCoilIn());
+        new Signal(local).from(in4).to(r4.getCoilIn());
+        new Signal(local).from(in5).to(r5.getCoilIn());
+        new Signal(local).from(in6).to(r6.getCoilIn());
+        new Signal(local).from(in7).to(r7.getCoilIn());
+        new Signal(local).from(in8).to(r8.getCoilIn());
+        new Signal(local).from(in9).to(r9.getCoilIn());
+        new Signal(local).from(inA).to(ra.getCoilIn());
+        new Signal(local).from(inB).to(rb.getCoilIn());
+        new Signal(local).from(inC).to(rc.getCoilIn());
+        new Signal(local).from(inD).to(rd.getCoilIn());
+        new Signal(local).from(inE).to(re.getCoilIn());
+        new Signal(local).from(inF).to(rf.getCoilIn());
 
         // A
-        Joint ja = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(0)).to(ja.getIn(0));
-        new Signal(circuit).from(r2.getOut(0)).to(ja.getIn(1));
-        new Signal(circuit).from(r3.getOut(0)).to(ja.getIn(2));
-        new Signal(circuit).from(r5.getOut(0)).to(ja.getIn(3));
-        new Signal(circuit).from(r6.getOut(0)).to(ja.getIn(4));
-        new Signal(circuit).from(r7.getOut(0)).to(ja.getIn(5));
-        new Signal(circuit).from(r8.getOut(0)).to(ja.getIn(6));
-        new Signal(circuit).from(r9.getOut(0)).to(ja.getIn(7));
-        new Signal(circuit).from(ra.getOut(0)).to(ja.getIn(8));
-        new Signal(circuit).from(re.getOut(0)).to(ja.getIn(9));
-        new Signal(circuit).from(rf.getOut(0)).to(ja.getIn(10));
-        new Signal(circuit).from(ja.getOut()).to(outA);
+        Joint ja = new Joint(local);
+        new Signal(local).from(r0.getOut(0)).to(ja.getIn(0));
+        new Signal(local).from(r2.getOut(0)).to(ja.getIn(1));
+        new Signal(local).from(r3.getOut(0)).to(ja.getIn(2));
+        new Signal(local).from(r5.getOut(0)).to(ja.getIn(3));
+        new Signal(local).from(r6.getOut(0)).to(ja.getIn(4));
+        new Signal(local).from(r7.getOut(0)).to(ja.getIn(5));
+        new Signal(local).from(r8.getOut(0)).to(ja.getIn(6));
+        new Signal(local).from(r9.getOut(0)).to(ja.getIn(7));
+        new Signal(local).from(ra.getOut(0)).to(ja.getIn(8));
+        new Signal(local).from(re.getOut(0)).to(ja.getIn(9));
+        new Signal(local).from(rf.getOut(0)).to(ja.getIn(10));
+        new Signal(local).from(ja.getOut()).to(outA);
 
         // B
-        Joint jb = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(1)).to(jb.getIn(0));
-        new Signal(circuit).from(r1.getOut(0)).to(jb.getIn(1));
-        new Signal(circuit).from(r2.getOut(1)).to(jb.getIn(2));
-        new Signal(circuit).from(r3.getOut(1)).to(jb.getIn(3));
-        new Signal(circuit).from(r4.getOut(0)).to(jb.getIn(4));
-        new Signal(circuit).from(r7.getOut(1)).to(jb.getIn(5));
-        new Signal(circuit).from(r8.getOut(1)).to(jb.getIn(6));
-        new Signal(circuit).from(r9.getOut(1)).to(jb.getIn(7));
-        new Signal(circuit).from(ra.getOut(1)).to(jb.getIn(8));
-        new Signal(circuit).from(rd.getOut(0)).to(jb.getIn(9));
-        new Signal(circuit).from(jb.getOut()).to(outB);
+        Joint jb = new Joint(local);
+        new Signal(local).from(r0.getOut(1)).to(jb.getIn(0));
+        new Signal(local).from(r1.getOut(0)).to(jb.getIn(1));
+        new Signal(local).from(r2.getOut(1)).to(jb.getIn(2));
+        new Signal(local).from(r3.getOut(1)).to(jb.getIn(3));
+        new Signal(local).from(r4.getOut(0)).to(jb.getIn(4));
+        new Signal(local).from(r7.getOut(1)).to(jb.getIn(5));
+        new Signal(local).from(r8.getOut(1)).to(jb.getIn(6));
+        new Signal(local).from(r9.getOut(1)).to(jb.getIn(7));
+        new Signal(local).from(ra.getOut(1)).to(jb.getIn(8));
+        new Signal(local).from(rd.getOut(0)).to(jb.getIn(9));
+        new Signal(local).from(jb.getOut()).to(outB);
 
         // C
-        Joint jc = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(2)).to(jc.getIn(0));
-        new Signal(circuit).from(r1.getOut(1)).to(jc.getIn(1));
-        new Signal(circuit).from(r3.getOut(2)).to(jc.getIn(2));
-        new Signal(circuit).from(r4.getOut(1)).to(jc.getIn(3));
-        new Signal(circuit).from(r5.getOut(1)).to(jc.getIn(4));
-        new Signal(circuit).from(r6.getOut(1)).to(jc.getIn(5));
-        new Signal(circuit).from(r7.getOut(2)).to(jc.getIn(6));
-        new Signal(circuit).from(r8.getOut(2)).to(jc.getIn(7));
-        new Signal(circuit).from(r9.getOut(2)).to(jc.getIn(8));
-        new Signal(circuit).from(ra.getOut(2)).to(jc.getIn(9));
-        new Signal(circuit).from(rb.getOut(0)).to(jc.getIn(10));
-        new Signal(circuit).from(rd.getOut(1)).to(jc.getIn(11));
-        new Signal(circuit).from(jc.getOut()).to(outC);
+        Joint jc = new Joint(local);
+        new Signal(local).from(r0.getOut(2)).to(jc.getIn(0));
+        new Signal(local).from(r1.getOut(1)).to(jc.getIn(1));
+        new Signal(local).from(r3.getOut(2)).to(jc.getIn(2));
+        new Signal(local).from(r4.getOut(1)).to(jc.getIn(3));
+        new Signal(local).from(r5.getOut(1)).to(jc.getIn(4));
+        new Signal(local).from(r6.getOut(1)).to(jc.getIn(5));
+        new Signal(local).from(r7.getOut(2)).to(jc.getIn(6));
+        new Signal(local).from(r8.getOut(2)).to(jc.getIn(7));
+        new Signal(local).from(r9.getOut(2)).to(jc.getIn(8));
+        new Signal(local).from(ra.getOut(2)).to(jc.getIn(9));
+        new Signal(local).from(rb.getOut(0)).to(jc.getIn(10));
+        new Signal(local).from(rd.getOut(1)).to(jc.getIn(11));
+        new Signal(local).from(jc.getOut()).to(outC);
 
         // D
-        Joint jd = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(3)).to(jd.getIn(0));
-        new Signal(circuit).from(r2.getOut(2)).to(jd.getIn(1));
-        new Signal(circuit).from(r3.getOut(3)).to(jd.getIn(2));
-        new Signal(circuit).from(r5.getOut(2)).to(jd.getIn(3));
-        new Signal(circuit).from(r6.getOut(2)).to(jd.getIn(4));
-        new Signal(circuit).from(r8.getOut(3)).to(jd.getIn(5));
-        new Signal(circuit).from(r9.getOut(3)).to(jd.getIn(6));
-        new Signal(circuit).from(rb.getOut(1)).to(jd.getIn(7));
-        new Signal(circuit).from(rc.getOut(0)).to(jd.getIn(8));
-        new Signal(circuit).from(rd.getOut(2)).to(jd.getIn(9));
-        new Signal(circuit).from(re.getOut(1)).to(jd.getIn(10));
-        new Signal(circuit).from(jd.getOut()).to(outD);
+        Joint jd = new Joint(local);
+        new Signal(local).from(r0.getOut(3)).to(jd.getIn(0));
+        new Signal(local).from(r2.getOut(2)).to(jd.getIn(1));
+        new Signal(local).from(r3.getOut(3)).to(jd.getIn(2));
+        new Signal(local).from(r5.getOut(2)).to(jd.getIn(3));
+        new Signal(local).from(r6.getOut(2)).to(jd.getIn(4));
+        new Signal(local).from(r8.getOut(3)).to(jd.getIn(5));
+        new Signal(local).from(r9.getOut(3)).to(jd.getIn(6));
+        new Signal(local).from(rb.getOut(1)).to(jd.getIn(7));
+        new Signal(local).from(rc.getOut(0)).to(jd.getIn(8));
+        new Signal(local).from(rd.getOut(2)).to(jd.getIn(9));
+        new Signal(local).from(re.getOut(1)).to(jd.getIn(10));
+        new Signal(local).from(jd.getOut()).to(outD);
 
         // E
-        Joint je = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(4)).to(je.getIn(0));
-        new Signal(circuit).from(r2.getOut(3)).to(je.getIn(1));
-        new Signal(circuit).from(r6.getOut(3)).to(je.getIn(2));
-        new Signal(circuit).from(r8.getOut(4)).to(je.getIn(3));
-        new Signal(circuit).from(ra.getOut(3)).to(je.getIn(4));
-        new Signal(circuit).from(rb.getOut(2)).to(je.getIn(5));
-        new Signal(circuit).from(rc.getOut(1)).to(je.getIn(6));
-        new Signal(circuit).from(rd.getOut(3)).to(je.getIn(7));
-        new Signal(circuit).from(re.getOut(2)).to(je.getIn(8));
-        new Signal(circuit).from(rf.getOut(1)).to(je.getIn(9));
-        new Signal(circuit).from(je.getOut()).to(outE);
+        Joint je = new Joint(local);
+        new Signal(local).from(r0.getOut(4)).to(je.getIn(0));
+        new Signal(local).from(r2.getOut(3)).to(je.getIn(1));
+        new Signal(local).from(r6.getOut(3)).to(je.getIn(2));
+        new Signal(local).from(r8.getOut(4)).to(je.getIn(3));
+        new Signal(local).from(ra.getOut(3)).to(je.getIn(4));
+        new Signal(local).from(rb.getOut(2)).to(je.getIn(5));
+        new Signal(local).from(rc.getOut(1)).to(je.getIn(6));
+        new Signal(local).from(rd.getOut(3)).to(je.getIn(7));
+        new Signal(local).from(re.getOut(2)).to(je.getIn(8));
+        new Signal(local).from(rf.getOut(1)).to(je.getIn(9));
+        new Signal(local).from(je.getOut()).to(outE);
 
         // F
-        Joint jf = new Joint(circuit);
-        new Signal(circuit).from(r0.getOut(5)).to(jf.getIn(0));
-        new Signal(circuit).from(r4.getOut(2)).to(jf.getIn(1));
-        new Signal(circuit).from(r5.getOut(3)).to(jf.getIn(2));
-        new Signal(circuit).from(r6.getOut(4)).to(jf.getIn(3));
-        new Signal(circuit).from(r8.getOut(5)).to(jf.getIn(4));
-        new Signal(circuit).from(r9.getOut(4)).to(jf.getIn(5));
-        new Signal(circuit).from(ra.getOut(4)).to(jf.getIn(6));
-        new Signal(circuit).from(rb.getOut(3)).to(jf.getIn(7));
-        new Signal(circuit).from(re.getOut(3)).to(jf.getIn(8));
-        new Signal(circuit).from(rf.getOut(2)).to(jf.getIn(9));
-        new Signal(circuit).from(jf.getOut()).to(outF);
+        Joint jf = new Joint(local);
+        new Signal(local).from(r0.getOut(5)).to(jf.getIn(0));
+        new Signal(local).from(r4.getOut(2)).to(jf.getIn(1));
+        new Signal(local).from(r5.getOut(3)).to(jf.getIn(2));
+        new Signal(local).from(r6.getOut(4)).to(jf.getIn(3));
+        new Signal(local).from(r8.getOut(5)).to(jf.getIn(4));
+        new Signal(local).from(r9.getOut(4)).to(jf.getIn(5));
+        new Signal(local).from(ra.getOut(4)).to(jf.getIn(6));
+        new Signal(local).from(rb.getOut(3)).to(jf.getIn(7));
+        new Signal(local).from(re.getOut(3)).to(jf.getIn(8));
+        new Signal(local).from(rf.getOut(2)).to(jf.getIn(9));
+        new Signal(local).from(jf.getOut()).to(outF);
 
         // G
-        Joint jg = new Joint(circuit);
-        new Signal(circuit).from(r2.getOut(4)).to(jg.getIn(0));
-        new Signal(circuit).from(r3.getOut(4)).to(jg.getIn(1));
-        new Signal(circuit).from(r4.getOut(3)).to(jg.getIn(2));
-        new Signal(circuit).from(r5.getOut(4)).to(jg.getIn(3));
-        new Signal(circuit).from(r6.getOut(5)).to(jg.getIn(4));
-        new Signal(circuit).from(r8.getOut(6)).to(jg.getIn(5));
-        new Signal(circuit).from(r9.getOut(5)).to(jg.getIn(6));
-        new Signal(circuit).from(ra.getOut(5)).to(jg.getIn(7));
-        new Signal(circuit).from(rb.getOut(4)).to(jg.getIn(8));
-        new Signal(circuit).from(rc.getOut(2)).to(jg.getIn(9));
-        new Signal(circuit).from(rd.getOut(4)).to(jg.getIn(10));
-        new Signal(circuit).from(re.getOut(4)).to(jg.getIn(11));
-        new Signal(circuit).from(rf.getOut(3)).to(jg.getIn(12));
-        new Signal(circuit).from(jg.getOut()).to(outG);
+        Joint jg = new Joint(local);
+        new Signal(local).from(r2.getOut(4)).to(jg.getIn(0));
+        new Signal(local).from(r3.getOut(4)).to(jg.getIn(1));
+        new Signal(local).from(r4.getOut(3)).to(jg.getIn(2));
+        new Signal(local).from(r5.getOut(4)).to(jg.getIn(3));
+        new Signal(local).from(r6.getOut(5)).to(jg.getIn(4));
+        new Signal(local).from(r8.getOut(6)).to(jg.getIn(5));
+        new Signal(local).from(r9.getOut(5)).to(jg.getIn(6));
+        new Signal(local).from(ra.getOut(5)).to(jg.getIn(7));
+        new Signal(local).from(rb.getOut(4)).to(jg.getIn(8));
+        new Signal(local).from(rc.getOut(2)).to(jg.getIn(9));
+        new Signal(local).from(rd.getOut(4)).to(jg.getIn(10));
+        new Signal(local).from(re.getOut(4)).to(jg.getIn(11));
+        new Signal(local).from(rf.getOut(3)).to(jg.getIn(12));
+        new Signal(local).from(jg.getOut()).to(outG);
     }
 
     public Input getPowerIn()

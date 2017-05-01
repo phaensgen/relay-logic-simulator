@@ -43,77 +43,66 @@ public class Counter4Test
         // initially, output is 0
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
 
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
 
         // 1
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
 
         // 2
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertNull(out1.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
 
         // 3
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertTrue(out1.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
 
         // 0
         _clock.setValue(null);
         clock.setValue(true);
-        simulate(circuit);
+        circuit.simulate();
         assertTrue(out0.getValue());
         assertTrue(out1.getValue());
 
         _clock.setValue(true);
         clock.setValue(null);
-        simulate(circuit);
+        circuit.simulate();
         assertNull(out0.getValue());
         assertNull(out1.getValue());
-    }
-
-    /**
-     * Performs a number of simulation steps.
-     */
-    private void simulate(Circuit circuit)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            circuit.simulate();
-        }
     }
 }
