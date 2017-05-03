@@ -84,6 +84,7 @@ public class RelayTimer extends Component
         Relay resetS1 = new Relay(local, name + "_ResetS1");
         Relay resetM0 = new Relay(local, name + "_ResetM0");
         Relay resetM1 = new Relay(local, name + "_ResetM1");
+        Relay reset = new Relay(local, name + "_Reset");
 
         Relay clockS0 = new Relay(local, name + "_ClockS0");
         Relay clockM0 = new Relay(local, name + "_ClockM0");
@@ -95,7 +96,7 @@ public class RelayTimer extends Component
         FlipFlop startStop = new FlipFlop(local, name + "_StartStop");
 
         Bell bell = new Bell(local, name + "_Bell");
-        And alarm = new And(local, name + "_Alarm", 4);
+        And alarm = new And(local, name + "_Alarm", 5);
 
         // TODO alarm when 00 and seconds1=5 (for 10 seconds alarm)
         // TODO pre alarm when 01:59 (for 1 seconds alarm)
@@ -105,24 +106,28 @@ public class RelayTimer extends Component
 
         // internal wirings
         // connect power
-        new Signal(local).from(powerIn).to(resetS0.getMiddleIn(0), resetS0.getMiddleIn(1), resetS1.getMiddleIn(0),
-            resetS1.getMiddleIn(1), resetM0.getMiddleIn(0), resetM0.getMiddleIn(1), resetM1.getMiddleIn(0),
+        new Signal(local).from(powerIn).to(resetS0.getMiddleIn(1), resetS1.getMiddleIn(1), resetM0.getMiddleIn(1),
             resetM1.getMiddleIn(1), bcdS0.getPowerIn(), bcdS1.getPowerIn(), bcdM0.getPowerIn(), bcdM1.getPowerIn(),
             decoderS0.getPowerIn(), decoderS1.getPowerIn(), decoderM0.getPowerIn(), decoderM1.getPowerIn(),
             setM0Switch.getMiddleIn(), setM1Switch.getMiddleIn(), startSwitch.getMiddleIn(), resetSwitch.getMiddleIn(),
-            clockM0.getMiddleIn(0), clockM1.getMiddleIn(0), startStop.getPowerIn(), alarm.getPowerIn());
+            clockM0.getMiddleIn(0), clockM1.getMiddleIn(0), startStop.getPowerIn(), alarm.getPowerIn(),
+            reset.getMiddleIn(0));
 
         new Signal(local).from(resetS0.get_Out(0)).to(counterS0.getPowerIn());
         new Signal(local).from(resetS1.get_Out(0)).to(counterS1.getPowerIn());
         new Signal(local).from(resetM0.get_Out(0)).to(counterM0.getPowerIn());
         new Signal(local).from(resetM1.get_Out(0)).to(counterM1.getPowerIn());
 
+        new Signal(local).from(resetSwitch.getOut()).to(reset.getCoilIn());
+        new Signal(local).from(reset.get_Out(0)).to(resetS0.getMiddleIn(0), resetS1.getMiddleIn(0),
+            resetM0.getMiddleIn(0), resetM1.getMiddleIn(0));
+
         new Signal(local).from(alarm.getOut()).to(bell.getIn());
 
         // connect start switch with clock generator
         new Signal(local).from(startSwitch.get_Out()).to(startStop.get_Clock());
         new Signal(local).from(startSwitch.getOut()).to(startStop.getClock());
-        new Signal(local).from(startStop.getOut()).to(clockS0.getCoilIn());
+        new Signal(local).from(startStop.getOut()).to(clockS0.getCoilIn(), alarm.getIn(4));
         new Signal(local).from(clock.get_Out()).to(clockS0.getMiddleIn(0));
         new Signal(local).from(clock.getOut()).to(clockS0.getMiddleIn(1));
         new Signal(local).from(clockS0.getOut(0)).to(counterS0.get_Clock());
