@@ -97,6 +97,8 @@ public class RelayTimer extends Component
 
         Bell bell = new Bell(local, name + "_Bell");
         And alarm = new And(local, name + "_Alarm", 5);
+        And preAlarm = new And(local, name + "_PreAlarm", 5);
+        Joint jointBell = new Joint(local, name + "_JointBell");
 
         // TODO alarm when 00 and seconds1=5 (for 10 seconds alarm)
         // TODO pre alarm when 01:59 (for 1 seconds alarm)
@@ -111,7 +113,7 @@ public class RelayTimer extends Component
             decoderS0.getPowerIn(), decoderS1.getPowerIn(), decoderM0.getPowerIn(), decoderM1.getPowerIn(),
             setM0Switch.getMiddleIn(), setM1Switch.getMiddleIn(), startSwitch.getMiddleIn(), resetSwitch.getMiddleIn(),
             clockM0.getMiddleIn(0), clockM1.getMiddleIn(0), startStop.getPowerIn(), alarm.getPowerIn(),
-            reset.getMiddleIn(0));
+            preAlarm.getPowerIn(), reset.getMiddleIn(0));
 
         new Signal(local).from(resetS0.get_Out(0)).to(counterS0.getPowerIn());
         new Signal(local).from(resetS1.get_Out(0)).to(counterS1.getPowerIn());
@@ -122,12 +124,14 @@ public class RelayTimer extends Component
         new Signal(local).from(reset.get_Out(0)).to(resetS0.getMiddleIn(0), resetS1.getMiddleIn(0),
             resetM0.getMiddleIn(0), resetM1.getMiddleIn(0));
 
-        new Signal(local).from(alarm.getOut()).to(bell.getIn());
+        new Signal(local).from(alarm.getOut()).to(jointBell.getIn(0));
+        new Signal(local).from(preAlarm.getOut()).to(jointBell.getIn(1));
+        new Signal(local).from(jointBell.getOut()).to(bell.getIn());
 
         // connect start switch with clock generator
         new Signal(local).from(startSwitch.get_Out()).to(startStop.get_Clock());
         new Signal(local).from(startSwitch.getOut()).to(startStop.getClock());
-        new Signal(local).from(startStop.getOut()).to(clockS0.getCoilIn(), alarm.getIn(4));
+        new Signal(local).from(startStop.getOut()).to(clockS0.getCoilIn(), alarm.getIn(4), preAlarm.getIn(4));
         new Signal(local).from(clock.get_Out()).to(clockS0.getMiddleIn(0));
         new Signal(local).from(clock.getOut()).to(clockS0.getMiddleIn(1));
         new Signal(local).from(clockS0.getOut(0)).to(counterS0.get_Clock());
@@ -174,7 +178,7 @@ public class RelayTimer extends Component
 
         // connect decimal decoders with 7-segment decoders
         // connect crosswise for counting down
-        new Signal(local).from(bcdS0.getOut0()).to(decoderS0.getIn9());
+        new Signal(local).from(bcdS0.getOut0()).to(decoderS0.getIn9(), preAlarm.getIn(0));
         new Signal(local).from(bcdS0.getOut1()).to(decoderS0.getIn8());
         new Signal(local).from(bcdS0.getOut2()).to(decoderS0.getIn7());
         new Signal(local).from(bcdS0.getOut3()).to(decoderS0.getIn6());
@@ -186,7 +190,7 @@ public class RelayTimer extends Component
         new Signal(local).from(bcdS0.getOut9()).to(decoderS0.getIn0());
         new Signal(local).from(bcdS0.getOutA()).to(resetS0.getCoilIn());
 
-        new Signal(local).from(bcdS1.getOut0()).to(decoderS1.getIn5(), alarm.getIn(1));
+        new Signal(local).from(bcdS1.getOut0()).to(decoderS1.getIn5(), alarm.getIn(1), preAlarm.getIn(1));
         new Signal(local).from(bcdS1.getOut1()).to(decoderS1.getIn4());
         new Signal(local).from(bcdS1.getOut2()).to(decoderS1.getIn3());
         new Signal(local).from(bcdS1.getOut3()).to(decoderS1.getIn2());
@@ -202,7 +206,7 @@ public class RelayTimer extends Component
         new Signal(local).from(bcdM0.getOut5()).to(decoderM0.getIn4());
         new Signal(local).from(bcdM0.getOut6()).to(decoderM0.getIn3());
         new Signal(local).from(bcdM0.getOut7()).to(decoderM0.getIn2());
-        new Signal(local).from(bcdM0.getOut8()).to(decoderM0.getIn1());
+        new Signal(local).from(bcdM0.getOut8()).to(decoderM0.getIn1(), preAlarm.getIn(2));
         new Signal(local).from(bcdM0.getOut9()).to(decoderM0.getIn0(), alarm.getIn(2));
         new Signal(local).from(bcdM0.getOutA()).to(resetM0.getCoilIn());
 
@@ -211,7 +215,7 @@ public class RelayTimer extends Component
         new Signal(local).from(bcdM1.getOut2()).to(decoderM1.getIn3());
         new Signal(local).from(bcdM1.getOut3()).to(decoderM1.getIn2());
         new Signal(local).from(bcdM1.getOut4()).to(decoderM1.getIn1());
-        new Signal(local).from(bcdM1.getOut5()).to(decoderM1.getIn0(), alarm.getIn(3));
+        new Signal(local).from(bcdM1.getOut5()).to(decoderM1.getIn0(), alarm.getIn(3), preAlarm.getIn(3));
         new Signal(local).from(bcdM1.getOut6()).to(resetM1.getCoilIn());
 
         // connect decoders with display
