@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,17 +17,20 @@ import java.awt.event.WindowEvent;
 import sunday.resi.common.Monitor;
 import sunday.resi.common.Simulator;
 import sunday.resi.library.Switch;
+import sunday.resi.util.Console;
 
 /**
  * A window for a graphical visualization of the relay timer.
  * 
  * @author Peter H&auml;nsgen
  */
-public class RelayTimerFrame extends Frame implements Monitor
+public class RelayTimerFrame extends Frame implements Monitor, Console
 {
     private static final long serialVersionUID = 1L;
 
     private RelayTimerCanvas canvas;
+
+    private TextArea textArea;
 
     /**
      * The constructor.
@@ -52,7 +56,7 @@ public class RelayTimerFrame extends Frame implements Monitor
         buttonPanel.setBackground(Color.BLACK);
         FlowLayout buttonPanelLayout = new FlowLayout(FlowLayout.CENTER);
         buttonPanel.setLayout(buttonPanelLayout);
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.NORTH);
 
         // button for setting the 10 minutes
         Button setM1Button = new Button("Set Minutes 10");
@@ -146,6 +150,9 @@ public class RelayTimerFrame extends Frame implements Monitor
         });
         buttonPanel.add(resetButton);
 
+        textArea = new TextArea();
+        add(textArea, BorderLayout.SOUTH);
+
         // handle window events
         addWindowListener(new WindowAdapter()
         {
@@ -176,5 +183,16 @@ public class RelayTimerFrame extends Frame implements Monitor
     public void monitor()
     {
         canvas.repaint();
+    }
+
+    /**
+     * Prints a line of text to the console text area.
+     */
+    @Override
+    public void println(String line)
+    {
+        String text = textArea.getText();
+        text += '\n' + line;
+        textArea.setText(text);
     }
 }

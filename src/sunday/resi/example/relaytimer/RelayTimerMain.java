@@ -5,6 +5,7 @@ import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
 import sunday.resi.library.Relay;
+import sunday.resi.util.PeakPowerMonitor;
 
 /**
  * Simulates the relay timer.
@@ -29,6 +30,8 @@ public class RelayTimerMain
 
         RelayTimerFrame frame = new RelayTimerFrame(timer, sim);
         circuit.addMonitor(frame);
+
+        circuit.addMonitor(new PeakPowerMonitor(circuit, 2, frame));
 
         printRelayCount(circuit, 2);
 

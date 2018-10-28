@@ -101,10 +101,13 @@ public class RelayTimer extends Component
         Joint jointBell = new Joint(local, name + "_JointBell");
 
         // TODO alarm when 00 and seconds1=5 (for 10 seconds alarm)
-        // TODO pre alarm when 01:59 (for 1 seconds alarm)
-        // TODO stop clock when overflow to 0000
-        // TODO connect reset switch (or remove it)
+        // TODO stop clock after alarm
+        // TODO pre alarm 5 minutes (optionally: configurable with jumper or programming switch)
+        // TODO start button only if not stopped
+        // TODO if stopped only reset button helps
+        // TODO reset resets counter to 59, enables start button, switches off clock
         // TODO restructure to meet final PCB layout and move parts
+        // TODO monitor seconds via console / debug window, not with 7-segment-display
 
         // internal wirings
         // connect power
