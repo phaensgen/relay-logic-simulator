@@ -12,6 +12,8 @@ import sunday.resi.library.Counter8;
 import sunday.resi.library.Relay;
 import sunday.resi.library.SevenSegmentDecoder10;
 import sunday.resi.library.SevenSegmentDisplay;
+import sunday.resi.util.PartConsoleMonitor;
+import sunday.resi.util.SystemConsole;
 
 /**
  * This is a dice which prints out random values.
@@ -37,7 +39,7 @@ public class Dice extends Component
         SevenSegmentDecoder10 decoder = new SevenSegmentDecoder10(circuit, name + "_Decoder");
 
         SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, name + "_Display");
-        circuit.addMonitor(display);
+        circuit.addMonitor(new PartConsoleMonitor(display, new SystemConsole()));
 
         Relay reset = new Relay(circuit, name + "_Reset");
 

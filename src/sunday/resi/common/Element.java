@@ -5,13 +5,11 @@ package sunday.resi.common;
  * 
  * @author Peter H&auml;nsgen
  */
-public abstract class Element implements Monitor
+public abstract class Element
 {
     private Circuit circuit;
 
     private String name;
-
-    private String lastDebugMessage;
 
     /**
      * The constructor.
@@ -30,23 +28,5 @@ public abstract class Element implements Monitor
     public String getName()
     {
         return name;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends Element> T watch()
-    {
-        circuit.addMonitor(this);
-        return (T) this;
-    }
-
-    @Override
-    public void monitor()
-    {
-        String debugMessage = toString();
-        if (!debugMessage.equals(lastDebugMessage))
-        {
-            System.out.println(debugMessage);
-            lastDebugMessage = debugMessage;
-        }
     }
 }

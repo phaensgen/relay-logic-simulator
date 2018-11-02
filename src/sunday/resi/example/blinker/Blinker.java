@@ -15,7 +15,7 @@ import sunday.resi.library.Lamp;
  */
 public class Blinker extends Component
 {
-    private Lamp l1;
+    private Lamp lamp;
 
     /**
      * The constructor.
@@ -24,17 +24,16 @@ public class Blinker extends Component
     {
         super(circuit, name);
 
-        Clock c1 = new Clock(circuit, name + "_Clock", 1, TimeUnit.SECONDS);
-        l1 = new Lamp(circuit, name + "_L1");
+        Circuit local = getLocalCircuit();
 
-        new Signal(circuit).from(c1.getOut()).to(l1.getIn());
+        Clock clock = new Clock(local, name + "_Clock", 1, TimeUnit.SECONDS);
+        lamp = new Lamp(local, name + "_Lamp");
 
-        circuit.addMonitor(this);
+        new Signal(local).from(clock.getOut()).to(lamp.getIn());
     }
 
-    @Override
-    public String toString()
+    public Lamp getLamp()
     {
-        return l1.getOn();
+        return lamp;
     }
 }

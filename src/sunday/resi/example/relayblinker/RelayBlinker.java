@@ -19,11 +19,11 @@ public class RelayBlinker extends Component
 {
     private Input powerIn;
 
-    private Lamp l1;
+    private Lamp lamp1;
 
-    private Lamp l2;
+    private Lamp lamp2;
 
-    private Relay r1;
+    private Relay relay;
 
     /**
      * The constructor.
@@ -35,17 +35,15 @@ public class RelayBlinker extends Component
         powerIn = new Input();
 
         Clock c1 = new Clock(circuit, name + "_Clock", 1, TimeUnit.SECONDS);
-        r1 = new Relay(circuit, name + "_Relay");
-        l1 = new Lamp(circuit, name + "_L1");
-        l2 = new Lamp(circuit, name + "_L2");
+        relay = new Relay(circuit, name + "_Relay");
+        lamp1 = new Lamp(circuit, name + "_Lamp1");
+        lamp2 = new Lamp(circuit, name + "_Lamp2");
 
         // connect signals
-        new Signal(circuit).from(powerIn).to(r1.getMiddleIn(0));
-        new Signal(circuit).from(c1.getOut()).to(r1.getCoilIn());
-        new Signal(circuit).from(r1.getOut(0)).to(l1.getIn());
-        new Signal(circuit).from(r1.get_Out(0)).to(l2.getIn());
-
-        circuit.addMonitor(this);
+        new Signal(circuit).from(powerIn).to(relay.getMiddleIn(0));
+        new Signal(circuit).from(c1.getOut()).to(relay.getCoilIn());
+        new Signal(circuit).from(relay.getOut(0)).to(lamp1.getIn());
+        new Signal(circuit).from(relay.get_Out(0)).to(lamp2.getIn());
     }
 
     public Input getPowerIn()
@@ -56,6 +54,6 @@ public class RelayBlinker extends Component
     @Override
     public String toString()
     {
-        return l1.getOn() + " " + l2.getOn();
+        return lamp1.getOn() + " " + lamp2.getOn();
     }
 }

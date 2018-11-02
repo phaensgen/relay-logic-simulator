@@ -12,6 +12,8 @@ import sunday.resi.library.Countdown16;
 import sunday.resi.library.Relay;
 import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
+import sunday.resi.util.PartConsoleMonitor;
+import sunday.resi.util.SystemConsole;
 
 /**
  * Simulates a decimal countdown and shows the result on a 7-segment display.
@@ -36,7 +38,7 @@ public class Countdown10Main
         SevenSegmentDecoder16 decoder = new SevenSegmentDecoder16(circuit, "Decoder");
 
         SevenSegmentDisplay display = new SevenSegmentDisplay(circuit, "Display");
-        circuit.addMonitor(display);
+        circuit.addMonitor(new PartConsoleMonitor(display, new SystemConsole()));
 
         // internal wiring
         new Signal(circuit).from(power.getOut()).to(decoder.getPowerIn(), bcd.getPowerIn(), reset.getMiddleIn(0));

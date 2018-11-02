@@ -2,6 +2,8 @@ package sunday.resi.example.blinker;
 
 import sunday.resi.common.Circuit;
 import sunday.resi.common.Simulator;
+import sunday.resi.util.PartConsoleMonitor;
+import sunday.resi.util.SystemConsole;
 
 /**
  * Simulates the blinker.
@@ -14,7 +16,9 @@ public class BlinkerMain
     {
         Circuit circuit = new Circuit();
 
-        new Blinker(circuit, "Blinker");
+        Blinker blinker = new Blinker(circuit, "Blinker");
+
+        circuit.addMonitor(new PartConsoleMonitor(blinker.getLamp(), new SystemConsole()));
 
         Simulator sim = new Simulator(circuit, 10);
         sim.start();

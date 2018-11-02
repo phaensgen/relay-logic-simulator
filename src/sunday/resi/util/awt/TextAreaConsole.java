@@ -5,6 +5,8 @@ import java.awt.TextArea;
 import sunday.resi.util.Console;
 
 /**
+ * This is a console implementation which prints all output to a text area component.
+ * 
  * @author Peter H&auml;nsgen
  */
 public class TextAreaConsole extends TextArea implements Console
