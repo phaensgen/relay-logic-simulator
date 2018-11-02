@@ -8,4 +8,6 @@ package sunday.resi.util;
 public interface Console
 {
     void println(String line);
+
+    void clear();
 }

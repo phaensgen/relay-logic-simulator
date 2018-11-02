@@ -4,7 +4,8 @@ import sunday.resi.common.Circuit;
 import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
-import sunday.resi.library.Relay;
+import sunday.resi.util.PartCountPrinter;
+import sunday.resi.util.PartTreePrinter;
 import sunday.resi.util.PeakPowerMonitor;
 
 /**
@@ -22,7 +23,7 @@ public class RelayTimerMain
         Circuit circuit = new Circuit();
 
         Power power = new Power(circuit, "VCC");
-        RelayTimer timer = new RelayTimer(circuit, "Relay Timer");
+        RelayTimer timer = new RelayTimer(circuit, "RelayTimer");
 
         new Signal(circuit).from(power.getOut()).to(timer.getPowerIn());
 
@@ -30,26 +31,11 @@ public class RelayTimerMain
 
         RelayTimerFrame frame = new RelayTimerFrame(timer, sim);
         circuit.addMonitor(frame);
+        circuit.addMonitor(new PeakPowerMonitor(circuit, 2, frame.getPeakPowerConsole()));
 
-        circuit.addMonitor(new PeakPowerMonitor(circuit, 2, frame));
-
-        printRelayCount(circuit, 2);
+        new PartCountPrinter(frame.getConsole(), 2).printParts(circuit);
+        new PartTreePrinter(frame.getConsole()).printParts(circuit);
 
         sim.start();
-    }
-
-    /**
-     * Prints the number of required relays for the circuit.
-     */
-    static void printRelayCount(Circuit circuit, int maxSwitchCount)
-    {
-        // we assume that every relay has up to maxSwitchCount switches
-        int count = 0;
-        for (Relay r : circuit.getAllParts(Relay.class))
-        {
-            count += (r.getSwitchCount() + 1) / maxSwitchCount;
-        }
-
-        System.out.println(String.valueOf(count + " relays with " + maxSwitchCount + " switches required."));
     }
 }

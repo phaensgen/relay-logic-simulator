@@ -56,15 +56,16 @@ public class PeakPowerMonitor implements Monitor
             }
         }
 
-        if (maxActiveLamps < activeLamps)
-        {
-            maxActiveLamps = activeLamps;
-            console.println("Maximum active lamps: " + String.valueOf(maxActiveLamps));
-        }
+        int oldMaxActiveLamps = maxActiveLamps;
+        int oldMaxActiveRelays = maxActiveRelays;
 
-        if (maxActiveRelays < activeRelays)
+        maxActiveLamps = Math.max(maxActiveLamps, activeLamps);
+        maxActiveRelays = Math.max(maxActiveRelays, activeRelays);
+
+        if ((maxActiveLamps != oldMaxActiveLamps) || (maxActiveRelays != oldMaxActiveRelays))
         {
-            maxActiveRelays = activeRelays;
+            console.clear();
+            console.println("Maximum active lamps: " + String.valueOf(maxActiveLamps));
             console.println("Maximum active relays: " + String.valueOf(maxActiveRelays));
         }
     }

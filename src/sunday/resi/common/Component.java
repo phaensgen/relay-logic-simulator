@@ -23,7 +23,7 @@ public abstract class Component extends Part
         local = new Circuit();
     }
 
-    protected Circuit getLocalCircuit()
+    public Circuit getLocalCircuit()
     {
         return local;
     }

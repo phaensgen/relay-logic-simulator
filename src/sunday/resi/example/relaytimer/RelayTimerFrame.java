@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Panel;
-import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,19 +17,22 @@ import sunday.resi.common.Monitor;
 import sunday.resi.common.Simulator;
 import sunday.resi.library.Switch;
 import sunday.resi.util.Console;
+import sunday.resi.util.awt.TextAreaConsole;
 
 /**
  * A window for a graphical visualization of the relay timer.
  * 
  * @author Peter H&auml;nsgen
  */
-public class RelayTimerFrame extends Frame implements Monitor, Console
+public class RelayTimerFrame extends Frame implements Monitor
 {
     private static final long serialVersionUID = 1L;
 
     private RelayTimerCanvas canvas;
 
-    private TextArea textArea;
+    private TextAreaConsole console;
+
+    private TextAreaConsole peakPowerConsole;
 
     /**
      * The constructor.
@@ -150,8 +152,18 @@ public class RelayTimerFrame extends Frame implements Monitor, Console
         });
         buttonPanel.add(resetButton);
 
-        textArea = new TextArea();
-        add(textArea, BorderLayout.SOUTH);
+        Panel south = new Panel();
+        south.setLayout(new BorderLayout());
+        add(south, BorderLayout.SOUTH);
+
+        console = new TextAreaConsole();
+        console.setPreferredSize(new Dimension(300, 150));
+        south.add(console, BorderLayout.WEST);
+
+        // add extra text area for showing the peak power consumption
+        peakPowerConsole = new TextAreaConsole();
+        peakPowerConsole.setPreferredSize(new Dimension(300, 150));
+        south.add(peakPowerConsole, BorderLayout.EAST);
 
         // handle window events
         addWindowListener(new WindowAdapter()
@@ -185,14 +197,13 @@ public class RelayTimerFrame extends Frame implements Monitor, Console
         canvas.repaint();
     }
 
-    /**
-     * Prints a line of text to the console text area.
-     */
-    @Override
-    public void println(String line)
+    public Console getConsole()
     {
-        String text = textArea.getText();
-        text += '\n' + line;
-        textArea.setText(text);
+        return console;
+    }
+
+    public Console getPeakPowerConsole()
+    {
+        return peakPowerConsole;
     }
 }
