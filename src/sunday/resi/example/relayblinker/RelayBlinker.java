@@ -51,6 +51,16 @@ public class RelayBlinker extends Component
         return powerIn;
     }
 
+    public Lamp getLamp1()
+    {
+        return lamp1;
+    }
+
+    public Lamp getLamp2()
+    {
+        return lamp2;
+    }
+
     @Override
     public String toString()
     {

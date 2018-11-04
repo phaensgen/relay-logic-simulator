@@ -82,9 +82,10 @@ public class LogicAnalyzer implements Monitor
             addValue(signal.getValue());
         }
 
-        public void setLabel(String label)
+        public Track setLabel(String label)
         {
             this.label = label;
+            return this;
         }
 
         public String getLabel()
@@ -92,9 +93,10 @@ public class LogicAnalyzer implements Monitor
             return label;
         }
 
-        public void setColor(Color color)
+        public Track setColor(Color color)
         {
             this.color = color;
+            return this;
         }
 
         public Color getColor()
