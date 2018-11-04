@@ -29,7 +29,7 @@ public class RelayTimerMain
 
         Simulator sim = new Simulator(circuit, 10);
 
-        RelayTimerFrame frame = new RelayTimerFrame(timer, sim);
+        RelayTimerFrame frame = new RelayTimerFrame(sim, timer);
         circuit.addMonitor(frame);
         circuit.addMonitor(new PeakPowerMonitor(circuit, 2, frame.getPeakPowerConsole()));
 

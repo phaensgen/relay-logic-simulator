@@ -5,7 +5,7 @@ import sunday.resi.common.Power;
 import sunday.resi.common.Signal;
 import sunday.resi.common.Simulator;
 import sunday.resi.util.PartConsoleMonitor;
-import sunday.resi.util.SystemConsole;
+import sunday.resi.util.console.SystemConsole;
 
 /**
  * Simulates the relay blinker.

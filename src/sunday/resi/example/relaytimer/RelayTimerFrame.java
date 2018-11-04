@@ -5,26 +5,24 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import sunday.resi.common.Monitor;
 import sunday.resi.common.Simulator;
 import sunday.resi.library.Switch;
-import sunday.resi.util.Console;
-import sunday.resi.util.awt.TextAreaConsole;
+import sunday.resi.util.SimulatorFrame;
+import sunday.resi.util.console.Console;
+import sunday.resi.util.console.TextAreaConsole;
 
 /**
  * A window for a graphical visualization of the relay timer.
  * 
  * @author Peter H&auml;nsgen
  */
-public class RelayTimerFrame extends Frame implements Monitor
+public class RelayTimerFrame extends SimulatorFrame implements Monitor
 {
     private static final long serialVersionUID = 1L;
 
@@ -37,8 +35,10 @@ public class RelayTimerFrame extends Frame implements Monitor
     /**
      * The constructor.
      */
-    public RelayTimerFrame(RelayTimer timer, Simulator simulator)
+    public RelayTimerFrame(Simulator simulator, RelayTimer timer)
     {
+        super(simulator);
+
         setTitle("Relay Timer");
         setSize(600, 400);
 
@@ -164,29 +164,6 @@ public class RelayTimerFrame extends Frame implements Monitor
         peakPowerConsole = new TextAreaConsole();
         peakPowerConsole.setPreferredSize(new Dimension(300, 150));
         south.add(peakPowerConsole, BorderLayout.EAST);
-
-        // handle window events
-        addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                simulator.stop();
-                System.exit(0);
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e)
-            {
-                simulator.stop();
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e)
-            {
-                simulator.start();
-            }
-        });
 
         setVisible(true);
     }

@@ -1,8 +1,6 @@
-package sunday.resi.util.awt;
+package sunday.resi.util.console;
 
 import java.awt.TextArea;
-
-import sunday.resi.util.Console;
 
 /**
  * This is a console implementation which prints all output to a text area component.

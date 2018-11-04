@@ -2,6 +2,7 @@ package sunday.resi.util;
 
 import sunday.resi.common.Monitor;
 import sunday.resi.common.Part;
+import sunday.resi.util.console.Console;
 
 /**
  * This is a monitor for a part which logs changes to the parts state to the console.

@@ -12,7 +12,7 @@ import sunday.resi.library.Counter16;
 import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
 import sunday.resi.util.PartConsoleMonitor;
-import sunday.resi.util.SystemConsole;
+import sunday.resi.util.console.SystemConsole;
 
 /**
  * Simulates a 4-bit counter and shows the result on a 7-segment display.

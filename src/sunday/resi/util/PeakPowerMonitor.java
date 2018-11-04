@@ -4,6 +4,7 @@ import sunday.resi.common.Circuit;
 import sunday.resi.common.Monitor;
 import sunday.resi.library.Lamp;
 import sunday.resi.library.Relay;
+import sunday.resi.util.console.Console;
 
 /**
  * This is a monitor implementation that estimates the maximum used power by a circuit. It counts the number of parts

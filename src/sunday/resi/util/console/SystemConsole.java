@@ -1,4 +1,4 @@
-package sunday.resi.util;
+package sunday.resi.util.console;
 
 /**
  * A console that prints messages to system out.

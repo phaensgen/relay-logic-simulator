@@ -13,7 +13,7 @@ import sunday.resi.library.Relay;
 import sunday.resi.library.SevenSegmentDecoder16;
 import sunday.resi.library.SevenSegmentDisplay;
 import sunday.resi.util.PartConsoleMonitor;
-import sunday.resi.util.SystemConsole;
+import sunday.resi.util.console.SystemConsole;
 
 /**
  * Simulates a decimal countdown and shows the result on a 7-segment display.

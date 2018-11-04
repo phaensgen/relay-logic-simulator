@@ -3,6 +3,7 @@ package sunday.resi.util;
 import sunday.resi.common.Circuit;
 import sunday.resi.common.Component;
 import sunday.resi.common.Part;
+import sunday.resi.util.console.Console;
 
 /**
  * A helper class that prints the tree of parts of a circuit.

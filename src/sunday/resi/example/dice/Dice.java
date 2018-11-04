@@ -13,7 +13,7 @@ import sunday.resi.library.Relay;
 import sunday.resi.library.SevenSegmentDecoder10;
 import sunday.resi.library.SevenSegmentDisplay;
 import sunday.resi.util.PartConsoleMonitor;
-import sunday.resi.util.SystemConsole;
+import sunday.resi.util.console.SystemConsole;
 
 /**
  * This is a dice which prints out random values.

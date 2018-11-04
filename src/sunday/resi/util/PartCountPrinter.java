@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import sunday.resi.common.Circuit;
 import sunday.resi.common.Part;
 import sunday.resi.library.Relay;
+import sunday.resi.util.console.Console;
 
 /**
  * A helper class that prints the count of parts of a circuit.
